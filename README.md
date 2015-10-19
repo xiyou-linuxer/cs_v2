@@ -1,9 +1,12 @@
-# cs-angular-app
+### Xiyou Linux Group Collaboration System(CS)
 
-此项目为西邮Linux兴趣小组内部交流平台WEB应用模块。
+#### Web Application
 
-如需了解后端API模块，请查看[cs-restful-api](https://github.com/xiyou-linuxer/cs-xiyoulinux),
-如需查看API文档，请查看[API WIKI](https://github.com/xiyou-linuxer/cs-xiyoulinux/WIKI/API)
+西邮Linux兴趣小组内部交流平台WEB应用。
+
+本项目只包含由angular框架构建的单页WEB应用部分，数据由后端提API提供，详情请查看[cs-restful-api](https://github.com/xiyou-linuxer/cs-restful-api),
+
+线上地址：http://cs.xiyoulinux.org
 
 [![Build Status](https://travis-ci.org/xiyou-linuxer/cs-angular-app.svg?branch=master)](https://travis-ci.org/xiyou-linuxer/cs-angular-app)
 
