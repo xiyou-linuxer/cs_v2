@@ -1,6 +1,9 @@
 # cs-angular-app
 
-此项目为西邮Linux兴趣小组内部交流平台WEB应用模块，如需了解后端API模块，请移步[cs-xiyoulinux](https://github.com/xiyou-linuxer/cs-xiyoulinux)
+此项目为西邮Linux兴趣小组内部交流平台WEB应用模块。
+
+如需了解后端API模块，请查看[cs-restful-api](https://github.com/xiyou-linuxer/cs-xiyoulinux),
+如需查看API文档，请查看[API WIKI](https://github.com/xiyou-linuxer/cs-xiyoulinux/WIKI/API)
 
 [![Build Status](https://travis-ci.org/xiyou-linuxer/cs-angular-app.svg?branch=master)](https://travis-ci.org/xiyou-linuxer/cs-angular-app)
 
