@@ -1,0 +1,280 @@
+
+<section class="vbox"> 
+  <header class="bg-white-only header header-md navbar navbar-fixed-top-xs"> 
+
+    <div class="navbar-header aside bg-info nav-xs" ng-class="cs.coms.aside.isopen ? '' : 'nav-xs'"> 
+      <a class="btn btn-link visible-xs">
+        <i class="icon-screen-desktop"></i>
+      </a> 
+      <a ui-sref="cs.home" class="navbar-brand text-lt">
+        <i class="icon-screen-desktop"></i>
+        <span class="hidden-nav-xs m-l-sm">西邮Linux CS</span>
+      </a> 
+      <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+        <i class="icon-settings"></i>
+      </a> 
+    </div> 
+
+    <ul class="nav navbar-nav hidden-xs"> 
+      <li>
+        <a href="#" ng-click="cs.coms.aside.isopen=!cs.coms.aside.isopen" class="text-muted"> 
+          <i class="icon-grid" ng-show="cs.coms.aside.isopen"></i>
+          <i class="icon-list" ng-hide="cs.coms.aside.isopen"></i>
+        </a>
+      </li>
+    </ul> 
+
+    <form class="navbar-form navbar-left input-s-box m-t m-l-n-xs hidden-xs" role="search" action="/search" method="get"> 
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-sm bg-white btn-icon">
+              <i class=" icon-magnifier"></i>
+            </button>
+          </span> 
+          <input name="wd" type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索..."> 
+        </div> 
+      </div> 
+    </form> 
+
+    <div class="navbar-right no-margin">
+      <ul class="nav navbar-nav m-n hidden-xs nav-user user">
+        <li class="hidden-xs">
+          <a href="#" class="dropdown-toggle lt toolbar-icon" data-toggle="dropdown">
+            <i class="icon-note"></i>
+          </a>
+        </li>
+        <li class="hidden-xs" uib-dropdown>
+          <a href="#" class="dropdown-toggle lt toolbar-icon" uib-dropdown-toggle>
+            <i class="icon-bell"></i>
+            <span class="badge badge-sm up bg-danger count" ng-bind="cs.mails.unread.length">0</span>
+          </a>
+          <section class="dropdown-menu uib-dropdown-menu aside-xl animated fadeInUp"> 
+            <section class="panel bg-white"> 
+              <div class="panel-heading b-light bg-light"> 
+                <strong ng-show="cs.mails.unread.length > 0">
+                  你有
+                  <span class="count">{{cs.mails.unread.length}}</span>
+                  条未读站内信
+                </strong>
+              </div>
+              <div class="list-group list-group-alt"> 
+                <a ui-sref="cs.mails({id: '{{mail.id}}'})" class="media list-group-item" ng-repeat="mail in cs.mails.unread">
+                  <span class="pull-left thumb-sm">
+                    <img ng-src="{{mail.avatar}}" class="img-circle">
+                  </span>
+                  <span class="block m-b-none">{{mail.content}}<br>
+                    <small class="text-muted">{{mail.createAt}}</small>
+                  </span>
+                </a>
+                <a ui-sref="cs.mails" class="media list-group-item" ng-hide="cs.mails.unread.length > 0">
+                  <span class="media-body block m-b-none">暂时没有任何未读站内信 </span>
+                </a> 
+              </div> 
+              <div class="panel-footer text-sm">
+                <a ui-sref="cs.mails">
+                  <i class="glyphicon glyphicon-cog"></i>
+                  查看所有站内信
+                </a>
+              </div> 
+            </section> 
+          </section>
+        </li>
+        <li class="hidden-xs">
+          <a href="#" class="dropdown-toggle lt toolbar-icon" ng-click="cs.coms.raside.isopen = !cs.coms.raside.isopen">
+            <i class="icon-users"></i>
+          </a>
+        </li>
+        <li class="dropdown" uib-dropdown>
+          <a href="#" class="dropdown-toggle bg clear" uib-dropdown-toggle>
+            <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+              <img ng-src="{{cs.users.signed.avatar}}">
+            </span>
+            <span ng-bind="{{cs.users.signed.name}}"></span>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu uib-dropdown-menu animated fadeInRight">
+            <li>
+              <a ui-sref="cs.profile({id: '{{cs.users.signed.id}}'})">个人中心</a>
+            </li>
+            <li>
+              <a ui-sref="cs.mails">
+                <span class="badge bg-danger pull-right"></span> 
+                站内信
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a id="btn-logout" data-toggle="ajaxModal">退出</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <section>
+    <section class="hbox stretch">
+      <!-- .aside -->
+      <aside class="bg-black dk aside hidden-print nav-xs" ng-class="cs.coms.aside.isopen ? '' : 'nav-xs'">
+        <section class="vbox">
+          <section class="scrollable">
+            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2"> 
+            <!-- nav --> 
+              <nav class="nav-primary hidden-xs">
+                <ul class="nav bg clearfix">
+                  <li class="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">应用</li>
+                  <li>
+                    <a ui-sref="cs.home">
+                      <i class="icon-home"></i>
+                      <b class="badge bg-info pull-right">10</b>
+                      <span class="font-bold">主页</span>
+                    </a>
+                  </li>
+                  <li class="m-b hidden-nav-xs"></li> 
+                </ul>
+                <ul class="nav" data-ride="collapse">
+                  <li> 
+                    <a ui-sref="cs.profile({id: '{{cs.users.signed.id}}'})">
+                      <i class="icon-user"></i> 
+                      <span>个人中心</span> 
+                    </a>
+                  </li> 
+                  <li>
+                    <a href="#" class="auto">
+                      <span class="pull-right text-muted">
+                        <i class="icon-arrow-left text"></i>
+                        <i class="icon-arrow-down text-active"></i>
+                      </span> 
+                      <i class="icon-envelope"></i>
+                      <span>站内信</span> 
+                      <b class="badge bg-info" style="margin-left:1em;" ng-hide="cs.coms.aside.isopen && cs.mails.unread.length > 0">{{cs.mails.unread.length}}</b>
+                    </a>
+                    <ul class="nav dk text-sm"> 
+                      <li>
+                        <a ui-sref="cs.mails.edit({id: 'new'})" class="auto">
+                          <i class="icon-note text-info"></i>
+                          <span>写信</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a ui-sref="cs.mails" class="auto">
+                          <i class=" icon-list text-info"></i>
+                          <span>全部</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a ui-sref="cs.mails" class="auto">
+                          <i class="icon-check text-success"></i>
+                          <span>已读</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a ui-sref="cs.mails" class="auto">
+                          <i class="icon-question text-warning"></i>
+                          <span>未读</span>
+                          <b class="badge bg-info" style="margin-left:2em;" ng-show="cs.mails.unread.length > 0">{{cs.mails.unread.length}}</b>
+                        </a>
+                      </li>
+                      <li>
+                        <a ui-sref="cs.mails" class="auto">
+                          <i class=" icon-paper-plane text-primary"></i>
+                          <span>已发</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a ui-sref="cs.mails" class="auto">
+                          <i class="icon-info text-dark"></i>
+                          <span>草稿</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="#" class="auto">
+                      <span class="pull-right text-muted">
+                        <i class="fa fa-angle-left text"></i>
+                        <i class="fa fa-angle-down text-active"></i>
+                      </span>
+                      <i class="icon-settings"></i>
+                      <span>平台管理</span>
+                    </a>
+                    <ul class="nav dk text-sm">
+                     <li>
+                        <a ui-sref="/admin/users">
+                          <i class="icon-plus text-success"></i>
+                          <span class="font-bold">用户管理</span>
+                        </a>
+                      </li>
+                      <li>
+                          <a ui-sref="/admin/permission">
+                            <i class="icon-refresh text-info"></i>
+                            <span class="font-bold">权限管理</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a ui-sref="/admin/apps">
+                            <i class="icon-grid text-primary-lter"></i>
+                            <span class="font-bold">应用管理</span>
+                          </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </section>
+        </section>
+      </aside>
+        <section>
+          <section class="hbox stretch">
+            <section class="vbox" ui-view="grid"></section>
+            <aside class="aside-md bg-light dk animated fadeInRight hide" ng-class="cs.coms.raside.isopen ? '' : 'hide'">
+              <section class="vbox animated fadeInRight">
+                <section class="scrollable hover">
+                  <nav class="nav-primary hidden-xs">
+                    <h4 class="font-thin m-l-md m-t hidden-nav-xs">用户列表</h4>
+                    <ul class="nav list-group no-bg no-borders auto m-t-n-xxs">
+                      <li class="list-group-item" ng-repeat="user in cs.users.online">
+                        <span class="pull-left thumb-xs m-t-xs avatar m-l-xs m-r-sm">
+                          <img src="{{user.avatar}}" class="img-circle">
+                          <i class="on b-light right sm"></i>
+                        </span>
+                        <div class="clear">
+                          <div class="hidden-nav-xs">
+                            <a ui-sref="cs.profile({id: '{{user.id}}'})">{{user.name}}</a>
+                          </div>
+                          <div class="visible-nav-xs">
+                            <a href="#">占格</a>
+                          </div>
+                          <small class="text-muted hidden-nav-xs">{{user.workplace}}</small>
+                        </div>
+                      </li>
+                      <li class="list-group-item" ng-repeat="user in cs.users.offline">
+                        <span class="pull-left thumb-xs m-t-xs avatar m-l-xs m-r-sm">
+                          <img src="{{user.avatar}}" class="img-circle">
+                          <i class="off b-light right sm"></i>
+                        </span>
+                        <div class="clear">
+                          <div class="hidden-nav-xs">
+                            <a ui-sref="cs.profile({id: '{{user.id}}'})">{{user.name}}</a>
+                          </div>
+                          <div class="visible-nav-xs">
+                            <a href="#">占格</a>
+                          </div>
+                          <small class="text-muted hidden-nav-xs">{{user.workplace}}</small>
+                        </div>
+                      </li>
+                    </ul>
+                  </nav>
+                </section>
+              </section>
+            </aside>
+          </section>
+          <!--hbox stretch--> 
+          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a> 
+        </section>
+        <!--content-->
+    </section>
+    <!--hbox stretch-->
+  </section>
+</section>
