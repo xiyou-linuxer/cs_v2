@@ -9,12 +9,13 @@ define([
   ])
   .controller('ctrls.cs.core', [
     '$scope',
-    function ($scope) {
+    '$uibModal',
+    function ($scope, $uibModal) {
       $scope.cs = {
         users: {
           signed: {
             id: 121,
-            name: 'Jensyn',
+            name: '张永军',
             avatar: 'http://7xj8c4.com1.z0.glb.clouddn.com/' +
               'xiyoulinux.png?imageView2/2/w/64'
           },
@@ -60,8 +61,58 @@ define([
             'xiyoulinux.png?imageView2/2/w/64',
             content: '测试一下拉',
             createAt: '2015-11-04 11:20:00'
+          }, {
+            id: 1024,
+            title: 'hello, world',
+            avatar: 'http://7xj8c4.com1.z0.glb.clouddn.com/' +
+            'xiyoulinux.png?imageView2/2/w/64',
+            content: '测试一下拉',
+            createAt: '2015-11-04 11:20:00'
           }]
+        },
+        modals: {}
+      }
+
+      $scope.openModal = function (ctx) {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: ctx.templateUrl,
+          controller: ctx.controller
+        })
+
+        modalInstance.result.then(ctx.callback)
+      }
+
+      $scope.cs.modals.activity = {
+        templateUrl: '/partials/common/modal.html',
+        controller: 'ctrls.cs.modals.activity',
+        callback: function (data) {
+          console.log(data)
         }
+      }
+
+
+      $scope.handleNewAct = function (data) {
+        console.log(data)
+      }
+    }
+  ])
+  .controller('ctrls.cs.modals.activity', [
+    '$scope',
+    '$uibModalInstance',
+    function ($scope, $uibModalInstance) {
+      $scope.act = {}
+
+      $scope.ok = function () {
+        if (!$scope.act.title || !$scope.act.content) {
+          return false
+        }
+
+        $uibModalInstance.close($scope.act)
+      }
+
+      $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel')
       }
     }
   ])
