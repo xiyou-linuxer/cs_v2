@@ -1,6 +1,6 @@
 define([
   'angular',
-  './global',
+  './core',
   './router'
   ],
   function (angular) {

@@ -1,46 +1,44 @@
-
-<section class="vbox"> 
-  <header class="bg-white-only header header-md navbar navbar-fixed-top-xs"> 
-
-    <div class="navbar-header aside bg-info nav-xs" ng-class="cs.coms.aside.isopen ? '' : 'nav-xs'"> 
-      <a class="btn btn-link visible-xs">
-        <i class="icon-screen-desktop"></i>
-      </a> 
+<section class="vbox">
+  <header class="bg-white-only header header-md navbar navbar-fixed-top-xs">
+    <div class="navbar-header aside bg-info nav-xs" ng-class="cs.coms.aside.isopen ? '' : 'nav-xs'">
+      <a class="btn btn-link visible-xs" ng-click="cs.coms.aside.isopen = !cs.coms.aside.isopen;cs.coms.raside.isopen=false">
+        <i class="icon-list"></i>
+      </a>
       <a ui-sref="cs.home" class="navbar-brand text-lt">
         <i class="icon-screen-desktop"></i>
         <span class="hidden-nav-xs m-l-sm">西邮Linux CS</span>
-      </a> 
-      <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+      </a>
+      <a class="btn btn-link visible-xs" ng-click="cs.coms.raside.isopen=!cs.coms.raside.isopen;cs.coms.aside.isopen=false">
         <i class="icon-settings"></i>
-      </a> 
-    </div> 
+      </a>
+    </div>
 
-    <ul class="nav navbar-nav hidden-xs"> 
+    <ul class="nav navbar-nav hidden-xs">
       <li>
-        <a href="#" ng-click="cs.coms.aside.isopen=!cs.coms.aside.isopen" class="text-muted"> 
+        <a href="#" ng-click="cs.coms.aside.isopen=!cs.coms.aside.isopen" class="text-muted">
           <i class="icon-grid" ng-show="cs.coms.aside.isopen"></i>
           <i class="icon-list" ng-hide="cs.coms.aside.isopen"></i>
         </a>
       </li>
-    </ul> 
+    </ul>
 
-    <form class="navbar-form navbar-left input-s-box m-t m-l-n-xs hidden-xs" role="search" action="/search" method="get"> 
+    <form class="navbar-form navbar-left input-s-box m-t m-l-n-xs hidden-xs" role="search" action="/search" method="get">
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-btn">
             <button type="submit" class="btn btn-sm bg-white btn-icon">
               <i class=" icon-magnifier"></i>
             </button>
-          </span> 
-          <input name="wd" type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索..."> 
-        </div> 
-      </div> 
-    </form> 
+          </span>
+          <input name="wd" type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索...">
+        </div>
+      </div>
+    </form>
 
     <div class="navbar-right no-margin">
-      <ul class="nav navbar-nav m-n hidden-xs nav-user user">
+      <ul class="nav navbar-nav m-n hidden-xs nav-user user" ng-class="cs.coms.raside.isopen ? 'open' : ''">
         <li class="hidden-xs">
-          <a href="#" class="dropdown-toggle lt toolbar-icon" data-toggle="dropdown">
+          <a href="#" class="toolbar-icon" ng-click="openModal(cs.modals.activity)">
             <i class="icon-note"></i>
           </a>
         </li>
@@ -49,16 +47,16 @@
             <i class="icon-bell"></i>
             <span class="badge badge-sm up bg-danger count" ng-bind="cs.mails.unread.length">0</span>
           </a>
-          <section class="dropdown-menu uib-dropdown-menu aside-xl animated fadeInUp"> 
-            <section class="panel bg-white"> 
-              <div class="panel-heading b-light bg-light"> 
+          <section class="dropdown-menu uib-dropdown-menu aside-xl animated fadeInUp">
+            <section class="panel bg-white">
+              <div class="panel-heading b-light bg-light">
                 <strong ng-show="cs.mails.unread.length > 0">
                   你有
                   <span class="count">{{cs.mails.unread.length}}</span>
                   条未读站内信
                 </strong>
               </div>
-              <div class="list-group list-group-alt"> 
+              <div class="list-group list-group-alt">
                 <a ui-sref="cs.mails({id: '{{mail.id}}'})" class="media list-group-item" ng-repeat="mail in cs.mails.unread">
                   <span class="pull-left thumb-sm">
                     <img ng-src="{{mail.avatar}}" class="img-circle">
@@ -69,15 +67,15 @@
                 </a>
                 <a ui-sref="cs.mails" class="media list-group-item" ng-hide="cs.mails.unread.length > 0">
                   <span class="media-body block m-b-none">暂时没有任何未读站内信 </span>
-                </a> 
-              </div> 
+                </a>
+              </div>
               <div class="panel-footer text-sm">
                 <a ui-sref="cs.mails">
                   <i class="glyphicon glyphicon-cog"></i>
                   查看所有站内信
                 </a>
-              </div> 
-            </section> 
+              </div>
+            </section>
           </section>
         </li>
         <li class="hidden-xs">
@@ -99,7 +97,7 @@
             </li>
             <li>
               <a ui-sref="cs.mails">
-                <span class="badge bg-danger pull-right"></span> 
+                <span class="badge bg-danger pull-right"></span>
                 站内信
               </a>
             </li>
@@ -115,11 +113,11 @@
   <section>
     <section class="hbox stretch">
       <!-- .aside -->
-      <aside class="bg-black dk aside hidden-print nav-xs" ng-class="cs.coms.aside.isopen ? '' : 'nav-xs'">
+      <aside class="bg-black dk aside hidden-print nav-xs" ng-class="cs.coms.aside.isopen ? 'nav-off-screen' : 'nav-xs'">
         <section class="vbox">
           <section class="scrollable">
-            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2"> 
-            <!-- nav --> 
+            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+            <!-- nav -->
               <nav class="nav-primary hidden-xs">
                 <ul class="nav bg clearfix">
                   <li class="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">应用</li>
@@ -130,26 +128,26 @@
                       <span class="font-bold">主页</span>
                     </a>
                   </li>
-                  <li class="m-b hidden-nav-xs"></li> 
+                  <li class="m-b hidden-nav-xs"></li>
                 </ul>
-                <ul class="nav" data-ride="collapse">
-                  <li> 
-                    <a ui-sref="cs.profile({id: '{{cs.users.signed.id}}'})">
-                      <i class="icon-user"></i> 
-                      <span>个人中心</span> 
-                    </a>
-                  </li> 
+                <ul class="nav">
                   <li>
-                    <a href="#" class="auto">
+                    <a ui-sref="cs.profile({id: '{{cs.users.signed.id}}'})">
+                      <i class="icon-user"></i>
+                      <span>个人中心</span>
+                    </a>
+                  </li>
+                  <li ng-class="cs.coms.aside.menus.mail.isopen ? 'active' : ''">
+                    <a href="#" class="auto" ng-click="cs.coms.aside.menus.mail.isopen=!cs.coms.aside.menus.mail.isopen">
                       <span class="pull-right text-muted">
                         <i class="icon-arrow-left text"></i>
                         <i class="icon-arrow-down text-active"></i>
-                      </span> 
+                      </span>
                       <i class="icon-envelope"></i>
-                      <span>站内信</span> 
+                      <span>站内信</span>
                       <b class="badge bg-info" style="margin-left:1em;" ng-hide="cs.coms.aside.isopen && cs.mails.unread.length > 0">{{cs.mails.unread.length}}</b>
                     </a>
-                    <ul class="nav dk text-sm"> 
+                    <ul class="nav dk text-sm">
                       <li>
                         <a ui-sref="cs.mails.edit({id: 'new'})" class="auto">
                           <i class="icon-note text-info"></i>
@@ -189,11 +187,11 @@
                       </li>
                     </ul>
                   </li>
-                  <li>
-                    <a href="#" class="auto">
+                  <li ng-class="cs.coms.aside.menus.admin.isopen ? 'active' : ''">
+                    <a href="#" class="auto" ng-click="cs.coms.aside.menus.admin.isopen=!cs.coms.aside.menus.admin.isopen">
                       <span class="pull-right text-muted">
-                        <i class="fa fa-angle-left text"></i>
-                        <i class="fa fa-angle-down text-active"></i>
+                        <i class="icon-arrow-left text"></i>
+                        <i class="icon-arrow-down text-active"></i>
                       </span>
                       <i class="icon-settings"></i>
                       <span>平台管理</span>
@@ -270,8 +268,8 @@
               </section>
             </aside>
           </section>
-          <!--hbox stretch--> 
-          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a> 
+          <!--hbox stretch-->
+          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
         </section>
         <!--content-->
     </section>

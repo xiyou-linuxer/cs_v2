@@ -1,5 +1,5 @@
 define([
-    './global'
+    './core'
   ], function (cs) {
   'use strict'
 

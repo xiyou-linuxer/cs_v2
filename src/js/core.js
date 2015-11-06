@@ -2,7 +2,7 @@ define([
     'angular',
     'angular-ui-router',
     'angular-ui-bootstrap',
-    'controllers/global'
+    'controllers/core'
   ], function (angular) {
   'use strict'
 

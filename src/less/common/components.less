@@ -1,6 +1,9 @@
 .no-margin {
   margin: 0 !important;
 }
+.large-padding {
+  padding: 20px 40px;
+}
 .small {
   font-size: 13px;
 }
@@ -139,7 +142,9 @@ a:hover .caret-white {
   border-color: #cbd5dd;
   background-color: #f1f5f6;
 }
-
+button.btn {
+  border: 0;
+}
 .input-group-btn>button.btn:hover,
 .input-group-btn>button.btn:active,
 .input-group-btn>button.btn:focus {
@@ -1384,7 +1389,6 @@ fieldset[disabled] .btn-info.active {
 .btn-warning.active,
 .open .dropdown-toggle.btn-warning {
   color: #fff !important;
-  background-color: #f9d21a;
   border-color: #f9cf0b;
 }
 .btn-warning:active,
@@ -1570,41 +1574,44 @@ fieldset[disabled] .btn-dark.active {
 }
 .comment-list {
   position: relative;
-}
-.comment-list .comment-item {
-  margin-top: 0;
-  position: relative;
-}
-.comment-list .comment-item > .thumb-sm {
-  width: 36px;
-}
-.comment-list .comment-item .arrow.left {
-  top: 20px;
-  left: 39px;
-}
-.comment-list .comment-item .comment-body {
-  margin-left: 46px;
-}
-.comment-list .comment-item .panel-body {
-  padding: 10px 15px;
-}
-.comment-list .comment-item .panel-heading,
-.comment-list .comment-item .panel-footer {
-  position: relative;
-  font-size: 12px;
-  background-color: #fff;
-}
-.comment-list .comment-reply {
-  margin-left: 46px;
-}
-.comment-list:before {
-  position: absolute;
-  top: 0;
-  bottom: 35px;
-  left: 18px;
-  width: 1px;
-  background: #e0e4e8;
-  content: '';
+
+  &:before {
+    position: absolute;
+    top: 0;
+    bottom: 35px;
+    left: 18px;
+    width: 1px;
+    background: #e0e4e8;
+    content: '';
+  }
+
+  .comment-item {
+    margin-top: 0;
+    position: relative;
+
+    & > .thumb-sm {
+      width: 36px;
+    }
+     .arrow.left {
+      top: 20px;
+      left: 39px;
+    }
+    .comment-body {
+      margin-left: 46px;
+    }
+    .panel-body {
+      padding: 10px 15px;
+    }
+    .panel-heading,
+    .panel-footer {
+      position: relative;
+      font-size: 12px;
+      background-color: #fff;
+    }
+  }
+  .comment-reply {
+    margin-left: 46px;
+  }
 }
 .timeline {
   display: table;
