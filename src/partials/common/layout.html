@@ -26,11 +26,11 @@
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-btn">
-            <button type="submit" class="btn btn-sm bg-white btn-icon">
+            <button  ui-sref="cs.search({id: '{{cs.users.signed.id}}'})" type="submit" class="btn btn-sm bg-white btn-icon">
               <i class=" icon-magnifier"></i>
             </button>
           </span>
-          <input name="wd" type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索...">
+          <input  name="wd" type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索...">
         </div>
       </div>
     </form>
@@ -57,7 +57,7 @@
                 </strong>
               </div>
               <div class="list-group list-group-alt">
-                <a ui-sref="cs.mails({id: '{{mail.id}}'})" class="media list-group-item" ng-repeat="mail in cs.mails.unread">
+                <a ui-sref="cs.mails.info({id: '{{mail.id}}'})" class="media list-group-item" ng-repeat="mail in cs.mails.unread">
                   <span class="pull-left thumb-sm">
                     <img ng-src="{{mail.avatar}}" class="img-circle">
                   </span>
@@ -149,13 +149,13 @@
                     </a>
                     <ul class="nav dk text-sm">
                       <li>
-                        <a ui-sref="cs.mails.edit({id: 'new'})" class="auto">
+                        <a  ui-sref="cs.mails.edit({id: 'new'})" class="auto">
                           <i class="icon-note text-info"></i>
                           <span>写信</span>
                         </a>
                       </li>
                       <li>
-                        <a ui-sref="cs.mails" class="auto">
+                        <a ui-sref="cs.mails({id: '{{cs.users.signed.id}}'})" class="auto">
                           <i class=" icon-list text-info"></i>
                           <span>全部</span>
                         </a>
@@ -174,7 +174,7 @@
                         </a>
                       </li>
                       <li>
-                        <a ui-sref="cs.mails" class="auto">
+                        <a  ui-sref="cs.mails.info({id: '{{cs.users.signed.id}}'})" class="auto">
                           <i class=" icon-paper-plane text-primary"></i>
                           <span>已发</span>
                         </a>

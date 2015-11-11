@@ -53,11 +53,35 @@ define([
         }
       }
     })
-    .state('cs.mails', {
-      url: '^/mails/{id:[0-9]{3,4}}',
+    .state('cs.search', {
+      url: '^/search/{id:[0-9]{3,4}}',
       views: {
         'grid': {
-          templateUrl: '/partials/pages/mails/grid.html'
+          templateUrl: '/partials/pages/search/grid.html'
+        }
+      }
+    })
+    .state('cs.mails', {
+      url: '^/mails',
+      views: {
+        'grid': {
+          templateUrl: '/partials/pages/mails/list.html'
+        }
+      }
+    })
+    .state('cs.mails.edit', {
+      url: '^/mails/{id:[0-9]{3,4}|new}/edit',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/mails/edit.html'
+        }
+      }
+    })
+    .state('cs.mails.info', {
+      url: '^/mails/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/mails/info.html'
         }
       }
     })
