@@ -53,15 +53,66 @@ define([
         }
       }
     })
-    .state('cs.mails', {
-      url: '^/mails/{id:[0-9]{3,4}}',
+    .state('cs.search', {
+      url: '^/search/{keywords}',
       views: {
         'grid': {
-          templateUrl: '/partials/pages/mails/grid.html'
+          templateUrl: '/partials/pages/search/grid.html'
         }
       }
     })
-
+    .state('cs.mails', {
+      url: '^/mails',
+      views: {
+        'grid': {
+          templateUrl: '/partials/pages/mails/list.html'
+        }
+      }
+    })
+    .state('cs.mails.edit', {
+      url: '^/mails/{id:[0-9]{3,4}|new}/edit',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/mails/edit.html'
+        }
+      }
+    })
+    .state('cs.mails.info', {
+      url: '^/mails/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/mails/info.html'
+        }
+      }
+    })
+    .state('cs.admin', {
+      abstract: true,
+      url: '^/admin'
+    })
+    .state('cs.admin.users', {
+      url: '/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/admin/users.html'
+        }
+      }
+    })
+    .state('cs.admin.permission', {
+      url: '^/admin/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/admin/permission.html'
+        }
+      }
+    })
+     .state('cs.admin.apps', {
+      url: '^/admin/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/admin/apps.html'
+        }
+      }
+    })
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false

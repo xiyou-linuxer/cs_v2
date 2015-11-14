@@ -9,13 +9,14 @@ define([
   ])
   .controller('ctrls.cs.core', [
     '$scope',
+    '$state',
     '$uibModal',
-    function ($scope, $uibModal) {
+    function ($scope, $state, $uibModal) {
       $scope.cs = {
         users: {
           signed: {
             id: 121,
-            name: '张永军',
+            name: 'xxx',
             avatar: 'http://7xj8c4.com1.z0.glb.clouddn.com/' +
               'xiyoulinux.png?imageView2/2/w/64'
           },
@@ -70,7 +71,9 @@ define([
             createAt: '2015-11-04 11:20:00'
           }]
         },
+        flags: 0,
         modals: {}
+
       }
 
       $scope.openModal = function (ctx) {
@@ -94,6 +97,15 @@ define([
 
       $scope.handleNewAct = function (data) {
         console.log(data)
+      }
+
+      $scope.cs.search = {
+        keywords: '',
+        handleSubmit: function () {
+          $state.go('cs.search', {
+            keywords: $scope.cs.search.keywords
+          })
+        }
       }
     }
   ])
