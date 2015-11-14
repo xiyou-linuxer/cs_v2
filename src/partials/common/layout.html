@@ -22,15 +22,15 @@
       </li>
     </ul>
 
-    <form class="navbar-form navbar-left input-s-box m-t m-l-n-xs hidden-xs" role="search" action="/search" method="get">
+    <form class="navbar-form navbar-left input-s-box m-t m-l-n-xs hidden-xs" ng-submit="cs.search.handleSubmit()">
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-btn">
-            <button  ui-sref="cs.search({id: '{{cs.users.signed.id}}'})" type="submit" class="btn btn-sm bg-white btn-icon">
-              <i class=" icon-magnifier"></i>
+            <button type="submit" class="btn btn-sm bg-white btn-icon">
+              <i class="icon-magnifier"></i>
             </button>
           </span>
-          <input  name="wd" type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索...">
+          <input type="text" class="form-control input-sm no-border rounded" placeholder="全站搜索..." ng-model="cs.search.keywords">
         </div>
       </div>
     </form>
@@ -198,19 +198,19 @@
                     </a>
                     <ul class="nav dk text-sm">
                      <li>
-                        <a ui-sref="/admin/users">
+                        <a ui-sref="cs.admin.users({id: '{{cs.users.signed.id}}'})">
                           <i class="icon-plus text-success"></i>
                           <span class="font-bold">用户管理</span>
                         </a>
                       </li>
                       <li>
-                          <a ui-sref="/admin/permission">
+                          <a ui-sref="cs.admin.permission({id: '{{cs.users.signed.id}}'})">
                             <i class="icon-refresh text-info"></i>
                             <span class="font-bold">权限管理</span>
                           </a>
                       </li>
                       <li>
-                          <a ui-sref="/admin/apps">
+                          <a ui-sref="cs.admin.apps({id:'{{cs.users.signed.id}}'})">
                             <i class="icon-grid text-primary-lter"></i>
                             <span class="font-bold">应用管理</span>
                           </a>

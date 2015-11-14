@@ -54,7 +54,7 @@ define([
       }
     })
     .state('cs.search', {
-      url: '^/search/{id:[0-9]{3,4}}',
+      url: '^/search/{keywords}',
       views: {
         'grid': {
           templateUrl: '/partials/pages/search/grid.html'
@@ -85,7 +85,34 @@ define([
         }
       }
     })
-
+    .state('cs.admin', {
+      abstract: true,
+      url: '^/admin'
+    })
+    .state('cs.admin.users', {
+      url: '/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/admin/users.html'
+        }
+      }
+    })
+    .state('cs.admin.permission', {
+      url: '^/admin/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/admin/permission.html'
+        }
+      }
+    })
+     .state('cs.admin.apps', {
+      url: '^/admin/{id:[0-9]{3,4}}',
+      views: {
+        'grid@cs': {
+          templateUrl: '/partials/pages/admin/apps.html'
+        }
+      }
+    })
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false
