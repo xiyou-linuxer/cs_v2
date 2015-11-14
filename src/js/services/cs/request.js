@@ -1,7 +1,7 @@
 define(['angular'], function (angular) {
   'use strict'
 
-  return angular.module('mods.svcs.request', [])
+  return angular.module('mods.svcs.cs.request', [])
   .factory('requestSvc', [
     '$q',
     '$http',

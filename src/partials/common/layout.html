@@ -88,12 +88,12 @@
             <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
               <img ng-src="{{cs.users.signed.avatar}}">
             </span>
-            <span ng-bind="{{cs.users.signed.name}}"></span>
+            <span>{{cs.users.signed.name}}</span>
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu uib-dropdown-menu animated fadeInRight">
             <li>
-              <a ui-sref="cs.profile({id: '{{cs.users.signed.id}}'})">个人中心</a>
+              <a ui-sref="cs.profile({id: '123'})">个人中心</a>
             </li>
             <li>
               <a ui-sref="cs.mails">
@@ -132,7 +132,7 @@
                 </ul>
                 <ul class="nav">
                   <li>
-                    <a ui-sref="cs.profile({id: '{{cs.users.signed.id}}'})">
+                    <a ui-sref="cs.profile({id: '123'})">
                       <i class="icon-user"></i>
                       <span>个人中心</span>
                     </a>
@@ -198,19 +198,19 @@
                     </a>
                     <ul class="nav dk text-sm">
                      <li>
-                        <a ui-sref="cs.admin.users({id: '{{cs.users.signed.id}}'})">
+                        <a ui-sref="cs.admin.users">
                           <i class="icon-plus text-success"></i>
                           <span class="font-bold">用户管理</span>
                         </a>
                       </li>
                       <li>
-                          <a ui-sref="cs.admin.permission({id: '{{cs.users.signed.id}}'})">
+                          <a ui-sref="cs.admin.permission">
                             <i class="icon-refresh text-info"></i>
                             <span class="font-bold">权限管理</span>
                           </a>
                       </li>
                       <li>
-                          <a ui-sref="cs.admin.apps({id:'{{cs.users.signed.id}}'})">
+                          <a ui-sref="cs.admin.apps">
                             <i class="icon-grid text-primary-lter"></i>
                             <span class="font-bold">应用管理</span>
                           </a>
@@ -225,8 +225,10 @@
       </aside>
         <section>
           <section class="hbox stretch">
-            <section class="vbox" ui-view="grid"></section>
-            <aside class="aside-md bg-light dk animated fadeInRight hide" ng-class="cs.coms.raside.isopen ? '' : 'hide'">
+            <section class="vbox">
+              <section class="scrollable wrapper-lg" ui-view="grid"></section>
+            </section>
+            <aside class="aside-md bg-light dk animated fadeInRight nav-xs" ng-class="cs.coms.raside.isopen ? '' : 'nav-xs'">
               <section class="vbox animated fadeInRight">
                 <section class="scrollable hover">
                   <nav class="nav-primary hidden-xs">

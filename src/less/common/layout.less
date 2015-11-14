@@ -1,3 +1,54 @@
+.loading {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #2ea0b6;
+  transition: all .25s ease-out;
+
+  .spinner {
+    width: 50px;
+    height: 60px;
+    margin-top: -30px;
+    margin-left: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    font-size: 10px;
+
+    & > div {
+      background-color: #fff;
+      height: 100%;
+      width: 6px;
+      display: inline-block;
+       
+      -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+      animation: stretchdelay 1.2s infinite ease-in-out;
+    }
+     
+    .rect2 {
+      -webkit-animation-delay: -1.1s;
+      animation-delay: -1.1s;
+    }
+     
+    .rect3 {
+      -webkit-animation-delay: -1.0s;
+      animation-delay: -1.0s;
+    }
+     
+    .rect4 {
+      -webkit-animation-delay: -0.9s;
+      animation-delay: -0.9s;
+    }
+     
+    .rect5 {
+      -webkit-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+    }
+  }
+}
 .navbar-right a.toolbar-icon {
   width: 36px;
   height: 36px;
@@ -7,4 +58,19 @@
   text-align: center;
   line-height: 36px;
   background-color: #f7fafa;
+}
+
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) } 
+  20% { -webkit-transform: scaleY(1.0) }
+}
+ 
+@keyframes stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }

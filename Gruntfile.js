@@ -103,7 +103,7 @@ module.exports = function (grunt) {
         latedef: 'nofunc', // 禁止变量先使用后定义，函数除外
         maxdepth: 3, // 最深嵌套三级
         maxerr: 30, // 最大警告数量为0,出现错误立即停止检查
-        maxparams: 5, // 函数参数最多个数
+        maxparams: 10, // 函数参数最多个数
         noarg: true, // 不允许使用arguments.caller等
         nocomma: true, // 禁止使用逗号运算符
         nonbsp: true, //

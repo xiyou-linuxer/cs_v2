@@ -1,97 +1,44 @@
 <!-- 最新动态内容 index_content.html -->
-<section class="scrollable wrapper-lg">
-  <div class="row">
-    <div class="col-sm-8">
-      <!--  第二部分  -->
-      <h4 class="font-thin">最新动态</h4>
+<div class="row">
+  <div class="col-sm-8">
+    <!--  第二部分  -->
+    <h4 class="font-thin">最新动态</h4>
 
-      <section class="comment-list block">
-        <!--  comment-item-id-1  -->
-        <article class="comment-item">
-          <a class="pull-left thumb-sm avatar">
-            <img ng-src="{{cs.users.signed.avatar}}">
-          </a>
-          <span class="arrow left"></span>
-          <!--主体内容  -->
-          <section class="comment-body panel panel-default">
-            <header class="panel-heading">
-              <a href="/profile/{{cs.users.signed.id}}">{{cs.users.signed.name}}</a>
+    <section class="comment-list block">
+      <!--  comment-item-id-1  -->
+      <article class="comment-item" ng-repeat="act in cs.acts">
+        <a class="pull-left thumb-sm avatar">
+          <img ng-src="{{act.authorAvatar}}">
+        </a>
+        <span class="arrow left"></span>
+        <!--主体内容  -->
+        <section class="comment-body panel panel-default">
+          <header class="panel-heading">
+            <a href="/profile/{{act.authorId}}">{{act.authorName}}</a>
 
-              <label class="label m-l-xs label-success">发表动态</label>
+            <label class="label m-l-xs label-success">发表动态</label>
 
-              <span class="text-muted m-l-sm pull-right">
-                <i class="fa fa-clock-o"></i>
-                2015-10-20 33:00:30
-              </span>
-            </header>
+            <span class="text-muted m-l-sm pull-right">
+              <i class="icon-clock"></i>
+              {{act.createAt}}
+            </span>
+          </header>
 
-            <div class="panel-body">
-              <h4>
-                <a href="/ddd">
-                  dddfaf
-                </a>
-              </h4>
-              <blockpanel-bodyquote>
-                <p>lalala</p>
-              </blockquote>
-              <div class="comment-action m-t-sm">
-                <a href="#" class="btn btn-default btn-xs">
-                  <i class="icon-like text-muted text"></i>
-                  <i class="icon-like text-danger text-active"></i> 点赞
-                </a>
-                <a href="#comment-form" class="btn btn-default btn-xs">
-                  <i class="icon-bubbles text-muted"></i> 评论
-                </a>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <div class="comment-content">
-                <div class="comment-picture">
-                  <a href="/profile/112">
-                    <img width="30px" height="30px" src="cs.users.signed.avatar">
-                  </a> 
-                </div>
-                <div class="comment-inform">
-                  <a href="/profile/213">
-                    <strong>张永军</strong>
-                  </a>
-                  <p>
-                    <small>2015-10-23 10:20:00</small>
-                  </p>
-                </div>
-                <div class="comment-text">
-                  <p style="margin-left:40px;">啦啦啦啦啦啦</p>
-                </div>
-              </div>
-            </div>
-            <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" 
-            aria-labelledby="myModalLabel">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">想说点什么呢</h4>
-                  </div>
-                  <div class="modal-body">
-                    <input id="commentActId" type="hidden">
-                    <textarea id="commentContent"></textarea>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button id="commentPublish" type="button" class="btn btn-primary" data-dismiss="modal">发表</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </article>
-      </section>
-    </div>
-
-    <!-- mini_aside part  -->
-    <div class="col-sm-4">
-    </div>
+          <div class="panel-body">
+            <h4>
+              <a href="#">
+                {{act.title}}
+              </a>
+            </h4>
+            <blockpanel-bodyquote>
+              <p>{{act.content}}</p>
+            </blockquote>
+          </div>
+        </section>
+      </article>
+    </section>
   </div>
-</section>
+
+  <!-- mini_aside part  -->
+  <div class="col-sm-4" ui-view="widgets"></div>
+</div>

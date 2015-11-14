@@ -23,6 +23,7 @@ define([
       url: '^/signin',
       views: {
         'layout': {
+          controller: 'ctrls.cs.auth.signin',
           templateUrl: '/partials/common/signin.html'
         }
       }
@@ -41,7 +42,11 @@ define([
       url: '^/',
       views: {
         'grid': {
+          controller: 'ctrls.cs.activity.list',
           templateUrl: '/partials/pages/home/grid.html'
+        },
+        'widgets@cs.home': {
+          templateUrl: '/partials/pages/home/widgets.html'
         }
       }
     })
@@ -90,7 +95,7 @@ define([
       url: '^/admin'
     })
     .state('cs.admin.users', {
-      url: '/{id:[0-9]{3,4}}',
+      url: '^/admin/users',
       views: {
         'grid@cs': {
           templateUrl: '/partials/pages/admin/users.html'
@@ -98,7 +103,7 @@ define([
       }
     })
     .state('cs.admin.permission', {
-      url: '^/admin/{id:[0-9]{3,4}}',
+      url: '^/admin/permission',
       views: {
         'grid@cs': {
           templateUrl: '/partials/pages/admin/permission.html'
@@ -106,13 +111,14 @@ define([
       }
     })
      .state('cs.admin.apps', {
-      url: '^/admin/{id:[0-9]{3,4}}',
+      url: '^/admin/apps',
       views: {
         'grid@cs': {
           templateUrl: '/partials/pages/admin/apps.html'
         }
       }
     })
+
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false

@@ -1,1 +1,37 @@
-这是登录页
+<div class="full-screen bg-info dker">
+  <section id="content" class="m-t-lg wrapper-md animated fadeInUp">    
+    <div class="container aside-xl">
+      <a class="navbar-brand block" ui-sref="cs.home">
+        <span class="h2 font-bold">Xiyou Linux Group</span>
+      </a>
+      <section class="m-b-lg">
+        <header class="wrapper text-center">
+          <strong>请在下方登录系统</strong>
+        </header>
+        <form ng-submit="handleSignin()">
+          <div class="form-group">
+            <input type="text" placeholder="姓名" name="username" class="form-control rounded input-lg text-center no-border">
+          </div>
+          <div class="form-group">
+             <input type="password" placeholder="密码" name="password" class="form-control rounded input-lg text-center no-border">
+          </div>
+          <button type="submit" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded">
+            <i class="icon-arrow-right pull-right"></i>
+            <span class="m-r-n-lg">登录</span>
+          </button>
+          <div class="text-center m-t m-b">
+            <a ui-sref="cs.home"><small>忘记密码？</small></a>
+          </div>
+        </form>
+      </section>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="footer">
+    <div class="text-center padder">
+      <p>
+        <small>Copyright &copy; 2014 Xiyou Linux Group</small>
+      </p>
+    </div>
+  </footer>
+</div>
