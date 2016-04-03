@@ -1,0 +1,47 @@
+{{extend ("../shared/layout")}}
+
+{{set (title="新建仓库")}}
+{{set (nav="Repositorys")}}
+
+{{#block ("body")}}
+  <h3 class="page-title">新建仓库</h3>
+  <hr>
+  <form class="form-horizontal" id="new_repository" action="/repositorys" accept-charset="UTF-8" method="post">
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="repository_path">仓库标题</label>
+      <div class="col-sm-10">
+        <input placeholder="repository title" class="form-control" tabindex="2" autofocus="autofocus" type="text" name="title" id="repository_title" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="repository_path">仓库地址</label>
+      <div class="col-sm-10">
+        <div class="input-group">
+          <div class="input-group-addon">
+            https://wiki.xiyoulinux.org/
+          </div>
+          <input placeholder="repository-path" class="form-control" tabindex="2" autofocus="autofocus" type="text" name="path" id="repository_path" required>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="repository_description">描述信息
+        <span class="light">(可选)</span>
+      </label>
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="3" maxlength="250" tabindex="3" name="description" id="repository_description"></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <input type="submit" name="commit" value="新建仓库" class="btn btn-success btn-create repository-submit disabled" tabindex="4" disabled>
+      </div>
+    </div>
+  </form>
+{{/block}}
+
+{{#block ('footSection')}}
+  <script>
+    seajs.use('js/repository/create');
+  </script>
+{{/block}}

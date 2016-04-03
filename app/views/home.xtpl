@@ -1,0 +1,6 @@
+{{extend ("./shared/layout")}}
+
+{{#block ("body")}}
+  <h1>{{name}}</h1>
+  <script src="/assets/js/home.js"></script>
+{{/block}}
