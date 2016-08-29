@@ -22,9 +22,10 @@ dev:
 	@NODE_ENV=dev \
 	nodemon -q\
 		-e js,json,less \
-		--watch ./app \
-		--watch ./resources/assets \
-		--watch ./config \
+		--ignore package.json \
+		--ignore node_modules \
+		--ignore public \
+		--ignore sftp-config.json \
 		-x 'make dev-server'
 
 test:
