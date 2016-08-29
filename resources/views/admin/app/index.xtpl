@@ -1,0 +1,74 @@
+{{extend ("../../shared/layout")}}
+
+{{set (title="应用管理")}}
+{{set (nav="admin")}}
+
+{{#block ("body")}}
+  <section class="vbox">
+    <section class="scrollable wrapper-lg">
+      <header class="header bg-light">
+        <ul class="nav nav-tabs nav-white">
+          {{#if (_query.status === '0')}}
+            <li><a href="/admin/apps">全部应用</a></li>
+            <li class="active"><a>待审核应用</a></li>
+          {{else}}
+            <li class="active"><a>全部应用</a></li>
+            <li><a href="/admin/apps?status=0">待审核应用</a></li>
+          {{/if}}
+        </ul>
+      </header>
+      {{#if (data.apps.length)}}
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>CLIENT_ID</th>
+              <th>名称</th>
+              <th>创建者</th>
+              <th>状态</th>
+              <th width="150">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each (data.apps)}}
+              <tr>
+                <td>{{id}}</td>
+                <td>{{client_id}}</td>
+                <td>{{name}}</td>
+                <td>{{author_name}}</td>
+                <td>
+                  {{#if (status === 0)}}
+                    <label class="label label-warning">待审核</label>
+                  {{elseif (status === 1)}}
+                    <label class="label label-primary">已审核</label>
+                  {{elseif (status === 2)}}
+                    <label class="label label-info">开发中</label>
+                  {{elseif (status === 3)}}
+                    <label class="label label-success">已上线</label>
+                  {{elseif (status === -2)}}
+                    <label class="label label-success">已下线</label>
+                  {{elseif (ap.status === -1)}}
+                    <label class="label label-default">已拒绝</label>
+                  {{/if}}
+                </td>
+                <td>
+                  {{#if (_query.status === '0')}}
+                    <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
+                    <a href="{{homepage}}" class="text-info text-u-l  m-l" target="_blank">通过</a>
+                    <a href="/apps/{{id}}" class="text-danger text-u-l m-l">删除</a>
+                  {{else}}
+                    <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
+                    <a href="{{homepage}}" class="text-info text-u-l  m-l" target="_blank">主页</a>
+                    <a href="/apps/{{id}}" class="text-danger text-u-l m-l">删除</a>
+                  {{/if}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        <div class="well bg-light m-t-lg text-center">暂无数据~</div>
+      {{/if}}
+    </section>
+  </section>
+{{/block}}

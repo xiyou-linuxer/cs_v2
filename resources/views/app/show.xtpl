@@ -1,0 +1,92 @@
+{{extend ("../shared/layout")}}
+
+{{set (title="应用")}}
+{{set (nav="app")}}
+
+{{#block ("headSection")}}
+  <link rel="stylesheet" href="/assets/css/app/show.css">
+{{/block}}
+
+{{#block ("body")}}
+  <section class="vbox">
+    <section class="scrollable wrapper-lg">
+      <ol class="breadcrumb bg-light p-b p-t m-b-lg">
+        <li><a href="/apps" class="font-bold">应用</a></li>
+        <li class="active font-bold">应用详情：{{app.name}}</li>
+      </ol>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-2 text-right font-bold">CLIENT_ID</div>
+            <div class="col-md-10 text-primary font-bold">{{app.client_id}}</div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">名称：</div>
+            <div class="col-md-10 font-bold">{{app.name}}</div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">创建者：</div>
+            <div class="col-md-10">{{app.author_name}}</div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">主页：</div>
+            <div class="col-md-10">
+              <a href="{{app.homepage}}" class="text-u-l" target="_blank">{{app.homepage}}</a>
+            </div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">LOGO：</div>
+            <div class="col-md-10">{{app.logo}}</div>
+            {{#if (_me.id === app.author_id)}}
+              <div class="line line-dashed b-b line-lg col-md-12"></div>
+              <div class="col-md-2 text-right font-bold">REDIRECT URL：</div>
+              <div class="col-md-10">{{app.redirect_uri}}</div>
+              <div class="line line-dashed b-b line-lg col-md-12"></div>
+              <div class="col-md-2 text-right font-bold">SECRET：</div>
+              <div class="col-md-10">
+                <div class="secret-component">
+                  <span class="secret-field">{{app.secret}}</span>
+                  <a href="#" class="toggle-btn">
+                    <i class="fa fa-angle-double-left"></i>
+                    <i class="fa fa-angle-double-left"></i>
+                    <i class="fa fa-angle-double-left"></i>
+                    <i class="fa fa-angle-double-right"></i>
+                    <i class="fa fa-angle-double-right"></i>
+                    <i class="fa fa-angle-double-right"></i>
+                  </a>
+                  <div class="secret-mask"></div>
+                </div>
+                <a class="btn btn-xs btn-success bg-success-lt btn-refresh-secret">刷新</a>
+              </div>
+            {{/if}}
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">状态：</div>
+            <div class="col-md-10">
+              {{#if (app.status === 0)}}
+                <label class="label label-warning">待审核</label>
+              {{elseif (app.status === 1)}}
+                <label class="label label-primary">已审核</label>
+              {{elseif (app.status === 2)}}
+                <label class="label label-info">开发中</label>
+              {{elseif (app.status === 3)}}
+                <label class="label label-success">已上线</label>
+              {{elseif (app.status === -2)}}
+                <label class="label label-success">已下线</label>
+              {{elseif (ap.status === -1)}}
+                <label class="label label-default">已拒绝</label>
+              {{/if}}
+            </div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">描述：</div>
+            <div class="col-md-10">
+              <p>{{app.description}}</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script>
+    seajs.use('js/app/show');
+  </script>
+{{/block}}

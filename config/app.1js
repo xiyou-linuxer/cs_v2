@@ -1,0 +1,62 @@
+'use strict';
+let _ = require('lodash');
+let AdamProxy = require('adam-proxy');
+let Sequelize = require('sequelize');
+let sequelize = new Sequelize('mysql://root:jk213@121.42.144.117:3306/linux_wiki');
+
+exports.init = function (app) {
+  app.sequelize = sequelize;
+
+  app.proxy = app.proxy || {};
+  app.proxy.adam = new AdamProxy(app.configs.oauth);
+};
+
+exports.server = {
+  host: '121.42.144.117',
+  port: 2111
+};
+
+exports.autoload = {
+/*  proxy: {
+    path: 'app/proxy'
+  },*/
+  constants: {
+    path: 'app/constants'
+  },
+  services: {
+    path: 'app/services'
+  },
+  controllers: {
+    path: 'app/controllers'
+  },
+  apis: {
+    path: 'app/apis'
+  }
+};
+
+exports.middlewares = {
+  path: 'app/middlewares',
+  queue: [
+    //'error',
+    'session',
+    'render',
+    'admin'
+  ]
+};
+
+exports.views = {
+  path: './app/views'
+};
+
+exports.assets = {
+  path: 'build/assets',
+  prefix: '/assets'
+};
+
+exports.oauth = {
+  client_id: 'hawwa',
+  client_secret: '$2y$10$8Gz5X7XkQtVzwFU8C9zSQ.FzIH6OZNd5D',
+  sso_domain: 'http://sso.adam.404befound.com',
+  api_domain: 'http://api.adam.404befound.com',
+  redirect_uri: 'http://121.42.144.117:2111/oauth/callback'
+};

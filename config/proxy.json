@@ -1,0 +1,17 @@
+{
+  "adam": {
+    "http://api.adam.404befound.com": {
+      "__domain": {
+        "auth": {
+          "auth": {"bearer": "[0]"}
+        }
+      },
+      "{endpoint}/[subpath]": {
+        "__path": {
+          "alias": "__default",
+          "subpath": "/"
+        }
+      }
+    }
+  }
+}

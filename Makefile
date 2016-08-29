@@ -1,34 +1,33 @@
 TEST_FILES =  $(shell ls -S `find test/unit -type f -name "*.test.js" -print`)
-LESS_FILES = $(shell find assets/less -name '*.less')
-CSS_FILES = $(LESS_FILES:assets/less/%.less=build/assets/css/%.css)
-JS_FILES = $(shell find assets/js -name '*.js')
-BUILD_JS_FILES = $(JS_FILES:assets/js/%.js=build/assets/js/%.js)
+LESS_FILES = $(shell find resources/assets/less -name '*.less')
+CSS_FILES = $(LESS_FILES:resources/assets/less/%.less=public/assets/css/%.css)
+JS_FILES = $(shell find resources/assets/js -name '*.js')
+BUILD_JS_FILES = $(JS_FILES:resources/%.js=public/%.min.js)
 
 export PATH := node_modules/.bin:$(PATH)
 export SHELL := /bin/bash
 
 install:
-	@npm install
+	@cnpm install
 
 jshint: install
-	@jshint ./app ./assets/js
+	@jshint ./app ./resources/assets/js
 
-server: build
-	@rekoala --config config/config
+server:
+	@npm run server
 
-dev-server: copy less
-	@rekoala --config config/config
+dev-server: build server
 
 dev:
 	@NODE_ENV=dev \
 	nodemon -q\
-		-e js,less \
+		-e js,json,less \
 		--watch ./app \
-		--watch ./assets \
+		--watch ./resources/assets \
 		--watch ./config \
 		-x 'make dev-server'
 
-test: install
+test:
 	@NODE_ENV=test mocha \
 		--harmony \
 		--reporter spec \
@@ -39,26 +38,35 @@ test: install
 		$(TEST_FILES)
 
 %.css:
-	@lessc --autoprefix --clean-css $(subst css,less,$@) $@
+	@lessc --autoprefix --clean-css $(subst public, resources, $(subst css,less,$@)) $@
 
-%.min.js: %.js
-	@uglifyjs --compress --output $@ $<
+%.min.js:%.js
+	@uglifyjs --compress --output $@ $^
 
-copy: clean
-	@mkdir build
-	@cp -rf assets build
+copy: copy_tips
+	@mkdir -p public/assets
+	@cp -rf resources/assets/libs public/assets/libs
+	@cp -rf resources/assets/images public/assets/images
 
 es6to5:
-	@babel assets/js --out-dir build/assets/js
+	@babel resources/assets/js --out-dir public/assets/js >/dev/null
 
-minify: $(BUILD_JS_FILES:.js=.min.js)
+scripts: scripts_tips es6to5 $(BUILD_JS_FILES)
 
-less: $(CSS_FILES)
+less: less_tips $(CSS_FILES)
 
-build: install clean copy es6to5 minify less
-	@echo 'assets build success'
+build: clean copy scripts less
 
 clean-build:
-	@rm -rf build
+	@rm -rf public/assets
 
 clean:  clean-build
+
+copy_tips:
+	@echo 'copy lib files and images...'
+
+scripts_tips:
+	@echo 'build js files...'
+
+less_tips:
+	@echo 'build less files...'

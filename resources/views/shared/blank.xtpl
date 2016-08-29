@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>{{title}}</title>
+  {{block ('headSection')}}
+</head>
+<body class="app">
+  {{block ('body')}}
+  {{block ('footSection')}}
+</body>
+</html>

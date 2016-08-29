@@ -1,0 +1,96 @@
+{{extend ("../../shared/layout")}}
+
+{{set (title="成员管理")}}
+{{set (nav="admin")}}
+
+{{#block ("body")}}
+  <section class="vbox">
+    <section class="scrollable wrapper-lg">
+      <header class="header bg-light">
+        <ul class="nav nav-tabs nav-white">
+          <li class="active"><a href="/admin/users">全部成员</a></li>
+          <a href="/admin/users/_new" class="btn btn-success btn-sm pull-right m-t-sm m-r-sm">添加成员</a>
+        </ul>
+      </header>
+      <form class="form-horizontal m-t" id="selectForm" action="/admin/users" method="GET">
+        <div class="form-group">
+          <div class="col-md-3">
+            <select class="form-control chosen-select" name="group"">
+              <option value="">所用用户组</option>
+              <option value="1" {{#if (_query.group === '1')}}selected{{/if}}>管理</option>
+              <option value="0" {{#if (_query.group === '0')}}selected{{/if}}>成员</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control chosen-select" name="grade">
+              <option value="">所有年级</option>
+              {{#each (data.grades)}}
+                <option value="{{this}}"  {{#if (_query.grade === this)}}selected{{/if}}>{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control chosen-select" name="major">
+              <option value="">所有专业</option>
+              {{#each (data.majors)}}
+                <option value="{{this}}"  {{#if (_query.major === this)}}selected{{/if}}>{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" name="keyword" placeholder="关键字搜索" value="{{_query.keyword}}">
+          </div>
+        </div>
+      </form>
+      {{#if (data.users.length)}}
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>姓名</th>
+              <th>用户组</th>
+              <th>年级</th>
+              <th>专业</th>
+              <th>电话</th>
+              <th>邮箱</th>
+              <th width="150">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each (data.users)}}
+              {{#if (id !== 10)}}
+                <tr>
+                  <td>{{id}}</td>
+                  <td>{{name}}</td>
+                  <td>
+                    {{#if (group === 1)}}
+                      <label class="label label-success">管理</label>
+                    {{else}}
+                      <label class="label label-info">成员</label>
+                    {{/if}}
+                  <td>{{grade}}</td>
+                  <td>{{major}}</td>
+                  <td>{{phone}}</td>
+                  <td>{{email}}</td>
+                  <td>
+                    <a href="/users/{{id}}" class="text-info text-u-l">查看</a>
+                    <a href="/admin/users/{{id}}/_edit" class="text-info text-u-l  m-l">编辑</a>
+                    <a href="#" data-id="{{id}}" class="text-danger text-u-l m-l btn-delete">删除</a>
+                  </td>
+                </tr>
+              {{/if}}
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        <div class="well bg-light m-t-lg text-center">暂无数据~</div>
+      {{/if}}
+    </section>
+  </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script>
+    seajs.use('js/admin/user/index');
+  </script>
+{{/block}}

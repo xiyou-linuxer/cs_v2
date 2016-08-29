@@ -1,0 +1,16 @@
+{
+  "server": {
+    "host": "121.42.144.117",
+    "port": 2111
+  },
+  "app_keys": [
+    "hello"
+  ],
+  "middlewares": [
+    "oauth",
+    "proxy",
+    "logger",
+    "autoload",
+    "render"
+  ]
+}

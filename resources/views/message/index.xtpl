@@ -1,0 +1,87 @@
+{{extend ("../shared/layout")}}
+
+{{set (title="消息")}}
+{{set (nav="message")}}
+
+{{#block ("body")}}
+  <section class="vbox">
+    <section class="scrollable wrapper-lg">
+      <header class="header bg-light">
+        <ul class="nav nav-tabs nav-white">
+          <li {{#if(!data.category)}}class="active"{{/if}}>
+            <a href="/messages"><i class="icon-list text-primary m-r-sm"></i><span>全部</span></a>
+          </li>
+          <li {{#if(data.category === 'read')}}class="active"{{/if}}>
+            <a href="/messages?category=read"><i class="icon-check text-success m-r-sm"></i><span>已读</span></a>
+          </li>
+          <li {{#if(data.category === 'unread')}}class="active"{{/if}}>
+            <a href="/messages?category=unread"><i class="icon-question text-danger m-r-sm"></i><span>未读</span></a>
+          </li>
+          <li {{#if(data.category === 'send')}}class="active"{{/if}}>
+            <a href="/messages?category=send"><i class="icon-paper-plane text-info m-r-sm"></i><span>已发</span></a>
+          </li>
+          <li {{#if(data.category === 'draft')}}class="active"{{/if}}>
+            <a href="/messages?category=draft"><i class="icon-folder text-primary m-r-sm"></i><span>草稿</span></a>
+          </li>
+        </ul>
+      </header>
+      <div class="row m-t m-b">
+        <div class="col-md-2">
+          <select class="form-control chosen-select" id="messageSelect">
+            <option value="none">选择</option>
+            <option value="all">全选</option>
+            <option value="1" {{#if (_query.group === '1')}}selected{{/if}}>已读</option>
+            <option value="0" {{#if (_query.group === '0')}}selected{{/if}}>未读</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <a href="#" class="btn btn-success m-r">标为已读</a>
+          <a href="#" class="btn btn-danger">批量删除</a>
+        </div>
+        <div class="col-md-2">
+          <a href="/messages/_new" class="btn btn-success pull-right">新建消息</a>
+        </div>
+      </div>
+      <table class="table table-striped m-b-none">
+        <thead>
+          <tr>
+            <td><input class="checkbox" type="checkbox"></td>
+            <th>标题</th>
+            <th>发件人</th>
+            <th>内容</th>
+            <th>时间</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (data.messages)}}
+            <tr role="button" data-id="{{id}}">
+              <td><input class="checkbox" type="checkbox"></td>
+              <td>{{title}}</td>
+              <td>{{author_name}}</td>
+              <td>{{content}}</td>
+              <td>{{created_at}}</td>
+              <td>
+              {{#if (data.category === 'send')}}
+                <label class="label label-primary">已发送</label>
+              {{elseif (status === 0)}}
+                <label class="label label-info">草稿</label>
+              {{elseif (status === 1)}}
+                <label class="label label-danger">未读</label>
+              {{else}}
+                <label class="label label-success">已读</label>
+              {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </section>
+  </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script>
+    seajs.use('js/message/index');
+  </script>
+{{/block}}

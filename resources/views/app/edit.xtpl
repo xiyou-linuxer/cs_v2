@@ -1,0 +1,98 @@
+{{extend ("../shared/layout")}}
+
+{{set (title="创建应用")}}
+{{set (nav="app")}}
+
+{{#block ("headSection")}}
+  <link rel="stylesheet" href="/assets/css/app/edit.css">
+{{/block}}
+
+{{#block ("body")}}
+  <section class="vbox">
+    <section class="scrollable wrapper-lg">
+      <h4 class="m-t-none">{{#if (!app.id)}}创建应用{{else}}编辑应用{{/if}}</h4>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="panel-body">
+          <form class="form-horizontal" id="app_form">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">CIENT_ID</label>
+              <div class="col-sm-8">
+                {{#if (app.id)}}
+                  <input type="hidden" id="data_app_id" value="{{app.id}}">
+                  <input name="client_id" type="text" class="form-control" value="{{app.client_id}}" disabled>
+                {{else}}
+                  <input name="client_id" type="text" class="form-control" placeholder="应用唯一标识">
+                {{/if}}
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">名称</label>
+              <div class="col-sm-8">
+                <input name="name" type="text" class="form-control" placeholder="应用名称" value="{{app.name}}">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">主页</label>
+              <div class="col-sm-8">
+                <input name="homepage" type="text" class="form-control" placeholder="应用主页链接地址" value="{{app.homepage}}">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">LOGO</label>
+              <div class="col-sm-8">
+                <input name="logo" type="text" class="form-control" placeholder="应用Logo图片链接地址" value="{{app.logo}}">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">REDIRECT URI</label>
+              <div class="col-sm-8">
+                <input name="redirect_uri" type="text" class="form-control" placeholder="应用Oauth授权回调地址" value="{{app.redirect_uri}}">
+              </div>
+            </div>
+            {{#if (app.status >= 1 || app.status === -2)}}
+              <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">状态</label>
+                <div class="col-sm-8">
+                  <select name="status" class="form-control chosen-select">
+                    <option value="0" {{#if (app.status === 2)}}selected{{/if}}>开发中</option>
+                    <option value="1" {{#if (app.status === 3)}}selected{{/if}}>已上线</option>
+                    <option value="-2" {{#if (app.status === -2)}}selected{{/if}}>已下线</option>
+                  </select>
+                </div>
+              </div>
+            {{/if}}
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">描述</label>
+              <div class="col-sm-8">
+                <textarea name="description" type="text" rows="5" class="form-control" placeholder="应用描述信息" value="{{app.description}}"></textarea>
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-6">
+                {{#if (app.id)}}
+                  <button type="submit" class="btn btn-s-md btn-success">保存应用</button>
+                {{else}}
+                  <button type="submit" class="btn btn-s-md btn-success">创建应用</button>
+                {{/if}}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script>
+    seajs.use('js/app/edit');
+  </script>
+{{/block}}

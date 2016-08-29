@@ -1,0 +1,175 @@
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  TypeError: this.render is not a function
+      at Object.<anonymous> (/home/jensyn/node-cs/app/middlewares/error.js:33:18)
+      at next (native)
+      at Object.<anonymous> (/home/jensyn/node-cs/node_modules/koa-session/index.js:116:7)
+      at next (native)
+      at Object.bodyParser (/home/jensyn/node-cs/node_modules/koa-bodyparser/index.js:68:5)
+      at next (native)
+      at onFulfilled (/home/jensyn/node-cs/node_modules/co/index.js:65:19)
+      at /home/jensyn/node-cs/node_modules/co/index.js:54:5
+      at Object.co (/home/jensyn/node-cs/node_modules/co/index.js:50:10)
+      at Object.toPromise (/home/jensyn/node-cs/node_modules/co/index.js:118:63)
+      at next (/home/jensyn/node-cs/node_modules/co/index.js:99:29)
+      at onRejected (/home/jensyn/node-cs/node_modules/co/index.js:85:7)
+
+
+  Error: write EPIPE
+      at Object.exports._errnoException (util.js:856:11)
+      at exports._exceptionWithHostPort (util.js:879:20)
+      at WriteWrap.afterWrite (net.js:763:14)
+
+
+  Error: access_denied
+      at Request._callback (/home/jensyn/node-cs/node_modules/adam-proxy/request.js:26:21)
+      at Request.self.callback (/home/jensyn/node-cs/node_modules/request/request.js:200:22)
+      at emitTwo (events.js:87:13)
+      at Request.emit (events.js:172:7)
+      at Request.<anonymous> (/home/jensyn/node-cs/node_modules/request/request.js:1067:10)
+      at emitOne (events.js:82:20)
+      at Request.emit (events.js:169:7)
+      at IncomingMessage.<anonymous> (/home/jensyn/node-cs/node_modules/request/request.js:988:12)
+      at emitNone (events.js:72:20)
+      at IncomingMessage.emit (events.js:166:7)
+      at endReadableNT (_stream_readable.js:905:12)
+      at nextTickCallbackWith2Args (node.js:474:9)
+      at process._tickCallback (node.js:388:17)
+
+
+  Error: access_denied
+      at Request._callback (/home/jensyn/node-cs/node_modules/adam-proxy/request.js:26:21)
+      at Request.self.callback (/home/jensyn/node-cs/node_modules/request/request.js:200:22)
+      at emitTwo (events.js:87:13)
+      at Request.emit (events.js:172:7)
+      at Request.<anonymous> (/home/jensyn/node-cs/node_modules/request/request.js:1067:10)
+      at emitOne (events.js:82:20)
+      at Request.emit (events.js:169:7)
+      at IncomingMessage.<anonymous> (/home/jensyn/node-cs/node_modules/request/request.js:988:12)
+      at emitNone (events.js:72:20)
+      at IncomingMessage.emit (events.js:166:7)
+      at endReadableNT (_stream_readable.js:905:12)
+      at nextTickCallbackWith2Args (node.js:474:9)
+      at process._tickCallback (node.js:388:17)
+
+
+  Error: access_denied
+      at Request._callback (/home/jensyn/node-cs/node_modules/adam-proxy/request.js:26:21)
+      at Request.self.callback (/home/jensyn/node-cs/node_modules/request/request.js:200:22)
+      at emitTwo (events.js:87:13)
+      at Request.emit (events.js:172:7)
+      at Request.<anonymous> (/home/jensyn/node-cs/node_modules/request/request.js:1067:10)
+      at emitOne (events.js:82:20)
+      at Request.emit (events.js:169:7)
+      at IncomingMessage.<anonymous> (/home/jensyn/node-cs/node_modules/request/request.js:988:12)
+      at emitNone (events.js:72:20)
+      at IncomingMessage.emit (events.js:166:7)
+      at endReadableNT (_stream_readable.js:905:12)
+      at nextTickCallbackWith2Args (node.js:474:9)
+      at process._tickCallback (node.js:388:17)
+
+/home/jensyn/node-cs/node_modules/adam-proxy/request.js:41

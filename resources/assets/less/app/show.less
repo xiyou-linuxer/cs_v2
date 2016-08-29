@@ -1,0 +1,43 @@
+.secret-component {
+  display: inline-block;
+  position: relative;
+
+  * {
+    font-size: 75%;
+    line-height: 1;
+    color: #fff !important;
+    text-align: center;
+    background-color: #777;
+  }
+  .secret-field {
+    display: inline-block;
+    padding: .4em 4em .4em .5em;
+    font-weight: 700;
+  }
+  .toggle-btn {
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    padding: .4em 0;
+    transition: width 0.5s ease-in-out;
+    .fa-angle-double-left {
+      display: none;
+    }
+  }
+
+  &.open .toggle-btn {
+    width: 4em;
+    .fa-angle-double-right {
+      display: none;
+    }
+    .fa-angle-double-left {
+      display: inline-block;
+    }
+  }
+}
+
+.btn-refresh-secret {
+  margin-top: -1px;
+}

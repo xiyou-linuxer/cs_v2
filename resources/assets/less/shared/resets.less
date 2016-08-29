@@ -1,0 +1,71 @@
+html {
+  background-color: #f2f4f8;
+  overflow-x: hidden;
+}
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #788188;
+  background-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.40;
+}
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin: 0;
+}
+a {
+  color: #545a5f;
+  text-decoration: none;
+}
+a:hover,
+a:focus,
+a:active {
+  color: #303437;
+  text-decoration: none;
+  outline: none;
+}
+label {
+  font-weight: normal;
+}
+small {
+  font-size: 13px;
+}
+button,
+button:hover {
+  border: 0;
+  outline: none;
+  background-color: auto;
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+  padding: 15px 8px;
+}
+
+.chosen-container.chosen-container-single  {
+  .chosen-drop {
+    border-color: #ccc;
+  }
+  .chosen-single {
+    color: #666;
+    height: 34px;
+    font-size: 14px;
+    line-height: 32px;
+    border-color: #ccc;
+    padding-left: 15px;
+  }
+  &.chosen-container-active .chosen-single {
+    border-color: #ccc;
+    box-shadow: inset 0 2px 2px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  }
+}

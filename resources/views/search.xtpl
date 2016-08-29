@@ -1,0 +1,84 @@
+{{extend ("./shared/layout")}}
+
+{{set (title="搜索")}}
+{{set (nav="")}}
+
+{{#block ("headSection")}}
+  <link rel="stylesheet" href="/assets/css/search.css">
+{{/block}}
+
+{{#block ("body")}}
+  <section class="hbox stretch">
+    <section>
+      <section class="vbox">
+        <section class="scrollable wrapper-lg">
+          <div class="panel panel-default">
+            <header class="panel-heading">相关动态
+              <span class="badge bg-info">{{news.length}}</span>
+            </header>
+            <ul class="news-list list-group alt">
+              {{#each (news)}}
+                <li class="list-group-item">
+                  <div class="media">
+                    <span class="pull-left thumb-sm">
+                      <img src="{{author_avatar}}" alt="" class="img-circle">
+                    </span>
+                    <div class="m-l-xl">
+                      <a href="/users/{{author_id}}">
+                        <strong>{{author_name}}</strong>
+                      </a>
+                      <p class="m-t m-b">{{content}}</p>
+                      <div class="clearfix">
+                        <label class="label label-info">{{topic}}</label>
+                        <p class="pull-right">
+                          <i class="fa fa-clock-o"></i>
+                          <small>{{created_at}}</small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              {{/each}}
+              {{#if (!news.length)}}
+                <li class="list-group-item">
+                未找到相关动态信息
+                </li>
+              {{/if}}
+            </ul>
+          </div>
+        </section>
+      </section>
+    </section>
+    <aside class="aside-lg bg-light lter b-r">
+      <section class="vbox">
+        <section class="scrollable wrapper-lg">
+          <div class="panel panel-default">
+            <header class="panel-heading">相关成员
+              <span class="badge bg-info">{{users.length}}</span>
+            </header>
+            <ul class="list-group alt">
+              {{#each (users)}}
+                <li class="list-group-item">
+                  <div class="media clearfix">
+                    <span class="pull-left thumb-sm">
+                      <img src="{{avatar}}" alt="" class="img-circle">
+                    </span>
+                    <div class="m-l-xl">
+                      <a href="/users/{{id}}">{{name}}</a>
+                      <small class="text-muted block">{{workplace}}</small>
+                    </div>
+                  </div>
+                </li>
+              {{/each}}
+              {{#if (!users.length)}}
+                <li class="list-group-item">
+                未找到相关成员信息
+                </li>
+              {{/if}}
+            </ul>
+          </div>
+        </section>
+      </section>
+    </aside>
+  </section>
+{{/block}}
