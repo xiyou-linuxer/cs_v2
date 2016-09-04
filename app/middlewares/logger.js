@@ -16,7 +16,7 @@ let createLogger = (method) => {
 	return function () {
 		let message = fmt.apply(null, arguments);
 
-    if (method === 'warn' || method === 'error') {
+    if (method === 'error') {
 		    console.error(message[LOG_COLORS[method]]);
     } else {
 	    console.log(message[LOG_COLORS[method]]);
@@ -39,22 +39,23 @@ let reqLogger = (ctx, err) => {
     logger = ctx.logger.error;
   }
 
-  logger('[%d] %s %s %dMS', status, timeStr, ctx.path, endTime - startTime);
+  logger('[%d] %s [%s] [%s] %s %dMS', status, timeStr, ctx.ip, ctx.method, ctx.path, endTime - startTime);
 };
 
 module.exports = function logger () {
   return function* logger (next) {
     let ctx = this;
+
+		if (/assets/.test(ctx.path)) {
+      return yield *next;
+    }
+
     ctx.startTime = Date.now();
 
     ctx.logger = {};
     Object.keys(LOG_COLORS).forEach(function (method) {
     	ctx.logger[method] =  createLogger(method);
     });
-
-    if (/assets/.test(ctx.path)) {
-      return yield *next;
-    }
 
     try {
       yield *next;

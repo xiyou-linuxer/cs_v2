@@ -11,14 +11,24 @@ const koaRouter = require('koa-router')();
 const koaStatic = require('koa-static-cache');
 const bodyParser = require('koa-bodyparser');
 
+const env = require('./.env');
 const appConfig = require('./config/app');
 const oauthConfig = require('./config/oauth');
 
+oauthConfig.server.host = env.host + ':' + env.port;
+['key', 'secret'].forEach(function (key) {
+  oauthConfig.adam[key] = env[key];
+});
+
+['authorize_url', 'access_url'].forEach(function (key) {
+  oauthConfig.adam[key] = oauthConfig.adam[key].replace('{{sso_domain}}', env.sso_domain);
+});
+
 const app = new Koa();
-app.proxy = {
-  adam: {}
-};
-app.keys = appConfig.app_keys;
+
+app.env = env;
+app.config = appConfig;
+app.keys = [baseDir + Date.now()];
 
 app.use(session(app));
 
@@ -37,6 +47,7 @@ middlewares.forEach(function (filename) {
 
 // load routes
 let controllers = {};
+let apiControllers = {};
 ['get', 'post', 'put', 'patch', 'delete'].forEach(method => {
   app[method] = (pathPattern, ctrlPattern) => {
     let strs = ctrlPattern.split('@');
@@ -62,5 +73,5 @@ app.use(koaStatic(path.join(baseDir, 'public'), {
   maxAge: 365 * 24 * 60 * 60
 }));
 
-app.listen(appConfig.server.port);
-console.log('server started at port %d....', appConfig.server.port);
+app.listen(env.port, env.host);
+console.log('server started at port %s:%d....', env.host, env.port);

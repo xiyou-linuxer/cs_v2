@@ -15,7 +15,7 @@
           <div class="wrapper">
             <div class="text-center m-b m-t">
               <a href="http://en.gravatar.com/" class="thumb-lg" target="_blank" title="点击更换个人头像">
-                  <img src="{{user.avatar}}" class="img-circle" alt="点击更换个人头像">
+                  <img src="{{user.avatar_url}}" class="img-circle" alt="点击更换个人头像">
               </a>
               <div>
                 <div class="h3 m-t-sm m-b-sm">
@@ -35,16 +35,16 @@
               </div>
             </div>
 
-            {{#if (user.id === _session.user.id)}}
+            {{#if (user.id === _me.id)}}
               <div class="btn-group btn-group-justified m-b">
                 <a class="btn btn-success btn-rounded" id="update_profile">
                   <i class="icon-user"> 保存资料</i>
                 </a>
-                <a class="btn btn-primary btn-rounded" id="update_password">
+                <a class="btn btn-primary btn-rounded" href="/oauth/reset_password" target="_blank">
                   <i class="icon-lock"> 修改密码</i>
                 </a>
               </div>
-            {{else}}
+            {{elseif (false)}}
               <div class="btn-group btn-group-justified m-b">
                 <a class="btn btn-success btn-rounded" id="info-btn" href="/mail/edit">
                   <i class="fa fa-comment-o" id="info"> 发站内信</i>
@@ -56,7 +56,7 @@
                 <strong>个人信息</strong>
               </header>
               <div class="panel-body">
-                {{#if (user.id === _session.user.id)}}
+                {{#if (user.id === _me.id)}}
                   <form class="form-horizontal form-profile" data-validate="parsley" id="profile_form">
                     <input type="hidden" id="user_id" value="{{user.id}}">
                     <div class="form-group">
@@ -122,11 +122,11 @@
 
                     <div class="form-group">
                       <label>博客： <span class="help-container"></span></label>
-                      <input name="blog" type="text" class="form-control" placeholder="http://..." value="{{user.blog}}">
+                      <input name="blog_url" type="text" class="form-control" placeholder="http://..." value="{{user.blog_url}}">
                     </div>
                     <div class="form-group">
                       <label>Github： <span class="help-container"></span></label>
-                      <input name="github" type="text" class="form-control" placeholder="http://..." value="{{user.github}}">
+                      <input name="github_url" type="text" class="form-control" placeholder="http://..." value="{{user.github_url}}">
                     </div>
                   </div>
                 </form>
@@ -167,11 +167,11 @@
 
                 <div class="form-group">
                   <label>博客：</label>
-                  <div class="form-control">{{user.blog}}</div>
+                  <div class="form-control">{{user.blog_url}}</div>
                 </div>
                 <div class="form-group" >
                   <label>Github：</label>
-                  <div class="form-control">{{user.github}}</div>
+                  <div class="form-control">{{user.github_url}}</div>
                 </div>
               </div>
             </form>
@@ -180,8 +180,8 @@
             <div class="line"></div>
             <small class="text-uc text-xs text-muted">connection</small>
             <p class="m-t-sm">
-              <a href="{{user.github}}" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-github"></i></a>
-              <a href="{{user.blog}}" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-internet-explorer"></i></a>
+              <a href="{{user.github || '#'}}" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-github"></i></a>
+              <a href="{{user.blog || '#'}}" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-internet-explorer"></i></a>
               <a href="http://web.qq.com" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-qq"></i></a>
               <a href="http://wx.qq.com" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-wechat"></i></a>
             </p>
@@ -197,66 +197,15 @@
             <li class="active"><a href="#activity" data-toggle="tab">相关动态</a></li>
           </ul>
         </header>
-        <section class="scrollable wrapper-lg" id="activity-scroll">
+        <section class="scrollable wrapper-lg" id="news_scrollable">
           <div class="clo-sm-11">
-            <section class="comment-list block">
-              {{#each (news)}}
-                {{#if (type === 0)}}
-                  <article class="comment-item" data-news-id="{{id}}">
-                    <a href="/users/{{author_id}}" class="pull-left thumb-sm avatar">
-                      <img src="{{author_avatar}}" alt="...">
-                    </a>
-                    <span class="arrow left"></span>
-                    <div class="comment-body panel panel-default">
-                      <header class="panel-heading">
-                        <a href="/users/{{author_id}}"><strong>{{author_name}}</strong></a>
-
-                        <span class="text-muted m-l-sm pull-right">
-                          <i class="fa fa-clock-o"></i>
-                          {{created_at}}
-                        </span>
-                      </header>
-                      <div class="panel-body">
-                          <p>{{content}}</p>
-                      </div>
-                      <div class="panel-footer">
-                        <label class="label label-info m-l-xs">{{topic}}</label>
-                      </div>
-                    </div>
-                  </article>
-                {{else}}
-                  <article class="comment-item" data-news-id="{{id}}">
-                    <a href="{{app_homepage}}" class="pull-left thumb-sm avatar" target="_blank">
-                      <img src="{{app_logo}}" alt="...">
-                    </a>
-                    <span class="arrow left"></span>
-                    <div class="comment-body panel panel-default">
-                      <header class="panel-heading">
-                        <a href="{{app_homepage}}" target="_blank">
-                          <strong>{{app_name}}</strong>
-                        </a>
-                        <span class="text-muted m-l-sm pull-right">
-                          <i class="fa fa-clock-o"></i>
-                          {{created_at}}
-                        </span>
-                      </header>
-                      <div class="panel-body">
-                        <p>
-                          {{content}}
-                          {{#if (link)}}
-                            <a href="{{link}}" target="_blank">点击查看</a>
-                          {{/if}}
-                        </p>
-                      </div>
-                      <div class="panel-footer">
-                        <label class="label label-success">应用</label>
-                        <label class="label label-info m-l-xs">{{topic}}</label>
-                      </div>
-                    </div>
-                  </article>
-                {{/if}}
-              {{/each}}
-            </section>
+            {{#if (news.length)}}
+              <section class="comment-list block">
+                {{include('../mods/news.xtpl')}}
+              </section>
+            {{else}}
+              <div class="well bg-light text-center">这家伙很懒，还没有发表任何动态~</div>
+            {{/if}}
           </div>
         </section>
       </section>
@@ -266,6 +215,6 @@
 
 {{#block ("footSection")}}
   <script>
-    seajs.use('js/user/profile');
+    seajs.use(['js/user/profile', 'js/mods/news']);
   </script>
 {{/block}}

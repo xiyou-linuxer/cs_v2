@@ -9,7 +9,7 @@ module.exports = function (app) {
     let query = _.pick(q, ['keyword', 'category', 'page', 'per_page']);
 
     let ret = yield ctx.proxy.adam.get('messages', {
-      where: query
+      qs: query
     });
     return ret;
   };
@@ -30,6 +30,12 @@ module.exports = function (app) {
     return yield ctx.proxy.adam.put('messages', {
       subpath: id,
       form: data
+    });
+  };
+
+  exports.deleteById = function* (ctx, id) {
+    return yield ctx.proxy.adam.delete('messages', {
+      subpath: id
     });
   };
 

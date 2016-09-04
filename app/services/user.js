@@ -18,7 +18,7 @@ module.exports = function (app) {
     let query = _.pick(q, ['group', 'grade', 'major', 'keyword', 'page', 'per_page']);
 
     let ret = yield ctx.proxy.adam.get('users', {
-      where: query
+      qs: query
     });
 
     ret.data = ret.data.map(function (user) {

@@ -1,27 +1,33 @@
 {{extend ("../../shared/layout")}}
 
-{{set (title="成员管理")}}
+{{set (title="用户管理")}}
 {{set (nav="admin")}}
+{{set (subNav="user")}}
 
 {{#block ("body")}}
   <section class="vbox">
     <section class="scrollable wrapper-lg">
       <header class="header bg-light">
         <ul class="nav nav-tabs nav-white">
-          <li class="active"><a href="/admin/users">全部成员</a></li>
-          <a href="/admin/users/_new" class="btn btn-success btn-sm pull-right m-t-sm m-r-sm">添加成员</a>
+          <li><a>用户管理</a></li>
         </ul>
       </header>
-      <form class="form-horizontal m-t" id="selectForm" action="/admin/users" method="GET">
+      <div class="alert alert-warning m-t">
+        <i class="fa fa-warning m-r"></i>为了维护用户数据安全，所有涉及到用户信息变更的操作将会被系统记录，并且会发送系统动态，请谨慎操作！
+      </div>
+      <form class="form-horizontal m-t" id="user_select_form" action="/admin/users" method="GET">
         <div class="form-group">
-          <div class="col-md-3">
+          <div class="col-md-2">
+            <a href="/admin/users/_new" class="btn btn-success btn-block">添加成员</a>
+          </div>
+          <div class="col-md-2">
             <select class="form-control chosen-select" name="group"">
               <option value="">所用用户组</option>
               <option value="1" {{#if (_query.group === '1')}}selected{{/if}}>管理</option>
               <option value="0" {{#if (_query.group === '0')}}selected{{/if}}>成员</option>
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <select class="form-control chosen-select" name="grade">
               <option value="">所有年级</option>
               {{#each (data.grades)}}
@@ -53,7 +59,7 @@
               <th>专业</th>
               <th>电话</th>
               <th>邮箱</th>
-              <th width="150">操作</th>
+              <th width="230">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +79,12 @@
                   <td>{{phone}}</td>
                   <td>{{email}}</td>
                   <td>
-                    <a href="/users/{{id}}" class="text-info text-u-l">查看</a>
+                    {{#if (group !== 1)}}
+                      <a href="#" data-id="{{id}}" class="text-info text-u-l btn-set-admin">设为管理员</a>
+                    {{else}}
+                      <a href="#" data-id="{{id}}" class="text-info text-u-l btn-unset-admin">取消管理员</a>
+                    {{/if}}
+                    <a href="/users/{{id}}" class="text-info text-u-l m-l">查看</a>
                     <a href="/admin/users/{{id}}/_edit" class="text-info text-u-l  m-l">编辑</a>
                     <a href="#" data-id="{{id}}" class="text-danger text-u-l m-l btn-delete">删除</a>
                   </td>

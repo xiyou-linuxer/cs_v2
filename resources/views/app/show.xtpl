@@ -16,7 +16,12 @@
       </ol>
       <div class="panel panel-default">
         <div class="panel-body">
+          <input type="hidden" id="data_app_id" value="{{app.id}}">
           <div class="row">
+            {{#if (app.status === 0)}}
+                <div class="alert alert-danger m-l m-r"><i class="fa fa-warning m-r"></i> 该应用为新创建应用或信息已发生变更，需等待系统管理员审批</div>
+              </div>
+            {{/if}}
             <div class="col-md-2 text-right font-bold">CLIENT_ID</div>
             <div class="col-md-10 text-primary font-bold">{{app.client_id}}</div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
@@ -24,16 +29,18 @@
             <div class="col-md-10 font-bold">{{app.name}}</div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
             <div class="col-md-2 text-right font-bold">创建者：</div>
-            <div class="col-md-10">{{app.author_name}}</div>
+            <div class="col-md-10">{{app.author.name}}</div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
             <div class="col-md-2 text-right font-bold">主页：</div>
             <div class="col-md-10">
-              <a href="{{app.homepage}}" class="text-u-l" target="_blank">{{app.homepage}}</a>
+              <a href="{{app.homepage_url}}" class="text-u-l" target="_blank">{{app.homepage_url}}</a>
             </div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
             <div class="col-md-2 text-right font-bold">LOGO：</div>
-            <div class="col-md-10">{{app.logo}}</div>
-            {{#if (_me.id === app.author_id)}}
+            <div class="col-md-10">
+              <a href="{{app.logo_url}}" class="text-u-l" target="_blank">{{app.logo_url}}</a>
+            </div>
+            {{#if (_me.id === app.author.id || _me.group === 1)}}
               <div class="line line-dashed b-b line-lg col-md-12"></div>
               <div class="col-md-2 text-right font-bold">REDIRECT URL：</div>
               <div class="col-md-10">{{app.redirect_uri}}</div>
@@ -41,7 +48,7 @@
               <div class="col-md-2 text-right font-bold">SECRET：</div>
               <div class="col-md-10">
                 <div class="secret-component">
-                  <span class="secret-field">{{app.secret}}</span>
+                  <span class="secret-field" id="app_secrect_field">{{app.secret}}</span>
                   <a href="#" class="toggle-btn">
                     <i class="fa fa-angle-double-left"></i>
                     <i class="fa fa-angle-double-left"></i>
@@ -52,11 +59,40 @@
                   </a>
                   <div class="secret-mask"></div>
                 </div>
-                <a class="btn btn-xs btn-success bg-success-lt btn-refresh-secret">刷新</a>
+                {{#if (app.status > 0)}}
+                  <a class="btn btn-xs btn-success bg-success-lt" id="btn_refresh_secret">刷新</a>
+                  <p class="m-t text-danger">注：Secret刷新之后，需重新配置应用才能继续使用OAuth统一授权功能</p>
+                {{/if}}
               </div>
             {{/if}}
             <div class="line line-dashed b-b line-lg col-md-12"></div>
-            <div class="col-md-2 text-right font-bold">状态：</div>
+            <div class="col-md-2 text-right font-bold">权限：</div>
+            <div class="col-md-10">
+              {{#each (scopes)}}
+                {{#if (hasScope)}}
+                  <div class="col-md-4 m-b p-l-none">
+                    <input type="checkbox" checked disabled> {{description}}
+                  </div>
+                {{/if}}
+              {{/each}}
+            </div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">提交状态：</div>
+            <div class="col-md-10">
+              {{#if (app.submit_status === 0)}}
+                <label class="label label-warning">待审核</label>
+              {{elseif (app.submit_status === 2)}}
+                <label class="label label-info">开发中</label>
+              {{elseif (app.submit_status === 3)}}
+                <label class="label label-success">已上线</label>
+              {{elseif (app.submit_status === -2)}}
+                <label class="label label-default">已下线</label>
+              {{else}}
+                空
+              {{/if}}
+            </div>
+            <div class="line line-dashed b-b line-lg col-md-12"></div>
+            <div class="col-md-2 text-right font-bold">审核状态：</div>
             <div class="col-md-10">
               {{#if (app.status === 0)}}
                 <label class="label label-warning">待审核</label>
@@ -67,9 +103,9 @@
               {{elseif (app.status === 3)}}
                 <label class="label label-success">已上线</label>
               {{elseif (app.status === -2)}}
-                <label class="label label-success">已下线</label>
-              {{elseif (ap.status === -1)}}
-                <label class="label label-default">已拒绝</label>
+                <label class="label label-default">已下线</label>
+              {{elseif (app.status === -1)}}
+                <label class="label label-danger">已拒绝</label>
               {{/if}}
             </div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
@@ -77,7 +113,14 @@
             <div class="col-md-10">
               <p>{{app.description}}</p>
             </div>
-
+            {{#if (app.status === 0 && _me.group === 1)}}
+              <div class="line line-dashed b-b line-lg col-md-12"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-10 m-b">
+                <a href="#" id="btn_app_confirm" class="btn btn-success m-r">审核通过</a>
+                <a href="#" id="btn_app_reject" class="btn btn-danger">审核不通过</a>
+              </div>
+            {{/if}}
           </div>
         </div>
       </div>

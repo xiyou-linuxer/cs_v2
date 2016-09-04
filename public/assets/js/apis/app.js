@@ -25,4 +25,25 @@ define(['utils'], function (require, exports, module) {
       url: '/api/apps/' + id
     });
   };
+
+  exports.refreshSecret = function (id) {
+    return utils.request({
+      type: 'PUT',
+      url: '/api/apps/' + id + '/secret'
+    });
+  };
+
+  exports.confirm = function (id) {
+    return utils.request({
+      type: 'PUT',
+      url: '/api/apps/' + id + '/confirm'
+    });
+  };
+
+  exports.reject = function (id) {
+    return utils.request({
+      type: 'PUT',
+      url: '/api/apps/' + id + '/reject'
+    });
+  };
 });

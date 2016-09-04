@@ -4,13 +4,12 @@ module.exports = function (app) {
 
   exports.index = function* () {
     let userService = this.services.user;
-    let group = parseInt(this.query.group) || 0;
-    let grade = parseInt(this.query.grade) || 0;
+    let group = parseInt(this.query.group);
+    let grade = parseInt(this.query.grade);
     let major = this.query.major || '';
     let keyword = this.query.keyword || '';
 
     let query = {
-      group: group,
       grade: grade,
       major: major,
       keyword: keyword
@@ -21,6 +20,10 @@ module.exports = function (app) {
         delete query[key];
       }
     });
+
+    if (group || group === 0) {
+      query.group = group;
+    }
 
     let ret = yield userService.getByQuery(this, query);
     let users = ret.data;

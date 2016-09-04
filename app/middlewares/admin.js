@@ -4,13 +4,12 @@ let qs = require('querystring');
 
 module.exports = function (ctx) {
   return function* (next) {
-    if (!/\/admin\//.test(this.path)) {
+    if (!/^\/admin\//.test(this.path)) {
       return yield* next;
     }
 
-    if (this.session.user.group !== 1) {
-      yield this.render('common/404');
-      return this.status = 404;
+    if (this.session.grant.user.group !== 1) {
+      this.throw(404);
     }
 
     return yield* next;

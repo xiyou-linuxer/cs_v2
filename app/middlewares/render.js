@@ -18,6 +18,9 @@ let render = (tpl, data) => {
   });
 };
 
+// data cache
+let _userCache = {};
+
 module.exports = function (app) {
   let viewPath = path.join(baseDir, 'resources/views');
 
@@ -29,19 +32,35 @@ module.exports = function (app) {
 
     ctx.render = function* (tpl, data) {
       let userService = ctx.services.user;
+      let messageService = ctx.services.message;
 
       let session = ctx.session;
       let cookies = ctx.request.header.cookie;
       let leftSideBarCollapsed = /left_sidebar_collapsed=true/.test(cookies);
       let rightSideBarCollapsed = /right_sidebar_collapsed=true/.test(cookies);
 
-      let ret = yield userService.getByQuery(this);
-      let users = ret.data.sort(function (a, b) {
-        return a.online_at - b.online_at;
+      // 侧栏用户信息缓存一分钟
+      if (!_userCache.expire || _userCache.expire < Date.now()) {
+        let ret = yield userService.getByQuery(this, {
+          per_page: 1000
+        });
+
+        let users = ret.data.sort(function (a, b) {
+          return a.online_at - b.online_at;
+        });
+        _userCache.data = users;
+        _userCache.expire = Date.now() + 60000;
+      }
+
+      let ret = yield messageService.getByQuery(this, {
+        per_page: 1000,
+        category: 1
       });
+      let _messages = ret.data;
 
       data = data || {};
-      data._users = users;
+      data._users = _userCache.data || [];
+      data._messages = _messages || [];
       data._query = this.query;
       data._me = session.grant.user;
       data._cookies = data._cookies || {};

@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function (app) {
-  let userService = app.services.user;
 
   exports.index = function* () {
     let page = parseInt(this.query.page) || 1;
@@ -17,7 +16,7 @@ module.exports = function (app) {
       query.keyword = keyword;
     }
 
-    let ret = yield userService.getByQuery(this, query);
+    let ret = yield this.services.user.getByQuery(this, query);
 
     this.body = ret;
   };
@@ -25,7 +24,7 @@ module.exports = function (app) {
   exports.create = function* () {
     let data = this.request.body;
 
-    let ret = yield userService.create(this, data);
+    let ret = yield this.services.user.create(this, data);
 
     this.body = ret;
   };
@@ -34,7 +33,14 @@ module.exports = function (app) {
     let id = parseInt(this.params.id);
     let data = this.request.body;
 
-    let ret = yield userService.updateById(this, id, data);
+    let ret = yield this.services.user.updateById(this, id, data);
+
+    this.body = ret;
+  };
+
+  exports.show = function* () {
+    let id = parseInt(this.params.id);
+    let ret = yield this.services.user.getById(this, id);
 
     this.body = ret;
   };
@@ -42,12 +48,7 @@ module.exports = function (app) {
   exports.destroy = function* () {
     let id = parseInt(this.params.id);
 
-    let user = yield userService.getById(this, id);
-    if (!user) {
-      return this.throw(404, new Error('该成员不存在~'));
-    }
-
-    yield userService.deleteById(this, id);
+    yield this.services.user.deleteById(this, id);
     this.status = 204;
   };
 

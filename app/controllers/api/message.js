@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = function (app) {
-  let messageService = app.services.message;
 
   exports.index = function* () {
     let page = parseInt(this.query.page) || 1;
     let pageSize = parseInt(this.query.per_page) || 20;
+    let category = parseInt(this.query.category, 10);
     let keyword = this.query.keyword || '';
 
     let query = {
@@ -13,11 +13,15 @@ module.exports = function (app) {
       per_page: pageSize
     };
 
+    if (category || category === 0) {
+      query.category = category;
+    }
+
     if (keyword) {
       query.keyword = keyword;
     }
 
-    let ret = yield messageService.getByQuery(this, query);
+    let ret = yield this.services.message.getByQuery(this, query);
 
     this.body = ret;
   };
@@ -26,9 +30,7 @@ module.exports = function (app) {
     let data = this.request.body;
 
     data.type = 0;
-    data.status = data.status === 'send' ? 1 : 0;
-console.log(data)
-    let ret = yield messageService.create(this, data);
+    let ret = yield this.services.message.create(this, data);
 
     this.body = ret;
   };
@@ -37,7 +39,23 @@ console.log(data)
     let id = parseInt(this.params.id);
     let data = this.request.body;
 
-    let ret = yield messageService.updateById(this, id, data);
+    let ret = yield this.services.message.updateById(this, id, data);
+
+    this.body = ret;
+  };
+
+  exports.show = function* () {
+    let id = parseInt(this.params.id);
+
+    let ret = yield this.services.message.getById(this, id);
+
+    this.body = ret;
+  };
+
+  exports.destroy = function* () {
+    let id = parseInt(this.params.id);
+
+    let ret = yield this.services.message.deleteById(this, id);
 
     this.body = ret;
   };

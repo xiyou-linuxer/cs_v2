@@ -1,7 +1,6 @@
 'use strict';
 
-define(['ui', '../../apis/user', 'bootstrapValidator', 'jquery.serializeObject'], function (require, exports, module) {
-  require('bootstrapValidator');
+define(['ui', '../../apis/user', 'jquery.serializeObject'], function (require, exports, module) {
   require('jquery.serializeObject');
 
   var UI = require('ui');
@@ -66,40 +65,46 @@ define(['ui', '../../apis/user', 'bootstrapValidator', 'jquery.serializeObject']
 
     var data = $('form').serializeObject();
 
-    var id = $('#data_user_id').val();
+    var userId = $('#data_user_id').val();
 
-    if (id) {
-      User.update(id, data).then(function (res) {
+    if (userId) {
+      User.update(userId, data).then(function (res) {
         if (res && res.id) {
           UI.alert({
-            message: '成员信息更新成功~'
+            message: '用户信息更新成功~'
           }).then(function () {
             window.location.href = '/admin/users';
           });
         } else {
-          UI.alert('成员信息更新失败，请稍后再试~');
+          UI.alert('用户信息更新失败，请稍后再试~');
+          fv.disableSubmitButtons(false);
         }
       }).catch(function (err) {
         if (err && err.message) {
           UI.alert(err.message);
         } else {
-          UI.alert('成员信息更新失败，请稍后再试~');
+          UI.alert('用户信息更新失败，请稍后再试~');
+          fv.disableSubmitButtons(false);
         }
       });
     } else {
       User.create(data).then(function (res) {
         if (res && res.id) {
-          UI.alert({
-            message: '成员信息添加成功~'
+          UI.confirm({
+            message: '用户信息添加成功，是否继续添加？'
+          }).catch(function () {
+            location.href = '/admin/users';
           });
         } else {
-          UI.alert('成员信息添加失败，请稍后再试~');
+          UI.alert('用户信息添加失败，请稍后再试~');
+          fv.disableSubmitButtons(false);
         }
       }).catch(function (err) {
         if (err && err.message) {
           UI.alert(err.message);
         } else {
-          UI.alert('成员信息添加失败，请稍后再试~');
+          UI.alert('用户信息添加失败，请稍后再试~');
+          fv.disableSubmitButtons(false);
         }
       });
     }

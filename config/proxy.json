@@ -1,6 +1,6 @@
 {
   "adam": {
-    "http://api.adam.404befound.com": {
+    "{{api_domain}}": {
       "__domain": {
         "auth": {
           "auth": {"bearer": "[0]"}

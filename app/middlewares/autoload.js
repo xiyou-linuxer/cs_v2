@@ -18,6 +18,10 @@ module.exports = function autoload (app) {
   });
 
   return function* autoload (next) {
+    if (/assets/.test(this.path)) {
+      return yield *next;
+    }
+
     this.services = Object.assign({}, services);
 
     yield *next;

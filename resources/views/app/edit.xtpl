@@ -1,6 +1,10 @@
 {{extend ("../shared/layout")}}
 
+{{#if (!app)}}
 {{set (title="创建应用")}}
+{{else}}
+{{set (title="编辑应用")}}
+{{/if}}
 {{set (nav="app")}}
 
 {{#block ("headSection")}}
@@ -10,15 +14,34 @@
 {{#block ("body")}}
   <section class="vbox">
     <section class="scrollable wrapper-lg">
-      <h4 class="m-t-none">{{#if (!app.id)}}创建应用{{else}}编辑应用{{/if}}</h4>
+      {{#if (!app)}}
+        <h4 class="m-t-none">创建应用</h4>
+      {{else}}
+        <h4 class="m-t-none">编辑应用</h4>
+        <input type="hidden" id="data_app_id" value="{{app.id}}">
+      {{/if}}
       <div class="line line-dashed b-b line-lg pull-in"></div>
         <div class="panel-body">
           <form class="form-horizontal" id="app_form">
+            {{#if (_me.group === 1)}}
+              <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-8">
+                  <div class="alert alert-success"><i class="fa fa-info m-r"></i> 您是系统管理员，创建或修改的应用信息将自动通过审核</div>
+                </div>
+              </div>
+            {{elseif (app && app.status !== 0)}}
+              <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-8">
+                  <div class="alert alert-danger"><i class="fa fa-warning m-r"></i> 该应用已经过系统管理员审核，任何信息发生更改，都需要重新等待审核</div>
+                </div>
+              </div>
+            {{/if}}
             <div class="form-group">
               <label class="col-sm-2 control-label">CIENT_ID</label>
               <div class="col-sm-8">
                 {{#if (app.id)}}
-                  <input type="hidden" id="data_app_id" value="{{app.id}}">
                   <input name="client_id" type="text" class="form-control" value="{{app.client_id}}" disabled>
                 {{else}}
                   <input name="client_id" type="text" class="form-control" placeholder="应用唯一标识">
@@ -34,16 +57,16 @@
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">主页</label>
+              <label class="col-sm-2 control-label">主页 URL</label>
               <div class="col-sm-8">
-                <input name="homepage" type="text" class="form-control" placeholder="应用主页链接地址" value="{{app.homepage}}">
+                <input name="homepage_url" type="text" class="form-control" placeholder="应用主页链接地址" value="{{app.homepage_url}}">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">LOGO</label>
+              <label class="col-sm-2 control-label">LOGO URL</label>
               <div class="col-sm-8">
-                <input name="logo" type="text" class="form-control" placeholder="应用Logo图片链接地址" value="{{app.logo}}">
+                <input name="logo_url" type="text" class="form-control" placeholder="应用Logo图片链接地址" value="{{app.logo_url}}">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
@@ -53,14 +76,25 @@
                 <input name="redirect_uri" type="text" class="form-control" placeholder="应用Oauth授权回调地址" value="{{app.redirect_uri}}">
               </div>
             </div>
+            <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
+            <div class="form-group m-b-none">
+              <label class="col-sm-2 control-label">权限</label>
+              <div class="col-sm-8">
+                  {{#each (scopes)}}
+                    <div class="col-md-4 m-b p-l-none">
+                      <input type="checkbox" name="scopes" value="{{id}}" {{#if (hasScope)}}checked{{/if}} {{#if (app.status === -2 || disabled)}}disabled{{/if}} data-level="{{level}}"> {{description}}
+                    </div>
+                  {{/each}}
+              </div>
+            </div>
             {{#if (app.status >= 1 || app.status === -2)}}
               <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">状态</label>
                 <div class="col-sm-8">
                   <select name="status" class="form-control chosen-select">
-                    <option value="0" {{#if (app.status === 2)}}selected{{/if}}>开发中</option>
-                    <option value="1" {{#if (app.status === 3)}}selected{{/if}}>已上线</option>
+                    <option value="2" {{#if (app.status === 2)}}selected{{/if}}>开发中</option>
+                    <option value="3" {{#if (app.status === 3)}}selected{{/if}}>已上线</option>
                     <option value="-2" {{#if (app.status === -2)}}selected{{/if}}>已下线</option>
                   </select>
                 </div>
@@ -70,7 +104,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">描述</label>
               <div class="col-sm-8">
-                <textarea name="description" type="text" rows="5" class="form-control" placeholder="应用描述信息" value="{{app.description}}"></textarea>
+                <textarea name="description" type="text" rows="5" class="form-control" placeholder="应用描述信息">{{app.description}}</textarea>
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>

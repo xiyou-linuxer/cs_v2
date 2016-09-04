@@ -1,16 +1,15 @@
 {
   "server": {
     "protocol": "http",
-    "host": "121.42.144.117:2111"
+    "host": "{{host}}:{{port}}"
   },
   "adam": {
-    "authorize_url": "http://sso.adam.404befound.com/oauth/authorize",
-    "access_url": "http://sso.adam.404befound.com/oauth/access_token",
-    "logout_url": "http://sso.adam.404befound.com/logout",
+    "authorize_url": "{{sso_domain}}/oauth/authorize",
+    "access_url": "{{sso_domain}}/oauth/access_token",
     "oauth": 2,
-    "key": "hawwa",
-    "secret": "$2y$10$8Gz5X7XkQtVzwFU8C9zSQ.FzIH6OZNd5D",
-    "scope": [],
+    "key": "{{client_id}}",
+    "secret": "{{client_secret}}",
+    "scope": ["all"],
     "state": true,
     "callback": "/handle_adam_callback",
     "transport": "session"

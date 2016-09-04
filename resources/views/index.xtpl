@@ -11,64 +11,9 @@
   <section class="hbox stretch">
     <section>
       <section class="vbox">
-        <section class="scrollable wrapper-lg">
+        <section class="scrollable wrapper-lg" id="news_scrollable">
           <section class="comment-list block">
-            {{#each (news)}}
-              {{#if (type === 0)}}
-                <article class="comment-item" data-news-id="{{id}}">
-                  <a href="/users/{{author_id}}" class="pull-left thumb-sm avatar">
-                    <img src="{{author_avatar}}" alt="...">
-                  </a>
-                  <span class="arrow left"></span>
-                  <div class="comment-body panel panel-default">
-                    <header class="panel-heading">
-                      <a href="/users/{{author_id}}"><strong>{{author_name}}</strong></a>
-
-                      <span class="text-muted m-l-sm pull-right">
-                        <i class="fa fa-clock-o"></i>
-                        {{created_at}}
-                      </span>
-                    </header>
-                    <div class="panel-body">
-                        <p>{{content}}</p>
-                    </div>
-                    <div class="panel-footer">
-                      <label class="label label-info m-l-xs">{{topic}}</label>
-                    </div>
-                  </div>
-                </article>
-              {{else}}
-                <article class="comment-item" data-news-id="{{id}}">
-                  <a href="{{app_homepage}}" class="pull-left thumb-sm avatar" target="_blank">
-                    <img src="{{app_logo}}" alt="...">
-                  </a>
-                  <span class="arrow left"></span>
-                  <div class="comment-body panel panel-default">
-                    <header class="panel-heading">
-                      <a href="{{app_homepage}}" target="_blank">
-                        <strong>{{app_name}}</strong>
-                      </a>
-                      <span class="text-muted m-l-sm pull-right">
-                        <i class="fa fa-clock-o"></i>
-                        {{created_at}}
-                      </span>
-                    </header>
-                    <div class="panel-body">
-                      <p>
-                        {{content}}
-                        {{#if (link)}}
-                          <a href="{{link}}" target="_blank">点击查看</a>
-                        {{/if}}
-                      </p>
-                    </div>
-                    <div class="panel-footer">
-                      <label class="label label-success">应用</label>
-                      <label class="label label-info m-l-xs">{{topic}}</label>
-                    </div>
-                  </div>
-                </article>
-              {{/if}}
-            {{/each}}
+            {{include('./mods/news.xtpl')}}
           </section>
         </section>
       </section>
@@ -84,11 +29,11 @@
                 <li class="list-group-item p-t-sm p-b-sm">
                   <div class="media">
                     <span class="pull-left thumb-sm">
-                      <img src="{{logo}}" class="img-circle">
+                      <img src="{{logo_url}}" class="img-circle">
                     </span>
                     <div class="media-body p-t-xs p-b-xs">
                       <div>
-                        <a href="{{homepage}}" class="font-bold" target="_blank">{{name}}</a>
+                        <a href="{{homepage_url}}" class="font-bold" target="_blank">{{name}}</a>
                       </div>
                     </div>
                   </div>
@@ -104,6 +49,6 @@
 
 {{#block ("footSection")}}
   <script>
-    seajs.use('js/index');
+    seajs.use('js/mods/news');
   </script>
 {{/block}}

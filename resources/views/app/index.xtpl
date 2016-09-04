@@ -9,15 +9,19 @@
       <header class="header bg-light">
         <ul class="nav nav-tabs nav-white">
           {{#if (data.isMy)}}
-            <li><a href="/apps">全部应用</a></li>
+            <li><a href="/apps">线上应用</a></li>
             <li class="active"><a href="#">我的应用</a></li>
           {{else}}
-            <li class="active"><a href="#">全部应用</a></li>
+            <li class="active"><a href="#">线上应用</a></li>
             <li><a href="/apps?isMy=1">我的应用</a></li>
           {{/if}}
-          <a href="/apps/_new" class="btn btn-success btn-sm pull-right m-t-sm m-r-sm">创建应用</a>
         </ul>
       </header>
+      <div class="row m-t m-b">
+        <div class="col-md-10">
+          <a href="/apps/_new" class="btn btn-success btn-sm m-r">新建应用</a>
+        </div>
+      </div>
       {{#if (data.apps.length)}}
         <table class="table table-striped m-b-none">
           <thead>
@@ -36,7 +40,7 @@
                 <td>{{id}}</td>
                 <td>{{client_id}}</td>
                 <td>{{name}}</td>
-                <td>{{author_name}}</td>
+                <td><a href="/users/{{author.id}}" class="text-info text-u-l">{{author.name}}</a></td>
                 <td>
                   {{#if (status === 0)}}
                     <label class="label label-warning">待审核</label>
@@ -48,15 +52,15 @@
                     <label class="label label-success">已上线</label>
                   {{elseif (status === -2)}}
                     <label class="label label-success">已下线</label>
-                  {{elseif (ap.status === -1)}}
-                    <label class="label label-default">已拒绝</label>
+                  {{elseif (status === -1)}}
+                    <label class="label label-danger">已拒绝</label>
                   {{/if}}
                 </td>
                 <td>
                   <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
                   {{#if (data.isMy)}}
                     <a href="/apps/{{id}}/_edit" class="text-info text-u-l  m-l">编辑</a>
-                    <a href="/apps/{{id}}" class="text-danger text-u-l m-l">删除</a>
+                    <a href="#" data-id="{{id}}" class="text-danger text-u-l m-l btn-delete">删除</a>
                   {{else}}
                     <a href="{{homepage}}" class="text-info text-u-l  m-l" target="_blank">主页</a>
                   {{/if}}
@@ -70,4 +74,10 @@
       {{/if}}
     </section>
   </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script>
+    seajs.use('js/app/index');
+  </script>
 {{/block}}

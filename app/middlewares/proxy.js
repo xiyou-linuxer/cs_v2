@@ -11,6 +11,14 @@ const proxyConfig = require(path.join(baseDir, 'config/proxy'));
 
 module.exports = function (app) {
 
+  let apiDomain = app.env.api_domain;
+  let _temp;
+  Object.keys(proxyConfig.adam).forEach(function (key) {
+    _temp = proxyConfig.adam[key];
+    delete proxyConfig.adam[key];
+  });
+  proxyConfig.adam[apiDomain] = _temp;
+
   let adamProxy = purest({
     provider: 'adam',
     config: proxyConfig,
@@ -20,12 +28,16 @@ module.exports = function (app) {
   return function* (next) {
     let ctx = this;
 
-    if (!this.session.grant.response
-      || !this.session.grant.response.access_token) {
+    if (/\/(assets)\//.test(ctx.path) || ctx.render) {
       return yield* next;
     }
 
-    let access_token = this.session.grant.response.access_token;
+    if (!ctx.session.grant.response
+      || !ctx.session.grant.response.access_token) {
+      return yield* next;
+    }
+
+    let access_token = ctx.session.grant.response.access_token;
     ctx.proxy = {};
     ctx.proxy.adam = {};
     ['get', 'post', 'put', 'patch', 'delete'].forEach(key => {
@@ -45,7 +57,32 @@ module.exports = function (app) {
 
         let statusCode = ret[0].statusCode;
         if (statusCode < 200 || statusCode >= 300) {
-          return ctx.throw(statusCode, ret[0].body);
+          console.log(ret)
+
+          let resBody = ret[0].body;
+          let message;
+          if (_.isObject(resBody)) {
+            if (_.isObject(resBody.error)) {
+              message = '';
+              Object.keys(resBody.error).forEach(key => {
+                if (_.isArray(resBody.error[key])) {
+                  message += resBody.error[key].join(',') + '。';
+                } else {
+                  message += resBody.error[key] + '。';
+                }
+              });
+            } else {
+              message = resBody.error;
+            }
+          } else {
+            message = resBody;
+          }
+
+          if (statusCode === 401) {
+            message = '未授权或token已过期，请重新登录系统';
+          }
+
+          return ctx.throw(statusCode, message);
         }
 
         return ret[1];

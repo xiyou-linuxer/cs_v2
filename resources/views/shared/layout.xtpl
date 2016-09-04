@@ -2,8 +2,8 @@
 <html lang="zh" class="app">
 <head>
   <meta charset="utf-8">
-  <title>{{title}} - Linux兴趣小组</title>
-  <meta name="description" content="Xiyou Linux Group HAWWA">
+  <title>{{title}} - 西邮Linux兴趣小组</title>
+  <meta name="description" content="Xiyou Linux Group KOALA">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="/assets/libs/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="/assets/libs/jquery.chosen/chosen.css">
@@ -22,7 +22,7 @@
         </a>
         <a href="/" class="navbar-brand text-lt">
           <i class="icon-screen-desktop"></i>
-          <span class="hidden-nav-xs m-l-sm">Hawwa</span>
+          <span class="hidden-nav-xs m-l-sm">KOALA</span>
         </a>
         <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
           <i class="icon-settings"></i>
@@ -58,34 +58,34 @@
               <i class="icon-note"></i>
             </a>
           </li>
-          <li class="hidden-xs" uib-dropdown>
+          <li class="hidden-xs">
             <a href="#" class="dropdown-toggle lt toolbar-icon" data-toggle="dropdown">
               <i class="icon-bell"></i>
-              <span class="badge badge-sm up bg-danger count">{{layout.messages.count}}</span>
+              {{#if(_messages.length > 0)}}<span class="badge badge-sm up bg-danger count">{{_messages.length}}</span>{{/if}}
             </a>
             <section class="dropdown-menu uib-dropdown-menu aside-xl animated fadeInUp">
               <section class="panel bg-white">
-                {{#if (layout.messages.count === 0)}}
+                {{#if (_messages.length !== 0)}}
                   <div class="panel-heading b-light bg-light">
                     <strong>
                       你有
-                      <span class="count">{{cs.mails.unread.length}}</span>
+                      <span class="count">{{_messages.length}}</span>
                       条未读站内信
                     </strong>
                   </div>
                 {{/if}}
                 <div class="list-group list-group-alt">
-                  {{#each (layout.messages)}}
+                  {{#each (_messages)}}
                     <a href="/messages/{{id}}" class="media list-group-item">
                       <span class="pull-left thumb-sm">
-                        <img ng-src="{{author_avatar}}" class="img-circle">
+                        <img src="{{author.avatar_url}}" class="img-circle">
                       </span>
                       <span class="block m-b-none">{{content}}<br>
                         <small class="text-muted">{{create_at}}</small>
                       </span>
                     </a>
                   {{/each}}
-                  {{#if (layout.messages.count === 0)}}
+                  {{#if (_messages.length === 0)}}
                     <a href="/messages" class="media list-group-item">
                       <span class="media-body block m-b-none">暂时没有任何未读站内信 </span>
                     </a>
@@ -108,7 +108,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle bg clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-                <img src="{{_me.avatar}}">
+                <img src="{{_me.avatar_url}}">
               </span>
               <span>{{_me.name}}</span>
               <b class="caret"></b>
@@ -168,7 +168,7 @@
                     </li>
                   </ul>
                   {{#if (_me.group === 1)}}
-                    <ul class="nav" data-ride="collapse">
+                    <ul class="nav sub-nav" data-ride="collapse">
                       <li {{#if (nav === 'admin')}}class="active"{{/if}}>
                         <a href="#" class="auto">
                           <span class="pull-right text-muted">
@@ -179,13 +179,13 @@
                           <span class="font-bold">管理</span>
                         </a>
                         <ul class="nav dk text-sm">
-                         <li>
+                         <li {{#if (nav === 'admin' && subNav === 'user')}}class="active"{{/if}}>
                             <a href="/admin/users">
                               <i class="icon-users text-info"></i>
                               <span class="font-bold">用户管理</span>
                             </a>
                           </li>
-                          <li>
+                          <li {{#if (nav === 'admin' && subNav === 'app')}}class="active"{{/if}}>
                               <a href="/admin/apps">
                                 <i class="icon-grid text-primary-lter"></i>
                                 <span class="font-bold">应用管理</span>
@@ -214,7 +214,7 @@
                       {{#each (_users)}}
                         <li class="list-group-item clearfix">
                           <span class="pull-left thumb-xs m-t-xs m-b-xs avatar m-l-xs m-r-sm">
-                            <img src="{{avatar}}" class="img-circle">
+                            <img src="{{avatar_url}}" class="img-circle">
                             <i class="{{#if(status === 'online')}}on{{else}}off{{/if}} b-light right sm"></i>
                           </span>
                           <div class="clear">
@@ -268,6 +268,8 @@
   <script src="/assets/libs/jquery.chosen/chosen.js"></script>
   <script src="/assets/libs/seajs/sea.js"></script>
   <script src="/assets/libs/seajs/sea-config.js"></script>
+  <script src="/assets/libs/formValidation/formValidation.js"></script>
+  <script src="/assets/libs/formValidation/bootstrapValidator.js"></script>
   <script>
     seajs.use(['js/shared/polyfills', 'js/shared/layout']);
   </script>

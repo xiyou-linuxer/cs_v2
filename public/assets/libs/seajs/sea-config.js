@@ -13,7 +13,7 @@ seajs.config({
     'lodash': 'libs/utils/lodash',
     'xtemplate': 'libs/xtemplate',
     'es6-promise': 'libs/polyfills/es6-promise',
-    'bootstrapValidator': 'libs/formValidation/bootstrapValidator',
+    'user-autocomplete': 'libs/utils/user-autocomplete',
     'jquery.cookie': 'libs/jquery/jquery.cookie',
     'jquery.serializeObject': 'libs/jquery/jquery.serializeObject'
   }

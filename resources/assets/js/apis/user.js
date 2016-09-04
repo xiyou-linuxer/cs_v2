@@ -27,4 +27,5 @@ define([
       url: '/api/users/' + id
     });
   };
+
 });

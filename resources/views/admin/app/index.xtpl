@@ -2,21 +2,38 @@
 
 {{set (title="应用管理")}}
 {{set (nav="admin")}}
+{{set (subNav="app")}}
 
 {{#block ("body")}}
   <section class="vbox">
     <section class="scrollable wrapper-lg">
       <header class="header bg-light">
         <ul class="nav nav-tabs nav-white">
-          {{#if (_query.status === '0')}}
-            <li><a href="/admin/apps">全部应用</a></li>
-            <li class="active"><a>待审核应用</a></li>
-          {{else}}
-            <li class="active"><a>全部应用</a></li>
-            <li><a href="/admin/apps?status=0">待审核应用</a></li>
-          {{/if}}
+          <li><a>应用管理</a></li>
         </ul>
       </header>
+      <form class="form-horizontal m-t" id="app_select_form" action="/admin/apps" method="GET">
+        <div class="form-group">
+          <div class="col-md-3">
+            <select class="form-control chosen-select" name="status"">
+              <option value="">所有状态</option>
+              <option value="0" {{#if (_query.status === '0')}}selected{{/if}}>待审核</option>
+              <option value="1" {{#if (_query.status === '1')}}selected{{/if}}>已审核</option>
+              <option value="2" {{#if (_query.status === '2')}}selected{{/if}}>开发中</option>
+              <option value="3" {{#if (_query.status === '3')}}selected{{/if}}>已上线</option>
+              <option value="-1" {{#if (_query.status === '-1')}}selected{{/if}}>已拒绝</option>
+              <option value="-2" {{#if (_query.status === '-2')}}selected{{/if}}>已下线</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" name="author_id" placeholder="请输入用户姓名" data-value="{{_query.author_id}}" data-toggle="user-autocomplete" data-type="single">
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" name="keyword" placeholder="关键字搜索" value="{{_query.keyword}}">
+          </div>
+
+        </div>
+      </form>
       {{#if (data.apps.length)}}
         <table class="table table-striped m-b-none">
           <thead>
@@ -26,7 +43,7 @@
               <th>名称</th>
               <th>创建者</th>
               <th>状态</th>
-              <th width="150">操作</th>
+              <th width="200">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -47,20 +64,14 @@
                     <label class="label label-success">已上线</label>
                   {{elseif (status === -2)}}
                     <label class="label label-success">已下线</label>
-                  {{elseif (ap.status === -1)}}
-                    <label class="label label-default">已拒绝</label>
+                  {{elseif (status === -1)}}
+                    <label class="label label-danger">已拒绝</label>
                   {{/if}}
                 </td>
                 <td>
-                  {{#if (_query.status === '0')}}
-                    <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
-                    <a href="{{homepage}}" class="text-info text-u-l  m-l" target="_blank">通过</a>
-                    <a href="/apps/{{id}}" class="text-danger text-u-l m-l">删除</a>
-                  {{else}}
-                    <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
-                    <a href="{{homepage}}" class="text-info text-u-l  m-l" target="_blank">主页</a>
-                    <a href="/apps/{{id}}" class="text-danger text-u-l m-l">删除</a>
-                  {{/if}}
+                  <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
+                  <a href="/apps/{{id}}/_edit" class="text-info text-u-l  m-l">修改</a>
+                  <a href="#" data-id="{{id}}" class="text-danger text-u-l m-l btn-delete">删除</a>
                 </td>
               </tr>
             {{/each}}
@@ -71,4 +82,10 @@
       {{/if}}
     </section>
   </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script>
+    seajs.use('js/admin/app/index');
+  </script>
 {{/block}}

@@ -1,7 +1,7 @@
 'use strict';
 
-define(['ui', '../apis/message', 'bootstrapValidator', 'jquery.serializeObject'], function (require, exports, module) {
-  require('bootstrapValidator');
+define(['ui', '../apis/message', 'user-autocomplete', 'jquery.serializeObject'], function (require, exports, module) {
+  require('user-autocomplete');
   require('jquery.serializeObject');
 
   var UI = require('ui');
@@ -25,13 +25,6 @@ define(['ui', '../apis/message', 'bootstrapValidator', 'jquery.serializeObject']
             message: '标题不能为空'
           }
         }
-      },
-      'receivers': {
-        validators: {
-          notEmpty: {
-            message: '收件人不能为空'
-          }
-        }
       }
     }
   }).on('success.form.fv', function (e) {
@@ -50,11 +43,7 @@ define(['ui', '../apis/message', 'bootstrapValidator', 'jquery.serializeObject']
       return UI.alert('内容不能为空~');
     }
 
-    if (action === 'send') {
-      data.status = 'send';
-    } else {
-      data.status = 'save';
-    }
+    data.status = action === 'send' ? 1 : 0;
 
     var messageId = $('#data_message_id').val();
 
@@ -75,22 +64,25 @@ define(['ui', '../apis/message', 'bootstrapValidator', 'jquery.serializeObject']
     function resolve(res) {
       if (res && res.id) {
         UI.alert({
-          message: data.status === 'send' ? '消息发送成功~' : '草稿保存成功~'
+          message: data.status === 1 ? '消息发送成功~' : '草稿保存成功~'
         }).then(function () {
           window.location.href = '/messages/' + res.id;
         });
       } else {
         UI.alert({
-          message: data.status === 'send' ? '消息发送失败，请稍后再试~' : '草稿保存失败，请稍后再试'
+          message: data.status === 1 ? '消息发送失败，请稍后再试~' : '草稿保存失败，请稍后再试'
         });
       }
     }
 
     function reject(err) {
-      console.log(err);
-      UI.alert({
-        message: data.status === 'send' ? '消息发送失败，请稍后再试~' : '草稿保存失败，请稍后再试'
-      });
+      if (err && err.message) {
+        UI.alert(err.message);
+      } else {
+        UI.alert({
+          message: data.status === 1 ? '消息发送失败，请稍后再试~' : '草稿保存失败，请稍后再试'
+        });
+      }
     }
   });
 });

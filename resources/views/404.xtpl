@@ -1,4 +1,4 @@
-{{extend ("../shared/blank")}}
+{{extend ("./shared/blank")}}
 
 {{set (title="404")}}
 

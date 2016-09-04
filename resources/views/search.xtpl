@@ -21,11 +21,11 @@
                 <li class="list-group-item">
                   <div class="media">
                     <span class="pull-left thumb-sm">
-                      <img src="{{author_avatar}}" alt="" class="img-circle">
+                      <img src="{{author.avatar_url}}" alt="" class="img-circle">
                     </span>
                     <div class="m-l-xl">
-                      <a href="/users/{{author_id}}">
-                        <strong>{{author_name}}</strong>
+                      <a href="/users/{{author.id}}">
+                        <strong>{{author.name}}</strong>
                       </a>
                       <p class="m-t m-b">{{content}}</p>
                       <div class="clearfix">
@@ -61,7 +61,7 @@
                 <li class="list-group-item">
                   <div class="media clearfix">
                     <span class="pull-left thumb-sm">
-                      <img src="{{avatar}}" alt="" class="img-circle">
+                      <img src="{{avatar_url}}" alt="" class="img-circle">
                     </span>
                     <div class="m-l-xl">
                       <a href="/users/{{id}}">{{name}}</a>

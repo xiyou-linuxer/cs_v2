@@ -2,6 +2,7 @@
 
 {{set (title="用户管理")}}
 {{set (nav="admin")}}
+{{set (subNav="user")}}
 
 {{#block ("headSection")}}
   <link rel="stylesheet" href="/assets/css/admin/user/edit.css">

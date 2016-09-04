@@ -5,7 +5,7 @@ let qs = require('querystring');
 module.exports = function (app) {
   return function* (next) {
 
-    let escape_reg = /\/connect\/.+|\/handle_.+_callback/;
+    let escape_reg = /\/assets|\/connect\/.+|\/handle_.+_callback/;
     if (escape_reg.test(this.path)) {
       return yield* next;
     }

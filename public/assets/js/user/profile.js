@@ -1,11 +1,12 @@
 'use strict';
 
-define(['ui', '../apis/user', 'bootstrapValidator', 'jquery.serializeObject'], function (require, exports, module) {
-  require('bootstrapValidator');
+define(['ui', 'xtemplate', '../apis/user', '../apis/news', 'jquery.serializeObject'], function (require, exports, module) {
   require('jquery.serializeObject');
 
   var UI = require('ui');
   var User = require('../apis/user');
+  var News = require('../apis/news');
+  var Xtemplate = require('xtemplate');
 
   $('#profile_form').formValidation({
     autoFocus: true,
@@ -107,17 +108,52 @@ define(['ui', '../apis/user', 'bootstrapValidator', 'jquery.serializeObject'], f
         });
       } else {
         UI.alert('信息保存失败，请稍后再试~');
+        fv.disableSubmitButtons(false);
       }
     }).catch(function (err) {
       if (err && err.message) {
         UI.alert(err.message);
       } else {
         UI.alert('信息保存失败，请稍后再试~');
+        fv.disableSubmitButtons(false);
       }
     });
   });
 
   $('#update_profile').on('click', function () {
     $('#profile_form').submit();
+  });
+
+  var pedding = false;
+  var page = 1;
+  var newsTemplate = $('#news_template').html();
+  var $scrollable = $('#news_scrollable');
+  $scrollable.on('scroll', function () {
+    if (pedding) {
+      return false;
+    }
+
+    var $newsList = $(this).find('.comment-list');
+    var viewHeight = $(this).height();
+    var contentHeight = $(this).get(0).scrollHeight;
+    var scrollTop = $(this).scrollTop();
+
+    if (contentHeight - viewHeight - scrollTop > 200) {
+      return false;
+    }
+
+    pedding = true;
+    News.getByQuery({
+      page: page + 1
+    }).then(function (res) {
+      if (res.data && res.data.length > 0) {
+        page = page + 1;
+
+        var html = new Xtemplate(newsTemplate).render(res.data);
+        $newsList.append(html);
+      }
+
+      pedding = false;
+    });
   });
 });

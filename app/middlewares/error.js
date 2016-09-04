@@ -19,19 +19,24 @@ module.exports = function (app) {
         return this.status = status;
       }
 
-      return this.throw(status, new Error(message));
+      //return this.throw(status, new Error(message));
+
+      if (e.status === 401) {
+        this.redirect('/connect/adam');
+        return this.status = 302;
+      }
 
       if (e.status === 404) {
-        yield this.render('common/404');
+        yield this.render('404');
         return this.status = 404;
       }
 
-      yield this.render('common/error');
+      yield this.render('error');
       return this.status = e.status;
     }
 
     if (this.status === 404) {
-      yield this.render('common/404');
+      yield this.render('404');
       return this.status = 404;
     }
   };

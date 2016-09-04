@@ -3,10 +3,10 @@
 module.exports = function (app) {
 
   exports.index = function* () {
-    let category = this.query.category || '';
+    let category = parseInt(this.query.category, 10);
 
     let query = {};
-    if (category) {
+    if (category || category === 0) {
       query.category = category;
     }
 
@@ -29,15 +29,40 @@ module.exports = function (app) {
 
   exports.show = function* () {
     let id = parseInt(this.params.id) || 0;
+    let user = this.session.grant.user;
 
-    let app = yield this.services.message.getById(this, id);
-    console.log(app)
-    if (!app) {
+    let message = yield this.services.message.getById(this, id);
+
+    if (!message) {
+      return this.status = 404;
+    }
+
+    if (message.author_id !== user.id && user.group !== 1) {
       return this.status = 404;
     }
 
     yield this.render('message/show', {
-      app: app
+      message: message
+    });
+  };
+
+  exports.update = function* () {
+    let id = parseInt(this.params.id) || 0;
+    let user = this.session.grant.user;
+
+    let message = yield this.services.message.getById(this, id);
+
+    if (!message) {
+      return this.status = 404;
+    }
+
+    // 已发送或者无权限
+    if (message.status !== 0 || (message.author_id !== user.id && user.group !== 1)) {
+      return this.status = 404;
+    }
+
+    yield this.render('message/edit', {
+      message: message
     });
   };
 

@@ -4,11 +4,9 @@ define([
   'ui',
   '../apis/news',
   'jquery.cookie',
-  'bootstrapValidator',
   'jquery.serializeObject'
 ], function (require, exports, module) {
   require('jquery.cookie');
-  require('bootstrapValidator');
   require('jquery.serializeObject');
 
   var UI = require('ui');
@@ -268,10 +266,16 @@ define([
         });
       } else {
         UI.alert('动态发表失败，请稍后再试~');
+        fv.disableSubmitButtons(false);
       }
     }).catch(function (err) {
       console.log(err)
-      UI.alert('动态发表失败，请稍后再试~');
+      if (err && err.message) {
+        UI.alert(err.message);
+      } else {
+        UI.alert('动态发表失败，请稍后再试~');
+        fv.disableSubmitButtons(false);
+      }
     });
   });
 });

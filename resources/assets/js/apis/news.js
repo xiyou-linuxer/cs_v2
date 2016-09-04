@@ -5,6 +5,14 @@ define([
 ], function (require, exports, module) {
   var utils = require('utils');
 
+  exports.getByQuery = function (query) {
+    return utils.request({
+      type: 'GET',
+      url: '/api/news',
+      data: query
+    });
+  };
+
   exports.create = function (data) {
     return utils.request({
       type: 'POST',
@@ -27,4 +35,20 @@ define([
       url: '/api/news/' + id
     });
   };
+
+  exports.createComment = function (id, data) {
+    return utils.request({
+      type: 'POST',
+      url: '/api/news/' + id + '/comments',
+      data: data
+    });
+  };
+
+  exports.favor = function (id) {
+    return utils.request({
+      type: 'POST',
+      url: '/api/news/' + id + '/favors'
+    });
+  };
+
 });

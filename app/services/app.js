@@ -6,9 +6,8 @@ const path = require('path');
 module.exports = function (app) {
   exports.getByQuery = function* (ctx, q) {
     let query = _.pick(q, ['keyword', 'author_id', 'status', 'page', 'per_page']);
-
     let ret = yield ctx.proxy.adam.get('apps', {
-      where: query
+      qs: query
     });
 
     return ret;
@@ -32,6 +31,31 @@ module.exports = function (app) {
       form: data
     });
   };
+
+  exports.deleteById = function* (ctx, id, data) {
+    return yield ctx.proxy.adam.delete('apps', {
+      subpath: id
+    });
+  };
+
+  exports.refreshSecret = function* (ctx, id) {
+    return yield ctx.proxy.adam.put('apps', {
+      subpath: id + '/secret'
+    });
+  };
+
+  exports.confirm = function* (ctx, id) {
+    return yield ctx.proxy.adam.put('apps', {
+      subpath: id + '/confirm'
+    });
+  };
+
+  exports.reject = function* (ctx, id) {
+    return yield ctx.proxy.adam.put('apps', {
+      subpath: id + '/reject'
+    });
+  };
+
 
   return exports;
 };

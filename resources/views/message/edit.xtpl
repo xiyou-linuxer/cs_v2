@@ -1,7 +1,11 @@
 {{extend ("../shared/layout")}}
 
-{{set (title="创建应用")}}
-{{set (nav="app")}}
+{{#if (!message)}}
+  {{set (title="新建消息")}}
+{{else}}
+  {{set (title="编辑消息")}}
+{{/if}}
+{{set (nav="message")}}
 
 {{#block ("headSection")}}
   <link rel="stylesheet" href="/assets/css/message/edit.css">
@@ -12,19 +16,24 @@
 {{#block ("body")}}
   <section class="vbox">
     <section class="scrollable wrapper-lg">
-      <h4 class="m-t-none">新建消息</h4>
+      {{#if (!message)}}
+        <h4 class="m-t-none">新建消息</h4>
+      {{else}}
+        <h4 class="m-t-none">编辑消息</h4>
+        <input type="hidden" id="data_message_id" value="{{message.id}}">
+      {{/if}}
       <div class="line line-dashed b-b line-lg pull-in"></div>
         <div class="panel-body">
           <form class="form-horizontal" id="message_form">
             <div class="form-group">
               <div class="col-md-offset-1 col-sm-10">
-                <input name="title" type="text" class="form-control" placeholder="标题">
+                <input name="title" type="text" class="form-control" placeholder="标题" value="{{message.title}}">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
             <div class="form-group">
               <div class="col-md-offset-1 col-sm-10">
-                <input name="receivers" type="text" class="form-control" placeholder="收件人">
+                <input name="receiver_id" type="text" class="form-control" placeholder="请输入用户名称" data-toggle="user-autocomplete"  data-value="{{message.all_receiver_ids}}">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>

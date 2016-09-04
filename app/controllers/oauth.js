@@ -3,11 +3,11 @@
 const baseDir = process.cwd();
 
 const path = require('path');
-const oauthConfig = require(path.join(baseDir, 'config/oauth'));
 
 module.exports = function (app) {
 
   exports.handle_adam_callback = function* () {
+
     if (!this.session.grant.response
       || !this.session.grant.response.access_token) {
       return this.throw(500, 'unkown error!');
@@ -30,8 +30,17 @@ module.exports = function (app) {
       delete this.session.grant.response;
     }
 
-    this.redirect(oauthConfig.adam.logout_url);
+    this.redirect(app.env.sso_domain + '/logout');
     this.status = 301;
+  };
+
+  exports.resetPassword = function* () {
+    this.redirect(app.env.sso_domain + '/password/reset');
+    this.status = 301;
+  };
+
+  exports.getAccessToken = function* () {
+    this.body = this.session.grant.response.raw;
   };
 
   return exports;
