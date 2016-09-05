@@ -95,10 +95,11 @@
           </li>
         {{/each}}
       </ul>
+    </div>
   </article>
 {{/each}}
 
-<script type="xtpl" id="news_template">
+<script type="xtpl" id="news_mods_template">
   {{%{{#each (this)}}
     <article class="comment-item" data-news-id="{{id}}">
       {{#if (type === 0)}}
@@ -196,6 +197,7 @@
             </li>
           {{/each}}
         </ul>
+      </div>
     </article>
   {{/each}}%}}
 </script>

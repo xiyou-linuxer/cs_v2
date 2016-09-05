@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const path = require('path');
+const marked = require('marked');
 
 module.exports = function (app) {
 
@@ -11,13 +12,20 @@ module.exports = function (app) {
     let ret = yield ctx.proxy.adam.get('messages', {
       qs: query
     });
+
+    ret.data = ret.data.map(function (message) {
+        return unfoldMessageInfo(message);
+    });
+
     return ret;
   };
 
   exports.getById = function* (ctx, id) {
-    return yield ctx.proxy.adam.get('messages', {
+    let message = yield ctx.proxy.adam.get('messages', {
       subpath: id
     });
+
+    return unfoldMessageInfo(message);
   };
 
   exports.create = function* (ctx, data) {
@@ -41,3 +49,9 @@ module.exports = function (app) {
 
   return exports;
 };
+
+function unfoldMessageInfo(message) {
+  message.content_html = marked(message.content);
+  message.content_text = message.content_html.replace(/<.+?>|<\/.+?>/g, ' ');
+  return message;
+}

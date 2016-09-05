@@ -1,4 +1,4 @@
-{{extend ("../shared/layout")}}
+{{extend ("../layouts/app")}}
 
 {{set (title="消息")}}
 {{set (nav="message")}}
@@ -8,7 +8,7 @@
 {{/block}}
 
 {{#block ("body")}}
-  <section class="vbox">
+  <section class="vbox koala-message-list-page">
     <section class="scrollable wrapper-lg">
       <header class="header bg-light">
         <ul class="nav nav-tabs nav-white">
@@ -45,11 +45,11 @@
               <td><input class="checkbox" type="checkbox"></td>
               <th>标题</th>
               <th>发送人</th>
-              <th>内容</th>
-              <th>时间</th>
               {{#if (_query.category === '-1' || _query.category === '0')}}
                 <th>接收人</th>
               {{/if}}
+              <th>内容</th>
+              <th>时间</th>
               <th>状态</th>
             </tr>
           </thead>
@@ -59,8 +59,6 @@
                 <td><input class="checkbox" type="checkbox"></td>
                 <td>{{title}}</td>
                 <td>{{author.name}}</td>
-                <td>{{content}}</td>
-                <td>{{created_at}}</td>
                 {{#if (_query.category === '-1' || _query.category === '0')}}
                   <td>
                     {{#each (all_receivers)}}
@@ -68,6 +66,8 @@
                     {{/each}}
                   </td>
                 {{/if}}
+                <td>{{content_text}}</td>
+                <td>{{created_at}}</td>
                 <td>
                 {{#if (_query.category === '-1')}}
                   <label class="label label-primary message-status-label">已发送</label>
@@ -91,7 +91,5 @@
 {{/block}}
 
 {{#block ("footSection")}}
-  <script>
-    seajs.use('js/message/index');
-  </script>
+  <script src="/assets/js/message/index.js"></script>
 {{/block}}

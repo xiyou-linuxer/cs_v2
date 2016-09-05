@@ -1,4 +1,4 @@
-{{extend ("../shared/layout")}}
+{{extend ("../layouts/app")}}
 
 {{set (title="消息")}}
 {{set (nav="message")}}
@@ -8,7 +8,7 @@
 {{/block}}
 
 {{#block ("body")}}
-  <section class="vbox">
+  <section class="vbox koala-message-show-page">
     <section class="scrollable wrapper-lg">
       <ol class="breadcrumb bg-light p-b p-t m-b-lg">
         <li><a href="/messages" class="font-bold">消息</a></li>
@@ -33,7 +33,7 @@
             <i class="fa fa-clock-o m-r-xs"></i>{{message.updated_at}}
           </p>
         </div>
-        <div class="panel-body">{{message.content}}</div>
+        <div class="panel-body">{{{message.content_html}}}</div>
         <div class="panel-footer">
           {{#if (message.status === 0)}}
             <a class="btn btn-success btn-sm m-r" href="/messages/{{message.id}}/_edit">继续编辑</a>
@@ -46,7 +46,5 @@
 {{/block}}
 
 {{#block ("footSection")}}
-  <script>
-    seajs.use('js/message/show');
-  </script>
+  <script src="/assets/js/message/show.js"></script>
 {{/block}}

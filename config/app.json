@@ -1,6 +1,5 @@
 {
   "middlewares": [
-    "error",
     "logger",
     "oauth",
     "proxy",

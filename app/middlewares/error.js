@@ -1,6 +1,6 @@
 'use strict';
 
-let qs = require('querystring');
+const xtpl = require('xtpl');
 
 module.exports = function (app) {
   return function* (next) {

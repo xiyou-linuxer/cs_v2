@@ -23,7 +23,7 @@ module.exports = function (app) {
     let workplaces = yield userService.getWorkplaceList(this);
     let jobs = yield userService.getJobList(this);
 
-    yield this.render('user/profile', {
+    yield this.render('profile', {
       user: user,
       news: news,
       grades: grades,

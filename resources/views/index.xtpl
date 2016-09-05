@@ -1,4 +1,4 @@
-{{extend ("./shared/layout")}}
+{{extend ("./layouts/app")}}
 
 {{set (title="首页")}}
 {{set (nav="home")}}
@@ -8,10 +8,10 @@
 {{/block}}
 
 {{#block ("body")}}
-  <section class="hbox stretch">
+  <section class="hbox stretch koala-home-page">
     <section>
       <section class="vbox">
-        <section class="scrollable wrapper-lg" id="news_scrollable">
+        <section class="scrollable wrapper-lg" id="news_mods_scrollable">
           <section class="comment-list block">
             {{include('./mods/news.xtpl')}}
           </section>
@@ -48,7 +48,5 @@
 {{/block}}
 
 {{#block ("footSection")}}
-  <script>
-    seajs.use('js/mods/news');
-  </script>
+  <script src="/assets/js/index.js"></script>
 {{/block}}

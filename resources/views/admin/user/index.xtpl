@@ -1,11 +1,15 @@
-{{extend ("../../shared/layout")}}
+{{extend ("../../layouts/app")}}
 
 {{set (title="用户管理")}}
 {{set (nav="admin")}}
 {{set (subNav="user")}}
 
+{{#block ("headSection")}}
+  <link rel="stylesheet" href="/assets/css/admin/user/index.css">
+{{/block}}
+
 {{#block ("body")}}
-  <section class="vbox">
+  <section class="vbox koala-admin-user-list-page">
     <section class="scrollable wrapper-lg">
       <header class="header bg-light">
         <ul class="nav nav-tabs nav-white">
@@ -101,7 +105,5 @@
 {{/block}}
 
 {{#block ("footSection")}}
-  <script>
-    seajs.use('js/admin/user/index');
-  </script>
+  <script src="/assets/js/admin/user/index.js"></script>
 {{/block}}

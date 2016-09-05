@@ -1,4 +1,4 @@
-{{extend ("../shared/layout")}}
+{{extend ("../layouts/app")}}
 
 {{#if (!app)}}
 {{set (title="创建应用")}}
@@ -12,7 +12,7 @@
 {{/block}}
 
 {{#block ("body")}}
-  <section class="vbox">
+  <section class="vbox koala-app-edit-page">
     <section class="scrollable wrapper-lg">
       {{#if (!app)}}
         <h4 class="m-t-none">创建应用</h4>
@@ -126,7 +126,5 @@
 {{/block}}
 
 {{#block ("footSection")}}
-  <script>
-    seajs.use('js/app/edit');
-  </script>
+  <script src="/assets/js/app/edit.js"></script>
 {{/block}}

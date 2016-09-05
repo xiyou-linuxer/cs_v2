@@ -1,0 +1,218 @@
+{{extend ("./layouts/app")}}
+
+{{set (title="个人中心")}}
+{{set (nav="profile")}}
+
+{{#block ("headSection")}}
+  <link rel="stylesheet" href="/assets/css/profile.css">
+{{/block}}
+
+{{#block ("body")}}
+  <section class="hbox stretch koala-profile-page">
+    <aside class="aside-lg bg-light lter b-r">
+      <section class="vbox">
+        <section class="scrollable">
+          <div class="wrapper">
+            <div class="text-center m-b m-t">
+              <a href="http://en.gravatar.com/" class="thumb-lg" target="_blank" title="点击更换个人头像">
+                  <img src="{{user.avatar_url}}" class="img-circle" alt="点击更换个人头像">
+              </a>
+              <div>
+                <div class="h3 m-t-sm m-b-sm">
+                  {{#if (user.sex === '男')}}
+                    <i class="fa fa-male"></i>
+                  {{else}}
+                    <i class="fa fa-female"></i>
+                  {{/if}}
+                  {{user.name}}
+                </div>
+                <small class="text-muted">
+                  <i class="fa fa-map-marker"></i>
+                  {{#if (user.native)}}
+                    <span>{{user.native}}</span>
+                  {{/if}}
+                </small>
+              </div>
+            </div>
+
+            {{#if (user.id === _me.id)}}
+              <div class="btn-group btn-group-justified m-b">
+                <a class="btn btn-success btn-rounded" id="update_profile">
+                  <i class="icon-user"> 保存资料</i>
+                </a>
+                <a class="btn btn-primary btn-rounded" href="#" target="_blank" id="btn_reset_password">
+                  <i class="icon-lock"> 修改密码</i>
+                </a>
+              </div>
+            {{elseif (false)}}
+              <div class="btn-group btn-group-justified m-b">
+                <a class="btn btn-success btn-rounded" id="info-btn" href="/mail/edit">
+                  <i class="fa fa-comment-o" id="info"> 发站内信</i>
+                </a>
+              </div>
+            {{/if}}
+            <div class="panel panel-default">
+              <header class="panel-heading">
+                <strong>个人信息</strong>
+              </header>
+              <div class="panel-body">
+                {{#if (user.id === _me.id)}}
+                  <form class="form-horizontal form-profile" data-validate="parsley" id="profile_form">
+                    <input type="hidden" id="user_id" value="{{user.id}}">
+                    <div class="form-group">
+                      <label>手机号： <span class="help-container"></span></label>
+                      <div class="row">
+                        <div class="col-xs-5">
+                          <select class="form-control chosen-select" name="countrySelectBox">
+                            <option value="CN">中国</option>
+                            <option value="US">美国</option>
+                            <option value="GB">英国</option>
+                            <option value="FR">法国</option>
+                          </select>
+                        </div>
+                        <div class="col-xs-7 p-l-none">
+                          <input name="phone" type="text" class="form-control" value="{{user.phone}}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>邮箱： <span class="help-container"></span></label>
+                      <input name="email" type="text" class="form-control" value="{{user.email}}">
+                    </div>
+                    <div class="form-group">
+                      <label>工作地点： <span class="help-container"></span></label>
+                      <select class="form-control chosen-select" name="workplace">
+                        {{#each (workplaces)}}
+                          <option {{#if (user.workplace === this)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>工作职位： <span class="help-container"></span></label>
+                      <select class="form-control chosen-select" name="job">
+                        {{#each (jobs)}}
+                          <option {{#if (user.jobs === this)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>年级： <span class="help-container"></span></label>
+                      <select class="form-control chosen-select" name="grade">
+                        {{#each (grades)}}
+                          <option {{#if (user.grade === this)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>专业： <span class="help-container"></span></label>
+                      <select class="form-control chosen-select" name="major">
+                        {{#each (majors)}}
+                        <option {{#if (user.major === this)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>QQ： <span class="help-container"></span></label>
+                      <input name="qq" type="text" class="form-control" placeholder="" value="{{user.qq}}">
+                    </div>
+                    <div class="form-group">
+                      <label>微信： <span class="help-container"></span></label>
+                      <input name="wechat" type="text" class="form-control" placeholder="" value="{{user.wechat}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label>博客： <span class="help-container"></span></label>
+                      <input name="blog_url" type="text" class="form-control" placeholder="http://..." value="{{user.blog_url}}">
+                    </div>
+                    <div class="form-group">
+                      <label>Github： <span class="help-container"></span></label>
+                      <input name="github_url" type="text" class="form-control" placeholder="http://..." value="{{user.github_url}}">
+                    </div>
+                  </div>
+                </form>
+              {{else}}
+              <form class="form-horizontal form-profile profile-data">
+                <div class="form-group">
+                  <label>手机号：</label>
+                  <div class="form-control">{{user.phone}}</div>
+                </div>
+                <div class="form-group">
+                  <label>邮箱：</label>
+                  <div class="form-control">{{user.email}}</div>
+                </div>
+                <div class="form-group">
+                  <label>工作地点：</label>
+                  <div class="form-control">{{user.workplace}}</div>
+                </div>
+                <div class="form-group">
+                  <label>工作职位：</label>
+                  <div class="form-control">{{user.job}}</div>
+                </div>
+                <div class="form-group">
+                  <label>年级：</label>
+                  <div class="form-control">{{user.grade}}</div>
+                </div>
+                <div class="form-group">
+                  <label>专业：</label>
+                  <div class="form-control">{{user.major}}</div>
+                </div>
+                <div class="form-group">
+                  <label>QQ：</label>
+                  <div class="form-control">{{user.qq}}</div>
+                </div>
+                <div class="form-group">
+                  <label>微信：</label>
+                  <div class="form-control">{{user.wechat}}</div>
+                </div>
+
+                <div class="form-group">
+                  <label>博客：</label>
+                  <div class="form-control">{{user.blog_url}}</div>
+                </div>
+                <div class="form-group" >
+                  <label>Github：</label>
+                  <div class="form-control">{{user.github_url}}</div>
+                </div>
+              </div>
+            </form>
+              {{/if}}
+            </div>
+            <div class="line"></div>
+            <small class="text-uc text-xs text-muted">connection</small>
+            <p class="m-t-sm">
+              <a href="{{user.github || '#'}}" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-github"></i></a>
+              <a href="{{user.blog || '#'}}" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-internet-explorer"></i></a>
+              <a href="http://web.qq.com" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-qq"></i></a>
+              <a href="http://wx.qq.com" class="btn btn-rounded btn-icon" target="_blank"><i class="fa fa-wechat"></i></a>
+            </p>
+          </div>
+        </section>
+      </section>
+    </aside>
+
+    <aside>
+      <section class="vbox">
+        <header class="header bg-light lt">
+          <ul class="nav nav-tabs nav-white">
+            <li class="active"><a href="#activity" data-toggle="tab">相关动态</a></li>
+          </ul>
+        </header>
+        <section class="scrollable wrapper-lg" id="news_mods_scrollable">
+          <div class="clo-sm-11">
+            {{#if (news.length)}}
+              <section class="comment-list block">
+                {{include('./mods/news.xtpl')}}
+              </section>
+            {{else}}
+              <div class="well bg-light text-center">这家伙很懒，还没有发表任何动态~</div>
+            {{/if}}
+          </div>
+        </section>
+      </section>
+    </aside>
+  </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script src="/assets/js/profile.js"></script>
+{{/block}}

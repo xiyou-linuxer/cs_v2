@@ -1,10 +1,14 @@
-{{extend ("../shared/layout")}}
+{{extend ("../layouts/app")}}
 
 {{set (title="应用")}}
 {{set (nav="app")}}
 
+{{#block ("headSection")}}
+  <link rel="stylesheet" href="/assets/css/app/index.css">
+{{/block}}
+
 {{#block ("body")}}
-  <section class="vbox">
+  <section class="vbox koala-app-list-page">
     <section class="scrollable wrapper-lg">
       <header class="header bg-light">
         <ul class="nav nav-tabs nav-white">
@@ -26,21 +30,24 @@
         <table class="table table-striped m-b-none">
           <thead>
             <tr>
-              <th>ID</th>
               <th>CLIENT_ID</th>
               <th>名称</th>
-              <th>创建者</th>
+              {{#if (!data.isMy)}}
+                <th>创建者</th>
+              {{/if}}
               <th>状态</th>
+              <th>创建时间</th>
               <th width="{{#if(data.isMy)}}150{{else}}100{{/if}}">操作</th>
             </tr>
           </thead>
           <tbody>
             {{#each (data.apps)}}
               <tr>
-                <td>{{id}}</td>
                 <td>{{client_id}}</td>
                 <td>{{name}}</td>
-                <td><a href="/users/{{author.id}}" class="text-info text-u-l">{{author.name}}</a></td>
+                {{#if (!data.isMy)}}
+                  <td><a href="/users/{{author.id}}" class="text-info text-u-l">{{author.name}}</a></td>
+                {{/if}}
                 <td>
                   {{#if (status === 0)}}
                     <label class="label label-warning">待审核</label>
@@ -56,6 +63,7 @@
                     <label class="label label-danger">已拒绝</label>
                   {{/if}}
                 </td>
+                <td>{{created_at}}</td>
                 <td>
                   <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
                   {{#if (data.isMy)}}
@@ -77,7 +85,5 @@
 {{/block}}
 
 {{#block ("footSection")}}
-  <script>
-    seajs.use('js/app/index');
-  </script>
+  <script src="/assets/js/app/index.js"></script>
 {{/block}}

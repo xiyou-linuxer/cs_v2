@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+!(function () {
 
   $.fn.serializeObject = function () {
     var result = {};
@@ -23,4 +23,4 @@ define(function (require, exports, module) {
     $.each(this.serializeArray(), extend);
     return result;
   };
-});
+})();

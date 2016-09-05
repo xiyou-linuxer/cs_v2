@@ -1,8 +1,8 @@
 TEST_FILES =  $(shell ls -S `find test/unit -type f -name "*.test.js" -print`)
-LESS_FILES = $(shell find resources/assets/less -name '*.less')
-CSS_FILES = $(LESS_FILES:resources/assets/less/%.less=public/assets/css/%.css)
-JS_FILES = $(shell find resources/assets/js -name '*.js')
-BUILD_JS_FILES = $(JS_FILES:resources/%.js=public/%.min.js)
+#LESS_FILES = $(shell find resources/assets/less -name '*.less')
+#CSS_FILES = $(LESS_FILES:resources/assets/less/%.less=public/assets/css/%.css)
+#JS_FILES = $(shell find resources/assets/js -name '*.js')
+#BUILD_JS_FILES = $(JS_FILES:resources/%.js=public/%.min.js)
 
 export PATH := node_modules/.bin:$(PATH)
 export SHELL := /bin/bash
@@ -38,25 +38,27 @@ test:
 		--require ./test/helper.js \
 		$(TEST_FILES)
 
-%.css:
-	@lessc --autoprefix --clean-css $(subst public, resources, $(subst css,less,$@)) $@
+#%.css:
+#	@lessc --autoprefix --clean-css $(subst public, resources, $(subst css,less,$@)) $@
 
-%.min.js:%.js
-	@uglifyjs --compress --output $@ $^
+#%.min.js:%.js
+#	@uglifyjs --compress --output $@ $^
 
 copy: copy_tips
 	@mkdir -p public/assets
 	@cp -rf resources/assets/libs public/assets/libs
 	@cp -rf resources/assets/images public/assets/images
 
-es6to5:
-	@babel resources/assets/js --out-dir public/assets/js >/dev/null
+#es6to5:
+#	@babel resources/assets/js --out-dir public/assets/js >/dev/null
 
-scripts: scripts_tips es6to5 $(BUILD_JS_FILES)
+#scripts: scripts_tips es6to5 $(BUILD_JS_FILES)
 
-less: less_tips $(CSS_FILES)
+#less: less_tips $(CSS_FILES)
 
-build: clean copy scripts less
+build: clean copy
+	@echo 'webpack build...'
+	@webpack
 
 clean-build:
 	@rm -rf public/assets

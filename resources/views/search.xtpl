@@ -1,4 +1,4 @@
-{{extend ("./shared/layout")}}
+{{extend ("./layouts/app")}}
 
 {{set (title="搜索")}}
 {{set (nav="")}}
@@ -8,7 +8,7 @@
 {{/block}}
 
 {{#block ("body")}}
-  <section class="hbox stretch">
+  <section class="hbox stretch koala-search-page">
     <section>
       <section class="vbox">
         <section class="scrollable wrapper-lg">

@@ -1,4 +1,4 @@
-{{extend ("../shared/layout")}}
+{{extend ("../layouts/app")}}
 
 {{#if (!message)}}
   {{set (title="新建消息")}}
@@ -10,11 +10,10 @@
 {{#block ("headSection")}}
   <link rel="stylesheet" href="/assets/css/message/edit.css">
   <link rel="stylesheet" href="/assets/libs/editor/editor.css">
-  <link rel="stylesheet" href="/assets/css/shared/markdown.css">
 {{/block}}
 
 {{#block ("body")}}
-  <section class="vbox">
+  <section class="vbox koala-message-edit-page">
     <section class="scrollable wrapper-lg">
       {{#if (!message)}}
         <h4 class="m-t-none">新建消息</h4>
@@ -62,6 +61,7 @@
 {{/block}}
 
 {{#block ("footSection")}}
+  <script src="/assets/js/message/edit.js"></script>
   <script src="/assets/libs/editor/marked.js"></script>
   <script src="/assets/libs/editor/editor.js"></script>
   <script>
@@ -71,7 +71,5 @@
     window.editor.render();
 
     $('.loading').fadeOut();
-
-    seajs.use('js/message/edit');
   </script>
 {{/block}}
