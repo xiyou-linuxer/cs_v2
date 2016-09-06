@@ -14,7 +14,7 @@ jshint: install
 	@jshint ./app ./resources/assets/js
 
 server:
-	@npm run server
+	@NODE_ENV=dev npm run server
 
 dev-server: build server
 

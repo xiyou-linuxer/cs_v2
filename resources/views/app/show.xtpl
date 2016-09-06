@@ -128,7 +128,7 @@
                   <a href="#" id="btn_app_confirm" class="btn btn-primary btn-sm m-r">审核通过</a>
                   <a href="#" id="btn_app_reject" class="btn btn-dark btn-sm m-r">审核不通过</a>
                 {{/if}}
-                <a href="/apps/{{app.id}}/_edit" class="btn btn-success btn-sm m-r">编辑应用</a>
+                <a href="/apps/{{app.client_id}}/_edit" class="btn btn-success btn-sm m-r">编辑应用</a>
                 <a href="#" id="btn_app_delete" class="btn btn-danger btn-sm m-r">删除应用</a>
               </div>
             {{/if}}

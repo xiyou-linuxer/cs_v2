@@ -4,6 +4,10 @@ const xtpl = require('xtpl');
 
 module.exports = function (app) {
   return function* (next) {
+    if (process.env.NODE_ENV === 'dev') {
+      return yield *next;
+    }
+
     try {
       yield *next;
     } catch (e) {
