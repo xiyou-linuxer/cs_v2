@@ -3,19 +3,36 @@
 module.exports = function (app) {
 
   exports.index = function* () {
+    let page = parseInt(this.query.page, 10) || 1;
     let isMy = this.query.isMy ? true : false;
+    let author_id = parseInt(this.query.author_id, 10);
+    let status = parseInt(this.query.status, 10);
+    let keyword = this.query.keyword || '';
 
-    let query = {};
+    let query = {
+      page: page,
+      keyword: keyword
+    };
+
     if (isMy) {
       query.author_id = this.session.grant.user.id;
+      if (status || status === 0) {
+        query.status = status;
+      }
     } else {
       query.status = 3;
+      if (author_id || author_id === 0) {
+        query.author_id = author_id;
+      }
     }
 
     let ret = yield this.services.app.getByQuery(this, query);
+    let totalPage = Math.ceil(ret.total_count / ret.per_page);
     let apps = ret.data;
 
     let data = {
+      page: page,
+      totalPage: totalPage,
       isMy: isMy,
       apps: apps
     };
@@ -34,7 +51,7 @@ module.exports = function (app) {
   };
 
   exports.update = function* () {
-    let id = parseInt(this.params.id) || 0;
+    let id = this.params.id;
     let user = this.session.grant.user;
 
     let app = yield this.services.app.getById(this, id);
@@ -73,7 +90,7 @@ module.exports = function (app) {
 
 
   exports.show = function* () {
-    let id = parseInt(this.params.id) || 0;
+    let id = this.params.id;
     let user = this.session.grant.user;
 
     let app = yield this.services.app.getById(this, id);

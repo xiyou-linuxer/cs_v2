@@ -29,16 +29,20 @@ module.exports = function (app) {
   };
 
   exports.create = function* (ctx, data) {
-    return yield ctx.proxy.adam.post('messages', {
+    let message = yield ctx.proxy.adam.post('messages', {
       form: data
     });
+
+    return unfoldMessageInfo(message);
   };
 
   exports.updateById = function* (ctx, id, data) {
-    return yield ctx.proxy.adam.put('messages', {
+    let message = yield ctx.proxy.adam.put('messages', {
       subpath: id,
       form: data
     });
+
+    return unfoldMessageInfo(message);
   };
 
   exports.deleteById = function* (ctx, id) {
@@ -51,6 +55,10 @@ module.exports = function (app) {
 };
 
 function unfoldMessageInfo(message) {
+  if (!message) {
+    return message;
+  }
+
   message.content_html = marked(message.content);
   message.content_text = message.content_html.replace(/<.+?>|<\/.+?>/g, ' ');
   return message;

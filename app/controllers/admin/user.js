@@ -4,12 +4,14 @@ module.exports = function (app) {
 
   exports.index = function* () {
     let userService = this.services.user;
+    let page = parseInt(this.query.page, 10) || 1;
     let group = parseInt(this.query.group);
     let grade = parseInt(this.query.grade);
     let major = this.query.major || '';
     let keyword = this.query.keyword || '';
 
     let query = {
+      page: page,
       grade: grade,
       major: major,
       keyword: keyword
@@ -26,12 +28,15 @@ module.exports = function (app) {
     }
 
     let ret = yield userService.getByQuery(this, query);
+    let totalPage = Math.ceil(ret.total_count / ret.per_page);
     let users = ret.data;
 
     let grades = yield userService.getGradeList(this);
     let majors = yield userService.getMajorList(this);
 
     let data = {
+      page: page,
+      totalPage: totalPage,
       users: users,
       grades: grades,
       majors: majors

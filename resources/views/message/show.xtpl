@@ -37,6 +37,8 @@
         <div class="panel-footer">
           {{#if (message.status === 0)}}
             <a class="btn btn-success btn-sm m-r" href="/messages/{{message.id}}/_edit">继续编辑</a>
+          {{elseif (message.type === 0 && message.receiver_id !== 0)}}
+            <a class="btn btn-success btn-sm m-r" href="/messages/_new?receiver_id={{message.author_id}}&title=回复：{{message.title}}">回复消息</a>
           {{/if}}
           <a class="btn btn-danger btn-sm" href="#" id="btn_message_delete" data-id="{{message.id}}">删除消息</a>
         </div>

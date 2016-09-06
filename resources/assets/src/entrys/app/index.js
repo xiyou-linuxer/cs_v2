@@ -2,11 +2,21 @@
 
 import 'babel-polyfill';
 import 'layouts/app';
+import 'mods/pagination';
+import 'mods/autocomplete';
 
 import UI from 'ui';
+import URL from 'utils/url';
 import App from 'apis/app';
 
 let $appListPage = $('.koala-app-list-page');
+
+let $appSelectForm = $appListPage.find('#app_select_form');
+$appSelectForm.find('.form-control').on('change', function (e) {
+  let data = $appSelectForm.serializeObject();
+  data.page = 1;
+  location.href = URL.updateQueryString(data);
+});
 
 $appListPage.find('table tbody .btn-delete').on('click', function (e) {
   e.preventDefault();

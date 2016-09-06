@@ -68,3 +68,17 @@ $appShowPage.find('#btn_app_reject').on('click', function (e) {
     }
   });
 });
+
+$appShowPage.find('#btn_app_delete').on('click', function (e) {
+  App.delete(appId).then(function (res) {
+    UI.alert('操作成功，应用已被删除~').then(function () {
+      location.href = '/apps';
+    });
+  }).catch(function (err) {
+    if (err && err.message) {
+      UI.alert(err.message);
+    } else {
+      UI.alert('操作失败，请稍后再试~');
+    }
+  });
+});

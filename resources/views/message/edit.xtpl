@@ -9,7 +9,6 @@
 
 {{#block ("headSection")}}
   <link rel="stylesheet" href="/assets/css/message/edit.css">
-  <link rel="stylesheet" href="/assets/libs/editor/editor.css">
 {{/block}}
 
 {{#block ("body")}}
@@ -26,13 +25,13 @@
           <form class="form-horizontal" id="message_form">
             <div class="form-group">
               <div class="col-md-offset-1 col-sm-10">
-                <input name="title" type="text" class="form-control" placeholder="标题" value="{{message.title}}">
+                <input name="title" type="text" class="form-control" placeholder="标题" value="{{message.title || _query.title}}">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
             <div class="form-group">
               <div class="col-md-offset-1 col-sm-10">
-                <input name="receiver_id" type="text" class="form-control" placeholder="请输入用户名称" data-toggle="user-autocomplete"  data-value="{{message.all_receiver_ids}}">
+                <input name="receiver_id" type="text" class="form-control" placeholder="接收人姓名" data-toggle="koala-autocomplete"  data-value="{{message.all_receiver_ids || _query.receiver_id}}">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in col-sm-12"></div>
@@ -43,7 +42,7 @@
                     <i class="fa fa-spin fa-spinner loading-icon" style="color: #272822"></i>
                     <div class="loading-msg">文本编辑器加载中...</div>
                   </div>
-                  <textarea id="editor" class="form-control"  name="content" placeholder="消息内容">{{message.content}}</textarea>
+                  <textarea class="form-control"  name="content" placeholder="消息内容">{{{message.content || _query.content}}}</textarea>
                 </div>
               </div>
             </div>
@@ -62,14 +61,4 @@
 
 {{#block ("footSection")}}
   <script src="/assets/js/message/edit.js"></script>
-  <script src="/assets/libs/editor/marked.js"></script>
-  <script src="/assets/libs/editor/editor.js"></script>
-  <script>
-    window.editor = new Editor({
-      autofocus: false
-    });
-    window.editor.render();
-
-    $('.loading').fadeOut();
-  </script>
 {{/block}}

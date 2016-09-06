@@ -10,7 +10,19 @@ import App from 'apis/app';
 
 let $appEditPage = $('.koala-app-edit-page');
 
-$appEditPage.find('#app_form').formValidation({
+let $appForm = $appEditPage.find('#app_form');
+
+let editor = new Editor({
+  autofocus: false,
+  element: $appForm.find('[name="content"]').get(0)
+});
+
+editor.render();
+
+$appForm.find('.loading').fadeOut();
+
+
+$appForm.formValidation({
   autoFocus: true,
   framework: 'bootstrap',
   icon: {
@@ -95,19 +107,19 @@ $appEditPage.find('#app_form').formValidation({
     }
   });
 
-  let $form = $('#app_form'),
-      fv    = $form.data('formValidation');
+  let fv = $appForm.data('formValidation');
   fv.disableSubmitButtons(false);
 }).on('change', '[name="status"]', function(e) {
-  let $form = $('#app_form'),
-      fv    = $form.data('formValidation');
+  let fv = $appForm.data('formValidation');
   fv.disableSubmitButtons(false);
 }).on('success.form.fv', function(e) {
   e.preventDefault();
 
   let $form = $(e.target),
       fv    = $form.data('formValidation');
-  let data  = $('#app_form').serializeObject();
+  let data  = $appForm.serializeObject();
+
+  data.content = editor.codemirror.getValue();
 
   if (Array.isArray(data.scopes)) {
     data.scopes = data.scopes.join(',');
@@ -120,7 +132,7 @@ $appEditPage.find('#app_form').formValidation({
         UI.alert({
           message: '应用保存成功~'
         }).then(function() {
-          window.location.href = '/apps/' + res.id;
+          window.location.href = '/apps/' + res.client_id;
         });
       } else {
         UI.alert('应用保存失败，请稍后再试~');
@@ -140,7 +152,7 @@ $appEditPage.find('#app_form').formValidation({
         UI.alert({
           message: '应用创建成功~'
         }).then(function() {
-          window.location.href = '/apps/' + res.id;
+          window.location.href = '/apps/' + res.client_id;
         });
       } else {
         UI.alert('应用创建失败，请稍后再试~');

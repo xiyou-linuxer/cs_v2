@@ -200,9 +200,7 @@
         <section class="scrollable wrapper-lg" id="news_mods_scrollable">
           <div class="clo-sm-11">
             {{#if (news.length)}}
-              <section class="comment-list block">
-                {{include('./mods/news.xtpl')}}
-              </section>
+              {{include('./mods/news.xtpl')}}
             {{else}}
               <div class="well bg-light text-center">这家伙很懒，还没有发表任何动态~</div>
             {{/if}}

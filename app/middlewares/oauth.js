@@ -16,8 +16,11 @@ module.exports = function (app) {
       return yield* next;
     }
 
-    this.session.old_path = escape_reg.test(this.path) ? '/' : this.path;
+    if (/^\/api/.test(this.path)) {
+      return this.throw(401, '未登录或token失效，请重新登录');
+    }
 
+    this.session.old_path = escape_reg.test(this.path) ? '/' : this.path;
     this.redirect('/connect/adam');
     this.status = 302;
   };

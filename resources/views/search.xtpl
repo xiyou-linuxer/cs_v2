@@ -11,41 +11,13 @@
   <section class="hbox stretch koala-search-page">
     <section>
       <section class="vbox">
-        <section class="scrollable wrapper-lg">
-          <div class="panel panel-default">
-            <header class="panel-heading">相关动态
-              <span class="badge bg-info">{{news.length}}</span>
-            </header>
-            <ul class="news-list list-group alt">
-              {{#each (news)}}
-                <li class="list-group-item">
-                  <div class="media">
-                    <span class="pull-left thumb-sm">
-                      <img src="{{author.avatar_url}}" alt="" class="img-circle">
-                    </span>
-                    <div class="m-l-xl">
-                      <a href="/users/{{author.id}}">
-                        <strong>{{author.name}}</strong>
-                      </a>
-                      <p class="m-t m-b">{{content}}</p>
-                      <div class="clearfix">
-                        <label class="label label-info">{{topic}}</label>
-                        <p class="pull-right">
-                          <i class="fa fa-clock-o"></i>
-                          <small>{{created_at}}</small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              {{/each}}
-              {{#if (!news.length)}}
-                <li class="list-group-item">
-                未找到相关动态信息
-                </li>
-              {{/if}}
-            </ul>
-          </div>
+        <section class="scrollable wrapper-lg" id="news_mods_scrollable">
+          {{#if (news.length)}}
+            <div class="alert alert-success">已为您找到 {{news.length}} 条相关动态</div>
+          {{else}}
+            <div class="well bg-light">未找到相关动态信息</div>
+          {{/if}}
+          {{include ('./mods/news.xtpl')}}
         </section>
       </section>
     </section>
@@ -72,7 +44,7 @@
               {{/each}}
               {{#if (!users.length)}}
                 <li class="list-group-item">
-                未找到相关成员信息
+                  <small class="text-muted">未找到相关成员信息</small>
                 </li>
               {{/if}}
             </ul>
@@ -81,4 +53,8 @@
       </section>
     </aside>
   </section>
+{{/block}}
+
+{{#block ("footSection")}}
+  <script src="/assets/js/search.js"></script>
 {{/block}}

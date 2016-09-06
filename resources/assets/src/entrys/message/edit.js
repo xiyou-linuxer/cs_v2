@@ -5,14 +5,25 @@ import './edit.less';
 import 'babel-polyfill';
 import 'layouts/app';
 import 'mods/markdown';
-import 'user-autocomplete';
+import 'mods/autocomplete';
 
 import UI from 'ui';
+import Editor from 'editor';
 import Message from 'apis/message';
 
 let $messageEditPage = $('.koala-message-edit-page');
+let $messageForm = $messageEditPage.find('#message_form');
 
-$messageEditPage.find('#message_form').formValidation({
+let editor = new Editor({
+  autofocus: false,
+  element: $messageForm.find('[name="content"]').get(0)
+});
+
+editor.render();
+
+$messageForm.find('.loading').fadeOut();
+
+$messageForm.formValidation({
   autoFocus: true,
   framework: 'bootstrap',
   icon: {
@@ -40,8 +51,8 @@ $messageEditPage.find('#message_form').formValidation({
       $btn   = fv.getSubmitButton(),
       action = $btn.data('action');
 
-  let data = $('#message_form').serializeObject();
-  data.content = window.editor.codemirror.getValue();
+  let data = $messageForm.serializeObject();
+  data.content = editor.codemirror.getValue();
 
   if (!data.content) {
     fv.disableSubmitButtons(false);
@@ -50,7 +61,7 @@ $messageEditPage.find('#message_form').formValidation({
 
   data.status = (action === 'send') ? 1 : 0;
 
-  let messageId = $('#data_message_id').val();
+  let messageId = $messageEditPage.find('#data_message_id').val();
 
   if (messageId) {
     Message.update(messageId, data).then(function (res) {

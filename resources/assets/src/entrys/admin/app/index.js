@@ -3,7 +3,8 @@
 
 import 'babel-polyfill';
 import 'layouts/app';
-import 'user-autocomplete';
+import 'mods/autocomplete';
+import 'mods/pagination';
 
 import UI from 'ui';
 import App from 'apis/app';

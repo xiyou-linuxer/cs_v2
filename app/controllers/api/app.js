@@ -29,7 +29,7 @@ module.exports = function (app) {
   };
 
   exports.update = function* () {
-    let id = parseInt(this.params.id);
+    let id = this.params.id;
     let data = this.request.body;
 
     let ret = yield this.services.app.updateById(this, id, data);
@@ -37,8 +37,15 @@ module.exports = function (app) {
     this.body = ret;
   };
 
+  exports.show = function* () {
+    let id = this.params.id;
+    let ret = yield this.services.app.getById(this, id);
+
+    this.body = ret;
+  };
+
   exports.destroy = function* () {
-    let id = parseInt(this.params.id);
+    let id = this.params.id;
 
     let ret = yield this.services.app.deleteById(this, id);
 
@@ -46,7 +53,7 @@ module.exports = function (app) {
   };
 
   exports.refreshSecret = function* () {
-    let id = parseInt(this.params.id);
+    let id = this.params.id;
 
     let ret = yield this.services.app.refreshSecret(this, id);
 
@@ -54,7 +61,7 @@ module.exports = function (app) {
   };
 
   exports.confirm = function* () {
-    let id = parseInt(this.params.id);
+    let id = this.params.id;
 
     let ret = yield this.services.app.confirm(this, id);
 
@@ -62,13 +69,12 @@ module.exports = function (app) {
   };
 
   exports.reject = function* () {
-    let id = parseInt(this.params.id);
+    let id = this.params.id;
 
     let ret = yield this.services.app.reject(this, id);
 
     this.body = ret;
   };
-
 
   return exports;
 };

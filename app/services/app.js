@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const path = require('path');
+const marked = require('marked');
 
 module.exports = function (app) {
   exports.getByQuery = function* (ctx, q) {
@@ -10,26 +11,36 @@ module.exports = function (app) {
       qs: query
     });
 
+    ret.data = ret.data.map(function (app) {
+        return unfoldAppInfo(app);
+    });
+
     return ret;
   };
 
   exports.getById = function* (ctx, id) {
-    return yield ctx.proxy.adam.get('apps', {
+    let app = yield ctx.proxy.adam.get('apps', {
       subpath: id
     });
+
+    return unfoldAppInfo(app);
   };
 
   exports.create = function* (ctx, data) {
-    return yield ctx.proxy.adam.post('apps', {
+    let app = yield ctx.proxy.adam.post('apps', {
       form: data
     });
+
+    return unfoldAppInfo(app);
   };
 
   exports.updateById = function* (ctx, id, data) {
-    return yield ctx.proxy.adam.put('apps', {
+    let app = yield ctx.proxy.adam.put('apps', {
       subpath: id,
       form: data
     });
+
+    return unfoldAppInfo(app);
   };
 
   exports.deleteById = function* (ctx, id, data) {
@@ -39,23 +50,39 @@ module.exports = function (app) {
   };
 
   exports.refreshSecret = function* (ctx, id) {
-    return yield ctx.proxy.adam.put('apps', {
+    let app = yield ctx.proxy.adam.put('apps', {
       subpath: id + '/secret'
     });
+
+    return unfoldAppInfo(app);
   };
 
   exports.confirm = function* (ctx, id) {
-    return yield ctx.proxy.adam.put('apps', {
+    let app = yield ctx.proxy.adam.put('apps', {
       subpath: id + '/confirm'
     });
+
+    return unfoldAppInfo(app);
   };
 
   exports.reject = function* (ctx, id) {
-    return yield ctx.proxy.adam.put('apps', {
+    let app = yield ctx.proxy.adam.put('apps', {
       subpath: id + '/reject'
     });
+
+    return unfoldAppInfo(app);
   };
 
 
   return exports;
 };
+
+function unfoldAppInfo(app) {
+  if (!app) {
+    return app;
+  }
+
+  app.description_html = marked(app.description);
+  app.description_text = app.description_html.replace(/<.+?>|<\/.+?>/g, ' ');
+  return app;
+}

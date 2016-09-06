@@ -43,6 +43,14 @@
   background-color: #f7fafa;
 }
 
+.editor-wrapper {
+  height: 285px;
+  position: relative;
+  .CodeMirror {
+    height: 203px;
+  }
+}
+
 @-webkit-keyframes stretchdelay {
   0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
   20% { -webkit-transform: scaleY(1.0) }
@@ -61,7 +69,7 @@
 @media (min-width: 768px) {
   .modal-fixed {
     .modal-dialog {
-      margin-top: 150px;
+      margin-top: 100px;
     }
   }
   .modal-dialog {

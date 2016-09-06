@@ -7058,6 +7058,7 @@ function togglePreview(editor) {
     toolbar.className += ' active';
   }
   var text = cm.getValue();
+  text = text.replace(/<(.+?)>|<(\/.+?)>/g, '&lt;$1&gt;');
   preview.innerHTML = parse(text);
 }
 
@@ -7403,7 +7404,7 @@ Editor.prototype.togglePreview = function() {
 Editor.prototype.toggleFullScreen = function() {
   toggleFullScreen(this);
 };
-
+/*
 if (typeof exports === 'object') {
   module.exports = Editor;
 } else if (typeof define === 'function' && define.amd) {
@@ -7414,7 +7415,8 @@ if (typeof exports === 'object') {
 } else {
   this.marked = Editor;
 }
-
+*/
+window.Editor = Editor;
 }).call(function() {
   return this || (typeof window !== 'undefined' ? window : global);
 }());

@@ -3,11 +3,13 @@
 module.exports = function (app) {
 
   exports.index = function* () {
+    let page = parseInt(this.query.page, 10) || 1;
     let status = parseInt(this.query.status, 10);
     let author_id = parseInt(this.query.author_id, 10);
     let keyword = this.query.keyword || '';
 
     let query = {
+      page: page,
       keyword: keyword
     };
 
@@ -20,9 +22,12 @@ module.exports = function (app) {
     }
 
     let ret = yield this.services.app.getByQuery(this, query);
+    let totalPage = Math.ceil(ret.total_count / ret.per_page);
     let apps = ret.data;
 
     let data = {
+      page: page,
+      totalPage: totalPage,
       apps: apps
     };
 

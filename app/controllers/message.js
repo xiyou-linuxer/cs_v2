@@ -3,17 +3,31 @@
 module.exports = function (app) {
 
   exports.index = function* () {
+    let page = parseInt(this.query.page, 10) || 1;
+    let type = parseInt(this.query.type, 10);
     let category = parseInt(this.query.category, 10);
+    let keyword = this.query.keyword || '';
 
-    let query = {};
+    let query = {
+      page: page,
+      keyword: keyword
+    };
+
+    if (type || type === 0) {
+        query.type = type;
+    }
+
     if (category || category === 0) {
       query.category = category;
     }
 
     let ret = yield this.services.message.getByQuery(this, query);
+    let totalPage = Math.ceil(ret.total_count / ret.per_page);
     let messages = ret.data;
 
     let data = {
+      page: page,
+      totalPage: totalPage,
       category: category,
       messages: messages
     };

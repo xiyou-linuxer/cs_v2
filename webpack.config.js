@@ -37,16 +37,26 @@ module.exports = {
       layouts: 'layouts',
       ui: 'mods/ui.js',
       request: 'utils/request.js',
-      'user-autocomplete': 'mods/user-autocomplete.js'
+      'autocomplete': 'mods/autocomplete.js'
     }
   },
   plugins: [
-    new CommonsChunkPlugin('js/vendor.js'),
+    new CommonsChunkPlugin({
+      name: 'common',
+      filename: 'js/vendor.js',
+      minChunks: 3,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
     new ExtractTextPlugin('css/[name].css')
   ],
   externals: {
     // 对应全局变量 jQuery
-    "jquery": "jQuery"
+    "jquery": "jQuery",
+    "editor": "Editor"
   }
 };
 

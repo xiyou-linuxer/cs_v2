@@ -82,6 +82,10 @@ module.exports = function (app) {
 };
 
 function unfoldUserInfo (user) {
+  if (!user) {
+    return user;
+  }
+
   if (moment(user.online_at).isAfter(moment().subtract(1, 'hours'))) {
     user.isOnline = true;
   } else {

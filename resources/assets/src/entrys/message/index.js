@@ -4,14 +4,28 @@ import './index.less';
 
 import 'babel-polyfill';
 import 'layouts/app';
+import 'mods/pagination';
+import 'mods/autocomplete';
 
 import UI from 'ui';
+import URL from 'utils/url';
 import Message from 'apis/message';
 
 let $messageListPage = $('.koala-message-list-page');
 
 let $table = $messageListPage.find('table');
-let $messageBtns = $messageListPage.find('.message-group-btn');
+let $messageBtnGroups = $messageListPage.find('.message-btn-group');
+let $messageFormControls = $messageListPage.find('.search-form-grop');
+
+let $messageSelectForm = $messageListPage.find('#message_select_form');
+$messageSelectForm.find('.form-control').on('change', function (e) {
+  let data = $messageSelectForm.serializeObject();
+
+  let query = URL.getQueryObject();
+  data.page = 1;
+  data.category = query.category;
+  location.href = URL.getQueryString(data);
+});
 
 $table.find('thead .checkbox').on('change', function (e) {
   e.preventDefault();
@@ -19,9 +33,11 @@ $table.find('thead .checkbox').on('change', function (e) {
   let isChecked = $(this).prop('checked');
   $(this).parents('table').find('tbody .checkbox').prop('checked', isChecked);
   if (isChecked) {
-    $messageBtns.fadeIn(300);
+    $messageBtnGroups.fadeIn(300);
+    $messageFormControls.hide();
   } else {
-    $messageBtns.fadeOut(300);
+    $messageBtnGroups.hide();
+    $messageFormControls.fadeIn(300);
   }
 });
 
@@ -40,9 +56,11 @@ $table.find('tbody .checkbox').on('change', function (e) {
 
   $table.find('thead .checkbox').prop('checked', checkedAll);
   if (hasChecked) {
-    $messageBtns.fadeIn(300);
+    $messageBtnGroups.fadeIn(300);
+    $messageFormControls.hide();
   } else {
-    $messageBtns.fadeOut(300);
+    $messageBtnGroups.hide();
+    $messageFormControls.fadeIn(300);
   }
 });
 
@@ -86,7 +104,9 @@ $messageListPage.find('#btn_message_read').on('click', function () {
       $rows.find('.message-status-label').removeClass('label-danger').addClass('label-success');
       $rows.find('.checkbox:checked').prop('checked', false);
       $table.find('thead .checkbox').prop('checked', false);
-      $messageBtns.fadeOut(300);
+
+      $messageBtnGroups.hide();
+      $messageFormControls.fadeIn(300);
     });
   }).catch(function () {
     UI.alert('批量操作发生错误，部分或全部信息未成功标记~').then(function () {
@@ -101,7 +121,9 @@ $messageListPage.find('#btn_message_read').on('click', function () {
 
       $rows.find('.checkbox:checked').prop('checked', false);
       $table.find('thead .checkbox').prop('checked', false);
-      $messageBtns.fadeOut(300);
+
+      $messageBtnGroups.hide();
+      $messageFormControls.fadeIn(300);
     });
   });
 });
@@ -133,13 +155,15 @@ $messageListPage.find('#btn_message_delete').on('click', function () {
     Promise.all(results).then(function () {
       UI.alert('批量删除成功~').then(function () {
         setTimeout(function () {
+          location.reload();
           $rows.remove();
           if ($table.find('tbody tr').length === 0) {
             $('<div class="well bg-light m-t-lg text-center">暂无数据~</div>').appendTo($table.parent());
             $table.remove();
           }
         }, 300);
-        $messageBtns.fadeOut(300);
+        $messageBtnGroups.hide();
+        $messageFormControls.fadeIn(300);
       });
     }).catch(function () {
       UI.alert('批量操作发生错误，部分或全部信息未成功删除~').then(function () {
@@ -155,7 +179,9 @@ $messageListPage.find('#btn_message_delete').on('click', function () {
               $table.find('thead .checkbox').prop('checked', false);
             }
           }, 300);
-          $messageBtns.fadeOut(300);
+
+          $messageBtnGroups.hide();
+          $messageFormControls.fadeIn(300);
         });
 
         failedList.forEach(function (id) {

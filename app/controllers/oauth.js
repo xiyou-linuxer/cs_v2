@@ -7,18 +7,20 @@ const path = require('path');
 module.exports = function (app) {
 
   exports.handle_adam_callback = function* () {
-
     if (!this.session.grant.response
       || !this.session.grant.response.access_token) {
       return this.throw(500, 'unkown error!');
     }
 
     try {
+      let client = yield this.proxy.adam.get('client');
+      this.session.grant.client = client;
+
       let user = yield this.proxy.adam.get('me');
       this.session.grant.user = user;
 
       this.redirect(this.session.old_path || '/');
-      this.status = 301;
+      this.status = 302;
     } catch (err) {
       this.body = err.message;
       //this.throw(err);

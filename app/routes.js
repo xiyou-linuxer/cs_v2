@@ -44,6 +44,7 @@ module.exports = function (app) {
 
   app.get('/api/apps', "api/app@index");
   app.post('/api/apps', "api/app@create");
+  app.get('/api/apps/:id', "api/app@show");
   app.put('/api/apps/:id', "api/app@update");
   app.delete('/api/apps/:id', "api/app@destroy");
   app.put('/api/apps/:id/secret', "api/app@refreshSecret");

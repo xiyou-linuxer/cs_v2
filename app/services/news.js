@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const path = require('path');
 const moment = require('moment');
+const marked = require('marked');
 
 module.exports = function (app) {
 
@@ -20,15 +21,19 @@ module.exports = function (app) {
   };
 
   exports.getById = function* (ctx, id) {
-    return yield ctx.proxy.adam.get('news', {
+    let news = yield ctx.proxy.adam.get('news', {
       subpath: id
     });
+
+    return unfoldNewsInfo(news);
   };
 
   exports.create = function* (ctx, data) {
-    return yield ctx.proxy.adam.post('news', {
+    let news = yield ctx.proxy.adam.post('news', {
       form: data
     });
+
+    return unfoldNewsInfo(news);
   };
 
   exports.deleteById = function* (ctx, id, data) {
@@ -38,10 +43,12 @@ module.exports = function (app) {
   };
 
   exports.createComment = function* (ctx, newsId, data) {
-    return yield ctx.proxy.adam.post('news', {
+    let news = yield ctx.proxy.adam.post('news', {
       subpath: newsId + '/comments',
       form: data
     });
+
+    return unfoldNewsInfo(news);
   };
 
   exports.getCommentsByQuery = function* (ctx, newsId, q) {
@@ -59,15 +66,21 @@ module.exports = function (app) {
   };
 
   exports.favor = function* (ctx, newsId) {
-    return yield ctx.proxy.adam.post('news', {
+    let news = yield ctx.proxy.adam.post('news', {
       subpath: newsId + '/favors'
     });
+
+    return unfoldNewsInfo(news);
   };
 
   return exports;
 };
 
 function unfoldNewsInfo (news) {
+  if (!news) {
+    return news;
+  }
+
   if (moment(news.created_at).isAfter(moment().subtract(7, 'days'))) {
     moment.locale('zh-cn');
     news.created_at = moment(news.created_at).fromNow();
@@ -82,6 +95,9 @@ function unfoldNewsInfo (news) {
   news.favors = news.favors.map(function (favor) {
     return unfoldFavorInfo(favor);
   });
+
+  news.content_html = marked(news.content);
+  news.content_text = news.content_html.replace(/<.+?>|<\/.+?>/g, ' ');
 
   return news;
 }

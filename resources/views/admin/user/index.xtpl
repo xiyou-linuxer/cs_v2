@@ -16,22 +16,23 @@
           <li><a>用户管理</a></li>
         </ul>
       </header>
-      <div class="alert alert-warning m-t">
+      <div class="alert alert-danger m-t">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <i class="fa fa-warning m-r"></i>为了维护用户数据安全，所有涉及到用户信息变更的操作将会被系统记录，并且会发送系统动态，请谨慎操作！
       </div>
       <form class="form-horizontal m-t" id="user_select_form" action="/admin/users" method="GET">
-        <div class="form-group">
-          <div class="col-md-2">
+        <div class="form-group m-b-none">
+          <div class="col-md-2 m-b">
             <a href="/admin/users/_new" class="btn btn-success btn-block">添加成员</a>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 m-b">
             <select class="form-control chosen-select" name="group"">
               <option value="">所用用户组</option>
               <option value="1" {{#if (_query.group === '1')}}selected{{/if}}>管理</option>
               <option value="0" {{#if (_query.group === '0')}}selected{{/if}}>成员</option>
             </select>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 m-b">
             <select class="form-control chosen-select" name="grade">
               <option value="">所有年级</option>
               {{#each (data.grades)}}
@@ -39,7 +40,7 @@
               {{/each}}
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 m-b">
             <select class="form-control chosen-select" name="major">
               <option value="">所有专业</option>
               {{#each (data.majors)}}
@@ -47,13 +48,13 @@
               {{/each}}
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 m-b">
             <input class="form-control" name="keyword" placeholder="关键字搜索" value="{{_query.keyword}}">
           </div>
         </div>
       </form>
       {{#if (data.users.length)}}
-        <table class="table table-striped m-b-none">
+        <table class="table table-striped m-b-none table-responsive">
           <thead>
             <tr>
               <th>ID</th>
@@ -97,6 +98,9 @@
             {{/each}}
           </tbody>
         </table>
+
+        {{include ('../../mods/pagination.xtpl')}}
+
       {{else}}
         <div class="well bg-light m-t-lg text-center">暂无数据~</div>
       {{/if}}

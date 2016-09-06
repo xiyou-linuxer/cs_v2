@@ -32,7 +32,7 @@ module.exports = function (app) {
       return yield* next;
     }
 
-    if (!ctx.session.grant.response
+    if (!ctx.session.grant || !ctx.session.grant.response
       || !ctx.session.grant.response.access_token) {
       return yield* next;
     }

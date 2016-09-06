@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/assets/libs/jquery.chosen/chosen.css">
   <link rel="stylesheet" href="/assets/libs/simple-line-icons/simple-line-icons.css">
   <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.css">
+  <link rel="stylesheet" href="/assets/libs/editor/editor.css">
+  <link rel="stylesheet" href="/assets/css/common.css">
   {{block ('headSection')}}
 </head>
 <body>
@@ -73,17 +75,18 @@
                   </div>
                 {{/if}}
                 <div class="list-group list-group-alt">
-                  {{#each (_messages)}}
-                    <a href="/messages/{{id}}" class="media list-group-item">
-                      <span class="pull-left thumb-sm">
-                        <img src="{{author.avatar_url}}" class="img-circle">
-                      </span>
-                      <span class="block m-b-none">{{content}}<br>
-                        <small class="text-muted">{{create_at}}</small>
-                      </span>
-                    </a>
-                  {{/each}}
-                  {{#if (_messages.length === 0)}}
+                  {{#if (_messages.length)}}
+                    {{#each (_messages.slice(0, 5))}}
+                      <a href="/messages/{{id}}" class="media list-group-item">
+                        <span class="pull-left thumb-sm">
+                          <img src="{{author.avatar_url}}" class="img-circle">
+                        </span>
+                        <span class="block m-b-none">{{{content_text.substr(0, 50)}}}...<br>
+                          <small class="text-muted">{{create_at}}</small>
+                        </span>
+                      </a>
+                    {{/each}}
+                  {{else}}
                     <a href="/messages" class="media list-group-item">
                       <span class="media-body block m-b-none">暂时没有任何未读站内信 </span>
                     </a>
@@ -115,10 +118,17 @@
               <li>
                 <a href="/users/{{_me.id}}">个人中心</a>
               </li>
+              <li class="divider"></li>
               <li>
                 <a href="/messages">
                   <span class="badge bg-danger pull-right"></span>
-                  站内信
+                  消息中心
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#" data-toggle="modal" data-target="#global_news_modal">
+                  发表动态
                 </a>
               </li>
               <li class="divider"></li>
@@ -240,7 +250,7 @@
   <div class="modal modal-fixed fade" id="global_news_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="global_news_form">
+        <form id="global_news_form" class="global-news-form">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">发表动态</h4>
@@ -250,7 +260,13 @@
               <input type="text" class="form-control" name="topic" placeholder="话题">
             </div>
             <div class="form-group">
-              <textarea class="form-control" name="content" rows="5" placeholder="内容"></textarea>
+              <div class="editor-wrapper">
+                <div class="loading" style="background-color: #dde">
+                  <i class="fa fa-spin fa-spinner loading-icon" style="color: #272822"></i>
+                  <div class="loading-msg">文本编辑器加载中...</div>
+                </div>
+                <textarea class="form-control"  name="content" placeholder="动态内容"></textarea>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -268,6 +284,8 @@
   <script src="/assets/libs/jquery.chosen/chosen.js"></script>
   <script src="/assets/libs/formValidation/formValidation.js"></script>
   <script src="/assets/libs/formValidation/bootstrapValidator.js"></script>
+  <script src="/assets/libs/editor/marked.js"></script>
+  <script src="/assets/libs/editor/editor.js"></script>
   <script src="/assets/js/vendor.js"></script>
   {{block ('footSection')}}
 </body>

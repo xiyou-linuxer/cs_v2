@@ -1,0 +1,58 @@
+{{set (page = data.page)}}
+{{set (totalPage = data.totalPage)}}
+{{#if (page < 1)}}
+  {{set (page = 1)}}
+{{elseif (page > totalPage)}}
+  {{set (page = totalPage)}}
+{{/if}}
+
+{{#if (totalPage > 1)}}
+  {{#if (page <= 3)}}
+    {{set (startPage = 1)}}
+  {{elseif (totalPage <= 5)}}
+    {{set (startPage = 1)}}
+  {{elseif (totalPage - page < 3)}}
+    {{set (startPage = totalPage - 4)}}
+  {{elseif (totalPage - page < 5)}}
+    {{set (startPage = page - 2)}}
+  {{else}}
+    {{set (startPage = page)}}
+  {{/if}}
+  {{#if (totalPage - startPage < 5)}}
+    {{set (endPage = totalPage)}}
+  {{else}}
+    {{set (endPage = startPage + 4)}}
+  {{/if}}
+  <div class="text-center">
+    <ul class="pagination pagination-lg">
+      {{#if (page !== 1)}}
+        <li><a href="?page=1"><i class="fa fa-angle-double-left"></i></a></li>
+      {{else}}
+        <li class="disabled"><a><i class="fa fa-angle-double-left"></i></a></li>
+      {{/if}}
+      {{#if (page > 1)}}
+        <li><a href="?page={{page - 1}}"><i class="fa fa-angle-left"></i></a></li>
+      {{else}}
+        <li class="disabled"><a><i class="fa fa-angle-left"></i></a></li>
+      {{/if}}
+      {{if (totalPage - page >= 5)}}
+      {{#each (range(startPage, endPage + 1))}}
+        {{#if (page === this)}}
+          <li class="active"><a>{{this}}</a></li>
+        {{else}}
+          <li><a href="?page={{this}}">{{this}}</a></li>
+        {{/if}}
+      {{/each}}
+      {{#if (page < totalPage)}}
+        <li><a href="?page={{page + 1}}"><i class="fa fa-angle-right"></i></a></li>
+      {{else}}
+        <li class="disabled"><a><i class="fa fa-angle-right"></i></a></li>
+      {{/if}}
+      {{#if (page !== totalPage)}}
+        <li><a href="?page={{totalPage}}"><i class="fa fa-angle-double-right"></i></a></li>
+      {{else}}
+        <li class="disabled"><a><i class="fa fa-angle-double-right"></i></a></li>
+      {{/if}}
+    </ul>
+  </div>
+{{/if}}

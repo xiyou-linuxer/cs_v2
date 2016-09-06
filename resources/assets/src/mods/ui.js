@@ -29,16 +29,18 @@ exports.alert = function (opts) {
     let tpl = `
       <div class="ui-alert">
         <div class="alert-inner">
-          <header>
-            <span class="alert-title"><i class="fa fa-info-circle m-r"></i>{{title}}</span>
-            <a href="#" class="alert-close">
-              <i class="fa fa-times"></i>
-            </a>
-          </header>
-          <div class="alert-body">{{{message}}}</div>
-          <footer>
-            <span class="btn btn-success btn-ok">{{btnText}}</span>
-          </footer>
+          <div class="alert-panel">
+            <header>
+              <span class="alert-title"><i class="fa fa-info-circle m-r"></i>{{title}}</span>
+              <a href="#" class="alert-close">
+                <i class="fa fa-times"></i>
+              </a>
+            </header>
+            <div class="alert-body">{{{message}}}</div>
+            <footer>
+              <span class="btn btn-success btn-ok">{{btnText}}</span>
+            </footer>
+          </div>
         </div>
       </div>`;
 
@@ -83,17 +85,19 @@ exports.confirm = function (opts) {
     let tpl = `
       <div class="ui-alert">
         <div class="alert-inner">
-          <header>
-            <span class="alert-title"><i class="fa fa-info-circle m-r"></i>{{title}}</span>
-            <a href="#" class="alert-close">
-              <i class="fa fa-times"></i>
-            </a>
-          </header>
-          <div class="alert-body">{{{message}}}</div>
-          <footer>
-            <span class="btn btn-success btn-ok m-r">{{btnText}}</span>
-            <span class="btn btn-danger btn-cancel m-l">取消</span>
-          </footer>
+          <div class="alert-panel">
+            <header>
+              <span class="alert-title"><i class="fa fa-info-circle m-r"></i>{{title}}</span>
+              <a href="#" class="alert-close">
+                <i class="fa fa-times"></i>
+              </a>
+            </header>
+            <div class="alert-body">{{{message}}}</div>
+            <footer>
+              <span class="btn btn-success btn-ok m-r">{{btnText}}</span>
+              <span class="btn btn-danger btn-cancel m-l">取消</span>
+            </footer>
+          </div>
         </div>
       </div>`;
 

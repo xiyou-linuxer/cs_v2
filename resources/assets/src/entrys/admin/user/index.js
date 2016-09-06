@@ -2,6 +2,7 @@
 
 import 'babel-polyfill';
 import 'layouts/app';
+import 'mods/pagination';
 
 import UI from 'ui';
 import User from 'apis/user';
@@ -60,7 +61,7 @@ $adminUserListPage.find('table tbody .btn-set-admin').on('click', function (e) {
 $adminUserListPage.find('table tbody .btn-unset-admin').on('click', function (e) {
   let userId = $(this).data('id');
 
-  UI.confirm('取消管理员之后，该用户将不再具有任何系统管理权限！<br>是否继续？')
+  UI.confirm('取消管理员之后，该用户将不再具有任何管理权限！<br>是否继续？')
   .then(function () {
     User.update(userId, {group: 0}).then(function () {
       UI.alert({

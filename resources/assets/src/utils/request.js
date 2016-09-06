@@ -1,4 +1,5 @@
-import 'babel-polyfill';
+'use strict';
+
 import $ from 'jquery';
 
 /**

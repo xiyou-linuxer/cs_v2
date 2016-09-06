@@ -13,8 +13,16 @@ const jQuery = $;
 // toogle fullscreen
 $(document).on('click', "[data-toggle=fullscreen]", function(e){
   e.preventDefault();
+  e.stopPropagation();
+
   if (screenfull.enabled) {
     screenfull.request();
+  }
+});
+
+$(document).delegate('a', 'click', function (e) {
+  if ($(this).attr('href') === '#') {
+    $(this).removeAttr('href');
   }
 });
 
@@ -128,6 +136,51 @@ $(document).on('click.button.data-api', '[data-loading-text]', function (e) {
     $this.button('loading');
 });
 
+// data-shift api
+!function ($) {
+
+  'use strict'; // jshint ;_;
+
+ /* SHIFT CLASS DEFINITION
+  * ====================== */
+
+  let Shift = function (element) {
+    this.$element = $(element)
+    this.$prev = this.$element.prev()
+    !this.$prev.length && (this.$parent = this.$element.parent())
+  }
+
+  Shift.prototype = {
+  	constructor: Shift
+
+    , init:function(){
+    	let $el = this.$element
+    	, method = $el.data()['toggle'].split(':')[1]
+    	, $target = $el.data('target')
+    	$el.hasClass('in') || $el[method]($target).addClass('in')
+    }
+    , reset :function(){
+    	this.$parent && this.$parent['prepend'](this.$element)
+    	!this.$parent && this.$element['insertAfter'](this.$prev)
+    	this.$element.removeClass('in')
+    }
+  }
+
+ /* SHIFT PLUGIN DEFINITION
+  * ======================= */
+
+  $.fn.shift = function (option) {
+    return this.each(function () {
+      let $this = $(this)
+        , data = $this.data('shift')
+      if (!data) $this.data('shift', (data = new Shift(this)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.shift.Constructor = Shift
+}($);
+
 let $window = $(window);
 // mobile
 let mobile = function(option){
@@ -220,7 +273,18 @@ $('#global_search_btn').on('click', function (e) {
   location.href = '/search/' + keyword;
 });
 
-$('#global_news_form').formValidation({
+let $globalNewsForm = $('#global_news_form');
+
+let editor = new Editor({
+  autofocus: false,
+  element: $globalNewsForm.find('[name="content"]').get(0)
+});
+
+editor.render();
+
+$globalNewsForm.find('.loading').fadeOut();
+
+$globalNewsForm.formValidation({
   autoFocus: true,
   framework: 'bootstrap',
   icon: {
@@ -254,6 +318,13 @@ $('#global_news_form').formValidation({
       fv    = $form.data('formValidation');
 
   let data = $form.serializeObject();
+
+  data.content = editor.codemirror.getValue();
+
+  if (!data.content) {
+    fv.disableSubmitButtons(false);
+    return UI.alert('内容不能为空~');
+  }
 
   News.create(data).then(function (res) {
     if (res && res.id) {

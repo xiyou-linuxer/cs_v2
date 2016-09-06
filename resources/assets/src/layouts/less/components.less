@@ -281,6 +281,43 @@ a.list-group-item:focus {
 .panel.no-borders .panel-footer {
   border-width: 0;
 }
+.table-fixed {
+  table-layout:fixed;
+
+  th, td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.table-scroll {
+  display: block;
+  overflow: scroll;
+  th,td {
+    white-space: nowrap;
+  }
+}
+.table-responsive {
+  display: block;
+  overflow: scroll;
+  th,td {
+    white-space: nowrap;
+  }
+}
+@media (min-width: 768px) {
+  .table-responsive {
+    display: table;
+    overflow: auto;
+    table-layout:fixed;
+
+    th, td {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
 .panel .table td,
 .panel .table th {
   padding: 8px 15px;
@@ -503,10 +540,21 @@ a.list-group-item:focus {
   position: relative;
   background: #5a6a7a;
 }
+
 .modal-center {
   position: absolute;
   left: 50%;
   top: 50%;
+}
+
+@media (max-width: 768px) {
+  .modal-v-center {
+    position: fixed;
+    width: 100%;
+    padding: 10px;
+    top: 50%;
+    margin-top: -50%;
+  }
 }
 .modal-content {
   -webkit-box-shadow: 0 2px 10px rgba(0,0,0,0.25);

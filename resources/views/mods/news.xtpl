@@ -1,103 +1,108 @@
-{{#each (news)}}
-  <article class="comment-item" data-news-id="{{id}}">
-    {{#if (type === 0)}}
-      <a href="/users/{{author.id}}" class="pull-left thumb-sm avatar">
-        <img src="{{author.avatar_url}}">
-      </a>
-    {{else}}
-      <a href="{{app.homepage_url}}" class="pull-left thumb-sm avatar" target="_blank">
-        <img src="{{app.logo_url}}">
-      </a>
-    {{/if}}
-    <span class="arrow left"></span>
-    <div class="comment-body panel panel-default">
-      <header class="panel-heading">
+{{#if (news.length)}}
+  <section class="comment-list block">
+    {{#each (news)}}
+      <article class="comment-item" data-news-id="{{id}}">
+        <a href="#news_{{id}}"></a>
         {{#if (type === 0)}}
-          <a href="/users/{{author.id}}">
-            {{#if(author.id === _me.id)}}<span class="label label-success label-sm m-r-xs r-3x">我</span>{{/if}}
-            <strong>{{author.name}}</strong>
+          <a href="/users/{{author.id}}" class="pull-left thumb-sm avatar">
+            <img src="{{author.avatar_url}}">
           </a>
         {{else}}
-          <a href="{{app.homepage_url}}" target="_blank">
-            <strong>{{app.name}}</strong>
+          <a href="{{app.homepage_url}}" class="pull-left thumb-sm avatar" target="_blank">
+            <img src="{{app.logo_url}}">
           </a>
         {{/if}}
-        <span class="text-muted m-l-sm pull-right">
-          <i class="fa fa-clock-o m-r-xs"></i>
-          {{created_at}}
-          {{#if(type === 0 && author.id === _me.id)}}
-            <a href="#" class="btn-news-delete text-muted">
-              <i class="fa fa-trash m-l-sm"></i>
-            </a>
-          {{/if}}
-        </span>
-      </header>
-      <div class="panel-body">
-          <p>{{content}}</p>
-          {{#if (link_url)}}
-            <a href="{{link_url}}" target="_blank">点击查看</a>
-          {{/if}}
-      </div>
-      <div class="panel-footer p">
-        <div class="clearfix">
-          {{#if (type === 1)}}
-            <label class="label label-success">应用</label>
-          {{/if}}
-          <label class="label label-info m-l-xs">{{topic}}</label>
-          <div class="btn-group pull-right">
-            {{#if (hasFavored)}}
-              <span class="text-success m-r"><i class="fa fa-thumbs-up m-r-xs"></i>{{favors.length}}</span>
+        <span class="arrow left"></span>
+        <div class="comment-body panel panel-default">
+          <header class="panel-heading">
+            {{#if (type === 0)}}
+              <a href="/users/{{author.id}}">
+                {{#if(author.id === _me.id)}}<span class="label label-success label-sm m-r-xs r-3x">我</span>{{/if}}
+                <strong>{{author.name}}</strong>
+              </a>
             {{else}}
-              <a href="#" class="btn-news-favor text-muted m-r"><i class="fa fa-thumbs-up m-r-xs"></i>{{favors.length}}</a>
+              <a href="{{app.homepage_url}}" target="_blank">
+                <strong>{{app.name}}</strong>
+              </a>
             {{/if}}
-            <a href="#" class="btn-news-comment-toggle text-muted"><i class="fa fa-comments m-r-xs"></i>{{comments.length}}</a>
-          </div>
-        </div>
-        <div class="input-group text-sm m-t comment-input-group" style="display: none">
-          <input type="text" class="input-sm form-control" placeholder="既然来了，不如说点什么吧">
-          <div class="input-group-btn">
-            <button type="button" class="btn btn-sm btn-default btn-news-comment">评论</button>
-          </div>
-        </div>
-      </div>
-      <ul class="list-group alt">
-        {{#if (favors.length)}}
-          <li class="list-group-item p-b-none">
-            <div class="media">
-            <span class="pull-left p-sm avatar bg-light m-b-sm m-r-sm">
-              <i class="fa fa-thumbs-up lg b-transparent"></i>
+            <span class="text-muted m-l-sm pull-right">
+              <i class="fa fa-clock-o m-r-xs"></i>
+              {{created_at}}
+              {{#if(type === 0 && author.id === _me.id)}}
+                <a href="#" class="btn-news-delete text-muted">
+                  <i class="fa fa-trash m-l-sm"></i>
+                </a>
+              {{/if}}
             </span>
-                {{#each (favors)}}
-                  <span class="pull-left thumb-xs m-b-sm">
-                    <img src="{{author.avatar_url}}" title="{{author.name}}" class="img-circle">
-                  </span>
-                {{/each}}
-            </div>
-          </li>
-        {{/if}}
-        {{#each (comments)}}
-          <li class="list-group-item">
-            <div class="media">
-              <span class="pull-left thumb-sm">
-                <img src="{{author.avatar_url}}" class="img-circle">
-              </span>
-              <small class="pull-right text-muted">
-                <i class="fa fa-clock-o m-r-xs"></i>
-                {{created_at}}
-              </small>
-              <div class="media-body">
-                <div>
-                  <a href="/users/{{author.id}}">{{author.name}}</a>
-                </div>
-                <span class="text-muted">{{content}}</span>
+          </header>
+          <div class="panel-body">
+              <p>{{{content_html}}}</p>
+              {{#if (link_url)}}
+                <a href="{{link_url}}" target="_blank">点击查看</a>
+              {{/if}}
+          </div>
+          <div class="panel-footer p">
+            <div class="clearfix">
+              {{#if (type === 1)}}
+                <label class="label label-success">应用</label>
+              {{/if}}
+              <label class="label label-info m-l-xs">{{topic}}</label>
+              <div class="btn-group pull-right">
+                {{#if (hasFavored)}}
+                  <span class="text-success m-r"><i class="fa fa-thumbs-up m-r-xs"></i>{{favors.length}}</span>
+                {{else}}
+                  <a href="#" class="btn-news-favor text-muted m-r"><i class="fa fa-thumbs-up m-r-xs"></i>{{favors.length}}</a>
+                {{/if}}
+                <a href="#" class="btn-news-comment-toggle text-muted"><i class="fa fa-comments m-r-xs"></i>{{comments.length}}</a>
               </div>
             </div>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  </article>
-{{/each}}
+            <div class="input-group text-sm m-t comment-input-group" style="display: none">
+              <input type="text" class="input-sm form-control" placeholder="既然来了，不如说点什么吧">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default btn-news-comment">评论</button>
+              </div>
+            </div>
+          </div>
+          <ul class="list-group alt">
+            {{#if (favors.length)}}
+              <li class="list-group-item p-b-none">
+                <div class="media">
+                <span class="pull-left p-sm avatar bg-light m-b-sm m-r-sm">
+                  <i class="fa fa-thumbs-up lg b-transparent"></i>
+                </span>
+                    {{#each (favors)}}
+                      <span class="pull-left thumb-xs m-b-sm">
+                        <img src="{{author.avatar_url}}" title="{{author.name}}" class="img-circle">
+                      </span>
+                    {{/each}}
+                </div>
+              </li>
+            {{/if}}
+            {{#each (comments)}}
+              <li class="list-group-item">
+                <div class="media">
+                  <span class="pull-left thumb-sm">
+                    <img src="{{author.avatar_url}}" class="img-circle">
+                  </span>
+                  <small class="pull-right text-muted">
+                    <i class="fa fa-clock-o m-r-xs"></i>
+                    {{created_at}}
+                  </small>
+                  <div class="media-body">
+                    <div>
+                      <a href="/users/{{author.id}}">{{author.name}}</a>
+                    </div>
+                    <span class="text-muted">{{content}}</span>
+                  </div>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </article>
+    {{/each}}
+  </section>
+{{/if}}
 
 <script type="xtpl" id="news_mods_template">
   {{%{{#each (this)}}
@@ -135,7 +140,7 @@
           </span>
         </header>
         <div class="panel-body">
-            <p>{{content}}</p>
+            <p>{{{content_html}}}</p>
             {{#if (link_url)}}
               <a href="{{link_url}}" target="_blank">点击查看</a>
             {{/if}}

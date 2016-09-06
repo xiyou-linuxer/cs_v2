@@ -16,10 +16,13 @@
       </ol>
       <div class="panel panel-default">
         <div class="panel-body">
-          <input type="hidden" id="data_app_id" value="{{app.id}}">
+          <input type="hidden" id="data_app_id" value="{{app.client_id}}">
           <div class="row">
             {{#if (app.status === 0)}}
-                <div class="alert alert-danger m-l m-r"><i class="fa fa-warning m-r"></i> 该应用为新创建应用或信息已发生变更，需等待系统管理员审批</div>
+                <div class="alert alert-danger m-l m-r">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <i class="fa fa-warning m-r"></i> 该应用为新创建应用或信息已发生变更，需等待系统管理员审批
+                </div>
               </div>
             {{/if}}
             <div class="col-md-2 text-right font-bold">CLIENT_ID</div>
@@ -111,14 +114,22 @@
             <div class="line line-dashed b-b line-lg col-md-12"></div>
             <div class="col-md-2 text-right font-bold">描述：</div>
             <div class="col-md-10">
-              <p>{{app.description}}</p>
+              {{#if (app.description)}}
+                <p>{{{app.description_text}}}</p>
+              {{else}}
+                <p class="text-muted">这家伙很懒，还没有填写描述信息~</p>
+              {{/if}}
             </div>
-            {{#if (app.status === 0 && _me.group === 1)}}
+            {{#if ((app.author_id === _me.id || _me.group === 1))}}
               <div class="line line-dashed b-b line-lg col-md-12"></div>
               <div class="col-md-2"></div>
               <div class="col-md-10 m-b">
-                <a href="#" id="btn_app_confirm" class="btn btn-success m-r">审核通过</a>
-                <a href="#" id="btn_app_reject" class="btn btn-danger">审核不通过</a>
+                {{#if ((app.status === 0 && _me.group === 1))}}
+                  <a href="#" id="btn_app_confirm" class="btn btn-primary btn-sm m-r">审核通过</a>
+                  <a href="#" id="btn_app_reject" class="btn btn-dark btn-sm m-r">审核不通过</a>
+                {{/if}}
+                <a href="/apps/{{app.id}}/_edit" class="btn btn-success btn-sm m-r">编辑应用</a>
+                <a href="#" id="btn_app_delete" class="btn btn-danger btn-sm m-r">删除应用</a>
               </div>
             {{/if}}
           </div>

@@ -1,18 +1,18 @@
 'use strict';
 
-import './user-autocomplete.less';
+import './autocomplete.less';
 
 import 'babel-polyfill';
 import Xtemplate from 'xtemplate';
 
 let listTemplate = `{{#each (this)}}
-  <li data-id="{{id}}" data-name="{{name}}">
+  <li data-id="{{client_id || id}}" data-name="{{name}}">
     <div class="avatar">
-      <img src="{{avatar_url}}">
+      <img src="{{logo_url || avatar_url}}">
     </div>
     <div class="info">
       <p class="name">{{name}}</p>
-      <p class="workplace">{{workplace}}</p>
+      <p class="workplace">{{#if (client_id)}}{{author.name}}{{else}}{{workplace}}{{/if}}</p>
     </div>
   </li>
   {{/each}}
@@ -23,14 +23,19 @@ let listTemplate = `{{#each (this)}}
 function autocomplete (selector) {
   let $origin = $(selector);
 
-  let className = $origin.attr('class');
+  let autocompleteType = $origin.data('autocomplete-type');
+  let autocompleteLimit = parseInt($origin.data('autocomplete-limit')) || 0;
 
-  $origin.addClass('user-autocomplete-origin');
-  let $component = $('<div class="user-autocomplete"></div>');
+  let remotePath = autocompleteType === 'app' ? '/api/apps/' : '/api/users/';
+
+  let className = $origin.attr('class');
+  $origin.addClass('koala-autocomplete-origin');
+  let $component = $('<div class="koala-autocomplete"></div>');
   let $inputBox = $('<div class="input-box"></div>').addClass(className).appendTo($component);
   let $list = $('<ul class="user-select"></ul').appendTo($component);
 
-  let $input = $('<input placeholder="请输入用户名称">').appendTo($inputBox);
+  let placeholder = $origin.attr('placeholder');
+  let $input = $('<input placeholder="' + placeholder + '">').appendTo($inputBox);
   let $label = $('<span class="label label-info"></span>');
 
   $origin.after($component);
@@ -70,11 +75,11 @@ function autocomplete (selector) {
       }
 
       $.ajax({
-        url: '/api/users',
+        url: remotePath,
         method: 'GET',
         data: {
           keyword: value,
-          per_page: 3
+          per_page: 5
         },
         success: function (res) {
           if (res && res.data) {
@@ -95,9 +100,16 @@ function autocomplete (selector) {
     $origin.attr('value', id);
     $list.hide();
 
-    if ($origin.data('type') === 'single') {
-      $input.siblings('.label').remove();
+    let oldSiblingsCount = autocompleteLimit - 1;
+    if (oldSiblingsCount >= 0) {
+        $input.siblings('.label').slice(oldSiblingsCount).remove();
     }
+
+    $input.siblings('.label').each(function () {
+      if ($(this).data('id') === id) {
+        $(this).remove();
+      }
+    });
 
     $input.before($label.clone().data('id', id).html(name));
 
@@ -114,14 +126,14 @@ function autocomplete (selector) {
   let dataValue = $origin.data('value') + '';
   let ids = dataValue ? dataValue.split(',') : [];
 
-  if ($origin.data('type') === 'single') {
-    ids = ids.slice(0, 1);
+  if (autocompleteLimit) {
+    ids = ids.slice(0, autocompleteLimit);
   }
 
   let receiverPromises = ids.map(function (id) {
     return new Promise(function (resolve, reject) {
       $.ajax({
-        url: '/api/users/' + id,
+        url: remotePath + id,
         method: 'GET',
         success: function (data) {
           resolve(data);
@@ -133,15 +145,16 @@ function autocomplete (selector) {
     });
   });
 
-  Promise.all(receiverPromises).then(function (receivers) {
+  Promise.all(receiverPromises).then(function (items) {
     let ids = [];
-    receivers.forEach(function (receiver) {
-      ids.push(receiver.id);
-      $input.before($label.clone().data('id', receiver.id).html(receiver.name));
+    items.forEach(function (item) {
+      let id = item.client_id ? item.client_id : item.id;
+      ids.push(item.id);
+      $input.before($label.clone().data('id', item.id).html(item.name));
     });
     $origin.val(ids.join(','));
   });
 
 }
 
-autocomplete('[data-toggle="user-autocomplete"]');
+autocomplete('[data-toggle="koala-autocomplete"]');

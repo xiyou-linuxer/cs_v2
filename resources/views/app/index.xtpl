@@ -21,13 +21,35 @@
           {{/if}}
         </ul>
       </header>
-      <div class="row m-t m-b">
-        <div class="col-md-10">
-          <a href="/apps/_new" class="btn btn-success btn-sm m-r">新建应用</a>
+      <form class="form-horizontal m-t" action="/messages" method="GET" id="app_select_form">
+        <div class="form-group m-b-none">
+          <div class="col-md-2 m-b">
+            <a href="/apps/_new" class="btn btn-success btn-block">新建应用</a>
+          </div>
+          {{#if (!data.isMy)}}
+            <div class="col-md-3 m-b">
+              <input class="form-control" name="author_id" placeholder="创建人姓名" data-value="{{_query.author_id}}" data-toggle="koala-autocomplete" data-autocomplate-limit="1">
+            </div>
+          {{else}}
+            <div class="col-md-3 m-b">
+              <select class="form-control chosen-select" name="status"">
+                <option value="">所有状态</option>
+                <option value="0" {{#if (_query.status === '0')}}selected{{/if}}>待审核</option>
+                <option value="1" {{#if (_query.status === '1')}}selected{{/if}}>已审核</option>
+                <option value="2" {{#if (_query.status === '2')}}selected{{/if}}>开发中</option>
+                <option value="3" {{#if (_query.status === '3')}}selected{{/if}}>已上线</option>
+                <option value="-1" {{#if (_query.status === '-1')}}selected{{/if}}>已拒绝</option>
+                <option value="-2" {{#if (_query.status === '-2')}}selected{{/if}}>已下线</option>
+              </select>
+            </div>
+          {{/if}}
+          <div class="col-md-3 m-b">
+            <input class="form-control" name="keyword" placeholder="关键字搜索" value="{{_query.keyword}}">
+          </div>
         </div>
-      </div>
+      </form>
       {{#if (data.apps.length)}}
-        <table class="table table-striped m-b-none">
+        <table class="table table-striped table-responsive m-b-none">
           <thead>
             <tr>
               <th>CLIENT_ID</th>
@@ -37,7 +59,7 @@
               {{/if}}
               <th>状态</th>
               <th>创建时间</th>
-              <th width="{{#if(data.isMy)}}150{{else}}100{{/if}}">操作</th>
+              <th width="150">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -65,10 +87,10 @@
                 </td>
                 <td>{{created_at}}</td>
                 <td>
-                  <a href="/apps/{{id}}" class="text-info text-u-l">查看</a>
-                  {{#if (data.isMy)}}
-                    <a href="/apps/{{id}}/_edit" class="text-info text-u-l  m-l">编辑</a>
-                    <a href="#" data-id="{{id}}" class="text-danger text-u-l m-l btn-delete">删除</a>
+                  <a href="/apps/{{client_id}}" class="text-info text-u-l">查看</a>
+                  {{#if (author.id === _me.id)}}
+                    <a href="/apps/{{client_id}}/_edit" class="text-info text-u-l  m-l">编辑</a>
+                    <a href="#" data-id="{{client_id}}" class="text-danger text-u-l m-l btn-delete">删除</a>
                   {{else}}
                     <a href="{{homepage}}" class="text-info text-u-l  m-l" target="_blank">主页</a>
                   {{/if}}
@@ -77,6 +99,9 @@
             {{/each}}
           </tbody>
         </table>
+
+        {{include ('../mods/pagination.xtpl')}}
+
       {{else}}
         <div class="well bg-light m-t-lg text-center">暂无数据~</div>
       {{/if}}
