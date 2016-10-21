@@ -103,6 +103,27 @@ $newsScrollable.on('scroll', function () {
   });
 });
 
+exports.scrollToNewsItem = function (newsId) {
+  let $newsItem = $('.comment-item[data-news-id=' + newsId + ']');
+
+  if (!$newsItem || !$newsItem.length) {
+    $newsScrollable.prepend('<div class="alert alert-danger">动态不存在，可能已被删除！</div>');
+    location.hash = '';
+    return;
+  }
+
+  var scrollTop = $newsItem.offset().top - 80;
+  $('#news_mods_scrollable').scrollTop(scrollTop);
+  location.hash = '#news_' + newsId;
+};
+
+// 当页面带有锚点时，滚动到相应的动态位置
+let hash = location.hash;
+if (hash && /^#news_\d+/.test(hash)) {
+  let newsId = parseInt(hash.replace('#news_', ''));
+  exports.scrollToNewsItem(newsId);
+}
+
 function replaceCommentItem(data, $oldItem) {
   var html = new Xtemplate(newsTemplate).render([data]);
 

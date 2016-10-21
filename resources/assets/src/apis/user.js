@@ -3,6 +3,13 @@
 import request from 'request';
 
 module.exports = {
+  getById (id) {
+    return request({
+      type: 'GET',
+      url: '/api/users/' + id
+    });
+  },
+
   create (data) {
     return request({
       type: 'POST',

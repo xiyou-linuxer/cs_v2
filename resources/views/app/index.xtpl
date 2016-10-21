@@ -68,7 +68,7 @@
                 <td>{{client_id}}</td>
                 <td>{{name}}</td>
                 {{#if (!data.isMy)}}
-                  <td><a href="/users/{{author.id}}" class="text-info text-u-l">{{author.name}}</a></td>
+                  <td><a href="/users/{{author.id}}" class="text-info text-u-l"  data-user-id="{{author.id}}" target="_blank">{{author.name}}</a></td>
                 {{/if}}
                 <td>
                   {{#if (status === 0)}}

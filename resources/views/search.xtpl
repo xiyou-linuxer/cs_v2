@@ -32,11 +32,11 @@
               {{#each (users)}}
                 <li class="list-group-item">
                   <div class="media clearfix">
-                    <span class="pull-left thumb-sm">
+                    <span class="pull-left thumb-sm cursor-pointer" data-user-id="{{id}}">
                       <img src="{{avatar_url}}" alt="" class="img-circle">
                     </span>
                     <div class="m-l-xl">
-                      <a href="/users/{{id}}">{{name}}</a>
+                      <a href="/users/{{id}}" data-user-id="{{id}}">{{name}}</a>
                       <small class="text-muted block">{{workplace}}</small>
                     </div>
                   </div>

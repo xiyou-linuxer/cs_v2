@@ -47,16 +47,4 @@
 
 {{#block ("footSection")}}
   <script src="/assets/js/index.js"></script>
-  <script>
-    let hash = location.hash;
-    if (hash && /^#news_\d+/.test(hash)) {
-      let newsId = parseInt(hash.replace('#news_', ''));
-
-      window.$newsItem = $('.comment-item[data-news-id=' + newsId + ']');
-
-      console.log($newsItem);
-
-      $('#news_mods_scrollable').scrollTop($newsItem.get(0).offsetTop);
-    }
-  </script>
 {{/block}}

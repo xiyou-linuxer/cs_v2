@@ -20,7 +20,7 @@
             {{#if (message.status === 0 || message.author.id === _me.id)}}
               <i class="fa fa-users m-r-xs"></i>
                 {{#each (message.all_receivers)}}
-                  <a href="/users/{{id}}" class="text-info text-u-l m-r-sm">{{name}}</a>
+                  <a href="/users/{{id}}" class="text-info text-u-l m-r-sm" data-user-id="{{id}}" target="_blank">{{name}}</a>
                 {{/each}}
                 {{#if (!message.all_receivers.length)}}
                   无
@@ -33,7 +33,7 @@
             <i class="fa fa-clock-o m-r-xs"></i>{{message.updated_at}}
           </p>
         </div>
-        <div class="panel-body">{{{message.content_html}}}</div>
+        <div class="panel-body message-content">{{{message.content_html}}}</div>
         <div class="panel-footer">
           {{#if (message.status === 0)}}
             <a class="btn btn-success btn-sm m-r" href="/messages/{{message.id}}/_edit">继续编辑</a>

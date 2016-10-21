@@ -57,7 +57,7 @@
               <tr>
                 <td>{{client_id}}</td>
                 <td>{{name}}</td>
-                <td>{{author.name}}</td>
+                <td><a href="/users/{{author.id}}" class="text-info text-u-l" data-user-id="{{author.id}}" target="_blank">{{author.name}}</a></td>
                 <td>
                   {{#if (status === 0)}}
                     <label class="label label-warning">待审核</label>

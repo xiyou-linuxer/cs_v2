@@ -2,9 +2,8 @@
   <section class="comment-list block">
     {{#each (news)}}
       <article class="comment-item" data-news-id="{{id}}">
-        <a href="#news_{{id}}"></a>
         {{#if (type === 0)}}
-          <a href="/users/{{author.id}}" class="pull-left thumb-sm avatar">
+          <a href="/users/{{author.id}}" class="pull-left thumb-sm avatar" data-user-id="{{author.id}}">
             <img src="{{author.avatar_url}}">
           </a>
         {{else}}
@@ -16,7 +15,7 @@
         <div class="comment-body panel panel-default">
           <header class="panel-heading">
             {{#if (type === 0)}}
-              <a href="/users/{{author.id}}">
+              <a href="/users/{{author.id}}" data-user-id="{{author.id}}">
                 {{#if(author.id === _me.id)}}<span class="label label-success label-sm m-r-xs r-3x">我</span>{{/if}}
                 <strong>{{author.name}}</strong>
               </a>
@@ -71,7 +70,7 @@
                   <i class="fa fa-thumbs-up lg b-transparent"></i>
                 </span>
                     {{#each (favors)}}
-                      <span class="pull-left thumb-xs m-b-sm">
+                      <span class="pull-left thumb-xs m-b-sm" data-user-id="{{author.id}}">
                         <img src="{{author.avatar_url}}" title="{{author.name}}" class="img-circle">
                       </span>
                     {{/each}}
@@ -81,7 +80,7 @@
             {{#each (comments)}}
               <li class="list-group-item">
                 <div class="media">
-                  <span class="pull-left thumb-sm">
+                  <span class="pull-left thumb-sm" data-user-id="{{author.id}}">
                     <img src="{{author.avatar_url}}" class="img-circle">
                   </span>
                   <small class="pull-right text-muted">
@@ -90,7 +89,7 @@
                   </small>
                   <div class="media-body">
                     <div>
-                      <a href="/users/{{author.id}}">{{author.name}}</a>
+                      <a href="/users/{{author.id}}" data-user-id="{{author.id}}">{{author.name}}</a>
                     </div>
                     <span class="text-muted">{{content}}</span>
                   </div>
@@ -108,7 +107,7 @@
   {{%{{#each (this)}}
     <article class="comment-item" data-news-id="{{id}}">
       {{#if (type === 0)}}
-        <a href="/users/{{author.id}}" class="pull-left thumb-sm avatar">
+        <a href="/users/{{author.id}}" class="pull-left thumb-sm avatar" data-user-id="{{author.id}}">
           <img src="{{author.avatar_url}}">
         </a>
       {{else}}
@@ -120,7 +119,7 @@
       <div class="comment-body panel panel-default">
         <header class="panel-heading">
           {{#if (type === 0)}}
-            <a href="/users/{{author.id}}">
+            <a href="/users/{{author.id}}" data-user-id="{{author.id}}">
               {{#if(author.id === _me.id)}}<span class="label label-success label-sm m-r-xs r-3x">我</span>{{/if}}
               <strong>{{author.name}}</strong>
             </a>
@@ -175,7 +174,7 @@
                 <i class="fa fa-thumbs-up lg b-transparent"></i>
               </span>
                   {{#each (favors)}}
-                    <span class="pull-left thumb-xs m-b-sm">
+                    <span class="pull-left thumb-xs m-b-sm" data-user-id="{{author.id}}">
                       <img src="{{author.avatar_url}}" title="{{author.name}}" class="img-circle">
                     </span>
                   {{/each}}
@@ -185,7 +184,7 @@
           {{#each (comments)}}
             <li class="list-group-item">
               <div class="media">
-                <span class="pull-left thumb-sm">
+                <span class="pull-left thumb-sm" data-user-id="author.id">
                   <img src="{{author.avatar_url}}" class="img-circle">
                 </span>
                 <small class="pull-right text-muted">
@@ -194,7 +193,7 @@
                 </small>
                 <div class="media-body">
                   <div>
-                    <a href="/users/{{author.id}}">{{author.name}}</a>
+                    <a href="/users/{{author.id}}" data-user-id="{{author.id}}">{{author.name}}</a>
                   </div>
                   <span class="text-muted">{{content}}</span>
                 </div>

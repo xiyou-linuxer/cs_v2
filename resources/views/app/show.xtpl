@@ -32,7 +32,9 @@
             <div class="col-md-10 font-bold">{{app.name}}</div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
             <div class="col-md-2 text-right font-bold">创建者：</div>
-            <div class="col-md-10">{{app.author.name}}</div>
+            <div class="col-md-10">
+              <a href="/users/{{app.author.id}}" class="text-info text-u-l"  data-user-id="{{app.author.id}}">{{app.author.name}}</a>
+            </div>
             <div class="line line-dashed b-b line-lg col-md-12"></div>
             <div class="col-md-2 text-right font-bold">主页：</div>
             <div class="col-md-10">

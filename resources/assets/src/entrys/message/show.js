@@ -3,6 +3,7 @@
 import 'babel-polyfill';
 import 'layouts/app';
 import 'mods/markdown';
+import './show.less';
 
 import UI from 'ui';
 import Message from 'apis/message';

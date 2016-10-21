@@ -3,7 +3,7 @@
 import './app.less';
 
 import 'babel-polyfill';
-
+import 'mods/userinfo-popup';
 import UI from 'ui';
 import $ from 'jquery';
 import News from 'apis/news';

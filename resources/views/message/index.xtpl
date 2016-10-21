@@ -93,9 +93,11 @@
                     {{/each}}
                   </td>
                 {{elseif (type === 0)}}
-                  <td>{{author.name}}</td>
+                  <td><a href="/users/{{author.id}}" class="text-info text-u-l" data-user-id="{{author.id}}" target="_blank"><strong>{{author.name}}</a></td>
                 {{else}}
-                  <td><label class="label label-info message-status-label">{{app.name}}</label></td>
+                  <td><a href="/apps/{{app.id}}" target="_blank">
+                    <label class="label label-info message-status-label text-u-l cursor-pointer">{{app.name}}</label></a>
+                  </td>
                 {{/if}}
                 <td>{{{content_text}}}</td>
                 <td>{{created_at}}</td>

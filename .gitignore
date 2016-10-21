@@ -3,4 +3,4 @@ sftp-config.json
 npm-debug.log
 server.out
 server.err
-.env.json
+.env.js

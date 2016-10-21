@@ -28,7 +28,7 @@ let reqLogger = (ctx, err) => {
   let startTime = ctx.startTime;
   let endTime = Date.now();
   let timeStr = moment(startTime).format('YYYY-MM-DD HH:mm:ss');
-
+console.log(ctx.app)
   let logger = null;
 	let status = err ? err.status : ctx.status;
   if (status >= 200 && status < 300) {
