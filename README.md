@@ -119,6 +119,15 @@ bash server.sh 生产环境下启动后台服务进程
 
 ### 线上部署
 
+##### 证书生成
+
+在项目更目录下生成https证书
+```
+openssl genrsa -out privatekey.pem 1024 
+openssl req -new -key privatekey.pem -out certrequest.csr
+openssl x509 -req -in certrequest.csr -signkey privatekey.pem -out certificate.pem -days 365 //控制有效期限为365天，默认为30天
+```
+
 ##### 环境变量
 
 复制.env.sample.json到.env.json，配置相关信息
