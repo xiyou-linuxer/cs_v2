@@ -42,7 +42,7 @@
         ```
         {
           "server": {
-            "protocol": "http",
+            "protocol": "https",
             "host": "{{host}}:{{port}}"
           },
           "adam": {
