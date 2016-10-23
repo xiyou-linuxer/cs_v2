@@ -11,7 +11,8 @@ const proxyConfig = require(path.join(baseDir, 'config/proxy'));
 
 module.exports = function (app) {
 
-  let apiDomain = app.env.api_domain;
+  let apiDomain = app.env.proxy.api_domain;
+
   let _temp;
   Object.keys(proxyConfig.adam).forEach(function (key) {
     _temp = proxyConfig.adam[key];
@@ -28,6 +29,7 @@ module.exports = function (app) {
   return function* (next) {
     let ctx = this;
 
+console.log(ctx.session.grant);
     if (/\/(assets)\//.test(ctx.path) || ctx.render) {
       return yield* next;
     }
@@ -36,7 +38,7 @@ module.exports = function (app) {
       || !ctx.session.grant.response.access_token) {
       return yield* next;
     }
-
+    
     let access_token = ctx.session.grant.response.access_token;
     ctx.proxy = {};
     ctx.proxy.adam = {};

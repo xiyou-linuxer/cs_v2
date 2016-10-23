@@ -1,7 +1,7 @@
 {
   "server": {
     "protocol": "https",
-    "host": "{{host}}:{{port}}"
+    "host": "{{host}}"
   },
   "adam": {
     "authorize_url": "{{sso_domain}}/oauth/authorize",

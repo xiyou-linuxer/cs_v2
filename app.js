@@ -17,15 +17,6 @@ const env = require('./.env');
 const appConfig = require('./config/app');
 const oauthConfig = require('./config/oauth');
 
-oauthConfig.server.host = env.host + ':' + env.port;
-['key', 'secret'].forEach(function (key) {
-  oauthConfig.adam[key] = env[key];
-});
-
-['authorize_url', 'access_url'].forEach(function (key) {
-  oauthConfig.adam[key] = oauthConfig.adam[key].replace('{{sso_domain}}', env.sso_domain);
-});
-
 const app = new Koa();
 
 app.env = env;
@@ -33,6 +24,9 @@ app.config = appConfig;
 app.keys = [baseDir + Date.now()];
 
 app.use(session(app));
+
+oauthConfig.server = Object.assign(oauthConfig.server, env.oauth.server);
+oauthConfig.adam = Object.assign(oauthConfig.adam, env.oauth.adam);
 
 let grant = new Grant(oauthConfig);
 app.use(mount(grant));
@@ -75,14 +69,15 @@ app.use(koaStatic(path.join(baseDir, 'public'), {
   maxAge: 365 * 24 * 60 * 60
 }));
 
-//app.listen(env.port, env.host);
-//console.log('server started at port %s:%d....', env.host, env.port);
+// app.listen(env.server.port, env.server.host);
+// console.log('server started at port %s:%d....', env.server.host, env.server.port);
 
 let options = {
   key: fs.readFileSync('./privatekey.pem'),
   cert: fs.readFileSync('./certificate.pem')
 };
 
-https.createServer(options, app.callback()).listen(2111, env.host);
-console.log('https server started at port %s:%d....', env.host, 2111);
+https.createServer(options, app.callback())
+ .listen(env.server.port, env.server.host);
+console.log('https server started at port %s:%d....', env.server.host, env.server.port);
 

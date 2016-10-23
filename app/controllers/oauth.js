@@ -32,12 +32,12 @@ module.exports = function (app) {
       delete this.session.grant.response;
     }
 
-    this.redirect(app.env.sso_domain + '/logout');
+    this.redirect(app.env.oauth.logout_url);
     this.status = 301;
   };
 
   exports.resetPassword = function* () {
-    this.redirect(app.env.sso_domain + '/password/reset');
+    this.redirect(app.env.oauth.reset_password_url);
     this.status = 301;
   };
 
