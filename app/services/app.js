@@ -19,11 +19,10 @@ module.exports = function (app) {
   };
 
   exports.getById = function* (ctx, id) {
-    let app = yield ctx.proxy.adam.get('apps', {
-      subpath: id
-    });
+    let app = yield ctx.proxy.adam.get(`apps/${id}`);
 
-    return unfoldAppInfo(app);
+    app = unfoldAppInfo(app);
+    return app;
   };
 
   exports.create = function* (ctx, data) {
@@ -31,46 +30,42 @@ module.exports = function (app) {
       form: data
     });
 
-    return unfoldAppInfo(app);
+    app = unfoldAppInfo(app);
+    return app;
   };
 
   exports.updateById = function* (ctx, id, data) {
-    let app = yield ctx.proxy.adam.put('apps', {
-      subpath: id,
+    let app = yield ctx.proxy.adam.put(`apps/${id}`, {
       form: data
     });
 
-    return unfoldAppInfo(app);
+    app = unfoldAppInfo(app);
+    return app;
   };
 
   exports.deleteById = function* (ctx, id, data) {
-    return yield ctx.proxy.adam.delete('apps', {
-      subpath: id
-    });
+    return yield ctx.proxy.adam.delete(`apps/${id}`);
   };
 
   exports.refreshSecret = function* (ctx, id) {
-    let app = yield ctx.proxy.adam.put('apps', {
-      subpath: id + '/secret'
-    });
+    let app = yield ctx.proxy.adam.put(`apps/${id}/secret`);
 
-    return unfoldAppInfo(app);
+    app = unfoldAppInfo(app);
+    return app;
   };
 
   exports.confirm = function* (ctx, id) {
-    let app = yield ctx.proxy.adam.put('apps', {
-      subpath: id + '/confirm'
-    });
+    let app = yield ctx.proxy.adam.put(`apps/${id}/confirm`);
 
-    return unfoldAppInfo(app);
+    app = unfoldAppInfo(app);
+    return app;
   };
 
   exports.reject = function* (ctx, id) {
-    let app = yield ctx.proxy.adam.put('apps', {
-      subpath: id + '/reject'
-    });
+    let app = yield ctx.proxy.adam.put(`apps/${id}/reject`);
 
-    return unfoldAppInfo(app);
+    app = unfoldAppInfo(app);
+    return app;
   };
 
 

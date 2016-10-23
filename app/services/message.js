@@ -14,18 +14,18 @@ module.exports = function (app) {
     });
 
     ret.data = ret.data.map(function (message) {
-        return unfoldMessageInfo(message);
+        message = unfoldMessageInfo(message);
+        return message;
     });
 
     return ret;
   };
 
   exports.getById = function* (ctx, id) {
-    let message = yield ctx.proxy.adam.get('messages', {
-      subpath: id
-    });
+    let message = yield ctx.proxy.adam.get(`messages/${id}`);
 
-    return unfoldMessageInfo(message);
+    message = unfoldMessageInfo(message);
+    return message;
   };
 
   exports.create = function* (ctx, data) {
@@ -33,22 +33,21 @@ module.exports = function (app) {
       form: data
     });
 
-    return unfoldMessageInfo(message);
+    message = unfoldMessageInfo(message);
+    return message;
   };
 
   exports.updateById = function* (ctx, id, data) {
-    let message = yield ctx.proxy.adam.put('messages', {
-      subpath: id,
+    let message = yield ctx.proxy.adam.put(`messages/${id}`, {
       form: data
     });
 
-    return unfoldMessageInfo(message);
+    message = unfoldMessageInfo(message);
+    return message;
   };
 
   exports.deleteById = function* (ctx, id) {
-    return yield ctx.proxy.adam.delete('messages', {
-      subpath: id
-    });
+    return yield ctx.proxy.adam.delete(`messages/${id}`);
   };
 
   return exports;

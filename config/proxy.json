@@ -6,10 +6,9 @@
           "auth": {"bearer": "[0]"}
         }
       },
-      "{endpoint}/[subpath]": {
+      "{endpoint}": {
         "__path": {
-          "alias": "__default",
-          "subpath": "/"
+          "alias": "__default"
         }
       }
     }

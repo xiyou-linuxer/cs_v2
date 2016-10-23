@@ -22,35 +22,37 @@ module.exports = function (app) {
     });
 
     ret.data = ret.data.map(function (user) {
-      return unfoldUserInfo(user);
+      user = unfoldUserInfo(user);
+      return user;
     });
 
     return ret;
   };
 
   exports.getById = function* (ctx, id) {
-    return yield ctx.proxy.adam.get('users', {
-      subpath: id
-    });
+    let user = yield ctx.proxy.adam.get(`users/${id}`);
+
+    return user;
   };
 
   exports.create = function* (ctx, data) {
-    return yield ctx.proxy.adam.post('users', {
+    let user = yield ctx.proxy.adam.post('users', {
       form: data
     });
+
+    return user;
   };
 
   exports.updateById = function* (ctx, id, data) {
-    return yield ctx.proxy.adam.put('users', {
-      subpath: id,
+    let user = yield ctx.proxy.adam.put(`users/${id}`, {
       form: data
     });
+
+    return user;
   };
 
   exports.deleteById = function* (ctx, id) {
-    return yield ctx.proxy.adam.delete('users', {
-      subpath: id
-    });
+    return yield ctx.proxy.adam.delete(`users/${id}`);
   };
 
   exports.getGradeList = function* (ctx) {

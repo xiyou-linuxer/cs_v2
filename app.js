@@ -2,7 +2,9 @@
 
 const baseDir = process.cwd();
 
+const fs = require('fs');
 const Koa = require('koa');
+const https = require('https');
 const path = require('path');
 const mount = require('koa-mount');
 const Grant = require('grant-koa');
@@ -73,5 +75,14 @@ app.use(koaStatic(path.join(baseDir, 'public'), {
   maxAge: 365 * 24 * 60 * 60
 }));
 
-app.listen(env.port, env.host);
-console.log('server started at port %s:%d....', env.host, env.port);
+//app.listen(env.port, env.host);
+//console.log('server started at port %s:%d....', env.host, env.port);
+
+let options = {
+  key: fs.readFileSync('./privatekey.pem'),
+  cert: fs.readFileSync('./certificate.pem')
+};
+
+https.createServer(options, app.callback()).listen(2111, env.host);
+console.log('https server started at port %s:%d....', env.host, 2111);
+

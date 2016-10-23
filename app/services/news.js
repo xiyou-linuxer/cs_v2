@@ -14,18 +14,18 @@ module.exports = function (app) {
       qs: query
     });
     ret.data = ret.data.map(function (news) {
-      return unfoldNewsInfo(news);
+      news = unfoldNewsInfo(news);
+      return news;
     });
 
     return ret;
   };
 
   exports.getById = function* (ctx, id) {
-    let news = yield ctx.proxy.adam.get('news', {
-      subpath: id
-    });
+    let news = yield ctx.proxy.adam.get(`news/${id}`);
 
-    return unfoldNewsInfo(news);
+    news = unfoldNewsInfo(news);
+    return news;
   };
 
   exports.create = function* (ctx, data) {
@@ -33,13 +33,12 @@ module.exports = function (app) {
       form: data
     });
 
-    return unfoldNewsInfo(news);
+    news = unfoldNewsInfo(news);
+    return news;
   };
 
   exports.deleteById = function* (ctx, id, data) {
-    return yield ctx.proxy.adam.delete('news', {
-      subpath: id
-    });
+    return yield ctx.proxy.adam.delete(`news/${id}`);
   };
 
   exports.createComment = function* (ctx, newsId, data) {
@@ -48,29 +47,29 @@ module.exports = function (app) {
       form: data
     });
 
-    return unfoldNewsInfo(news);
+    news = unfoldNewsInfo(news);
+    return news;
   };
 
   exports.getCommentsByQuery = function* (ctx, newsId, q) {
     let query = _.pick(q, ['author_id', 'page', 'per_page']);
 
-    let ret = yield ctx.proxy.adam.get('news', {
-      subpath: newsId + '/comments',
+    let ret = yield ctx.proxy.adam.get(`news/${newsId}/comments`, {
       qs: query
     });
     ret.data = ret.data.map(function (comment) {
-      return unfoldCommentInfo(comment);
+      comment = unfoldCommentInfo(comment);
+      return comment;
     });
 
     return ret;
   };
 
   exports.favor = function* (ctx, newsId) {
-    let news = yield ctx.proxy.adam.post('news', {
-      subpath: newsId + '/favors'
-    });
+    let news = yield ctx.proxy.adam.post(`news/${newsId}/favors`);
 
-    return unfoldNewsInfo(news);
+    news = unfoldNewsInfo(news);
+    return news;
   };
 
   return exports;
@@ -89,7 +88,8 @@ function unfoldNewsInfo (news) {
   }
 
   news.comments = news.comments.map(function (comment) {
-    return unfoldCommentInfo(comment);
+    comment = unfoldCommentInfo(comment);
+    return comment;
   });
 
   news.favors = news.favors.map(function (favor) {
