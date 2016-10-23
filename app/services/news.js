@@ -42,8 +42,7 @@ module.exports = function (app) {
   };
 
   exports.createComment = function* (ctx, newsId, data) {
-    let news = yield ctx.proxy.adam.post('news', {
-      subpath: newsId + '/comments',
+    let news = yield ctx.proxy.adam.post(`news/${newsId}/comments`, {
       form: data
     });
 
